@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+#spring:
+#  # Datasource 설정
+#  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    # username:
+#    # password:
+#    username:
+#    password:
+#    # url: jdbc:mariadb://[서버주소]:[포트번호]/[DB명]
+#    url:
+#    hikari:
+#      maximum-pool-size: 10
+#      connection-init-sql: SELECT 1
+#      connection-timeout: 5000
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      auto-commit: true
