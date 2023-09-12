@@ -1,5 +1,7 @@
 server:
   port: 8081
+openai:
+  apikey: qweqweqwe
 
 #spring:
 #  # Datasource 설정
