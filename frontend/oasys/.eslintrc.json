@@ -26,5 +26,10 @@
         "@typescript-eslint/explicit-module-boundary-types": 0,
         "@typescript-eslint/no-explicit-any": 2
     },
-    "ignorePatterns": [".eslintrc.json", "vite.config.ts"]
+    "ignorePatterns": [".eslintrc.json", "vite.config.ts"],
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    }
 }
