@@ -8,12 +8,12 @@ public class NaverCloud {
 
     public static String stt(String filepath) {    // 컨트롤러에서 사용하기 위해 static으로
 
-        String clientId = "YOUR_CLIENT_ID";             // Application Client ID";
-        String clientSecret = "YOUR_CLIENT_SECRET";     // Application Client Secret";
+        String clientId = "";             // Application Client ID";
+        String clientSecret = "";     // Application Client Secret";
         StringBuffer response = new StringBuffer();
 
         try {
-            String imgFile = "음성 파일 경로";
+            String imgFile = filepath;
             File voiceFile = new File(imgFile);
 
             String language = "Kor";        // 언어 코드 ( Kor, Jpn, Eng, Chn )
