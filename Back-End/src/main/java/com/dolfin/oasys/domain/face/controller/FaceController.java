@@ -17,8 +17,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/v1/face")
 public class FaceController {
 
-    private FaceService faceService;
+    private final FaceService faceService;
 
     @PostMapping(path = "/recognition", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
@@ -39,36 +42,17 @@ public class FaceController {
         return new ResponseEntity<>(faceResponse, HttpStatus.OK);
     }
 
+    @PostMapping(path = "/saveTest", consumes = {
+        MediaType.APPLICATION_JSON_VALUE,
+        MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<String> saveTest(@RequestPart(name = "multipartFile") MultipartFile multipartFile)throws IOException {
+        String faceId = faceService.faceSave(multipartFile, "이순재");
+        return new ResponseEntity<>(faceId, HttpStatus.OK);
+    }
 
-    //    @PostMapping(path = "/detect", consumes = {
-//        MediaType.APPLICATION_JSON_VALUE,
-//        MediaType.MULTIPART_FORM_DATA_VALUE})
-//    public ResponseEntity<String> faceDetect(@RequestPart(name = "multipartFile") MultipartFile multipartFile)throws IOException {
-//        String fileName = multipartFile.getOriginalFilename();
-//        String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
-//
-//        OkHttpClient client = new OkHttpClient();
-//
-//        File inputFile = multipartFileToFile(multipartFile);
-//
-//        RequestBody requestBody = new MultipartBody.Builder()
-//            .setType(MultipartBody.FORM)
-//            .addFormDataPart("image", fileName, RequestBody.create(okhttp3.MediaType.parse("image/"+extension), inputFile))
-//            .build();
-//
-//        Request request = new Request.Builder()
-//            .url("https://apis.openapi.sk.com/nugufacecan/v1/detect")
-//            .post(requestBody)
-//            .addHeader("app-id", APP_ID)
-//            .addHeader("appKey", APP_KEY)
-//            .build();
-//        try {
-//            Response response = client.newCall(request).execute();
-//            System.out.println(response.body().string());
-//            return new ResponseEntity<>(response.toString(), HttpStatus.OK);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return new ResponseEntity<>("Error", HttpStatus.BAD_REQUEST);
-//    }
+    @DeleteMapping("/deleteTest/{faceId}")
+    public ResponseEntity<Void> deleteTest(@PathVariable("faceId")String faceId) {
+        faceService.faceDelete(faceId);
+        return new ResponseEntity<> (HttpStatus.OK);
+    }
 }

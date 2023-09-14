@@ -1,68 +1,194 @@
 package com.dolfin.oasys.domain.face.service;
 
+import com.dolfin.oasys.domain.face.model.dto.FaceDetect;
+import com.dolfin.oasys.domain.face.model.dto.FaceRecognize;
 import com.dolfin.oasys.domain.face.model.dto.FaceResponse;
+import com.dolfin.oasys.domain.member.model.entity.Gender;
+import com.dolfin.oasys.domain.member.model.entity.Member;
+import com.dolfin.oasys.domain.member.model.repository.MemberRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Time;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class FaceServiceImpl implements FaceService{
-
+    private final MemberRepository memberRepository;
+    private final String SUB_ID = "LXDARGRVOL";
     private final String APP_ID = "V3BXR4ILE8";
+    private final String GROUP_ID = "8FTBECB6WN";
     private final String APP_KEY = "X2k5RyJZFgwy5cIOOOM33Zt0dJQyOCY1jnx9UPp9";
 
     @Override
-    public FaceResponse faceRecognition(MultipartFile multipartFile) throws IOException{
-
+    public FaceResponse faceRecognition(MultipartFile multipartFile) throws IOException {
         //인풋 파일 정보 추출
         String fileName = multipartFile.getOriginalFilename();
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
         OkHttpClient client = new OkHttpClient();
-
         //파일로 변환
         File convFile = multipartFileToFile(multipartFile);
 
         //request body 생성
         RequestBody requestBody = new MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("image", fileName, RequestBody.create(okhttp3.MediaType.parse("image/"+extension), convFile))
+            .addFormDataPart("image", fileName, RequestBody.create(MediaType.parse("image/"+extension), convFile))
             .build();
         //request 생성
         Request request = new Request.Builder()
             .url("https://apis.openapi.sk.com/nugufacecan/v1/recognize")
             .post(requestBody)
             .addHeader("app-id", APP_ID)
+            .addHeader("group-id", GROUP_ID)
             .addHeader("appKey", APP_KEY)
             .build();
 
         //이미 있는 회원인지 검사
-        try {
-            Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+        ObjectMapper objectMapper = new ObjectMapper();
+        Response response = client.newCall(request).execute();
+        FaceRecognize faceRecognize = objectMapper.readValue(response.body().string(), FaceRecognize.class);
 
-            //이미 회원인 경우
-            if(response.isSuccessful()){
-                //회원 정보 추출후 resonse 생성
-//                return FaceResponse.from(true,true);
+        log.info("faceRecognize={}",faceRecognize.toString());
+
+        //이미 회원인 경우
+        if(faceRecognize.getFace_id() != null){
+            Member member = memberRepository.findByFaceId(faceRecognize.getFace_id());
+            return FaceResponse.from(true, member.isSenior(), member.getGender(), member);
+        }else{
+            //request body 생성
+            RequestBody detectRequestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", fileName, RequestBody.create(MediaType.parse("image/"+extension), convFile))
+                .build();
+            //request 생성
+            Request detectRequest = new Request.Builder()
+                .url("https://apis.openapi.sk.com/nugufacecan/v1/detect")
+                .post(detectRequestBody)
+                .addHeader("app-id", APP_ID)
+                .addHeader("appKey", APP_KEY)
+                .build();
+
+            Response detectResponse = client.newCall(detectRequest).execute();
+            FaceDetect faceDetect = objectMapper.readValue(detectResponse.body().string(), FaceDetect.class);
+
+            Gender gender = faceDetect.getFaces().get(0).getGender().equals("male") ? Gender.MALE : Gender.FEMALE;
+            if(faceDetect.getFaces().get(0).getAge() >= 60){
+                return FaceResponse.from(false, true, gender, Member.builder().build());
             }
+            return FaceResponse.from(false,false, gender, Member.builder().build());
+        }
+    }
 
-            //회원이 아니면
-            //노인인지 검사후 response 반환
+    @Override
+    public String faceSave(MultipartFile multipartFile, String name) throws IOException{
+        String fileName = multipartFile.getOriginalFilename();
+        String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+        OkHttpClient client = new OkHttpClient();
+
+        File convFile = multipartFileToFile(multipartFile);
+        //request body 생성
+        RequestBody requestBody = new MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("image", fileName, RequestBody.create(MediaType.parse("image/"+extension), convFile))
+            .build();
+        //등록 request 생성
+        Request request = new Request.Builder()
+            .url("https://apis.openapi.sk.com/nugufacecan/v1/face")
+            .post(requestBody)
+            .addHeader("app-id", APP_ID)
+            .addHeader("group-id", GROUP_ID)
+            .addHeader("subject-id", SUB_ID)
+            .addHeader("appKey", APP_KEY)
+            .addHeader("face-name", name.hashCode()+"_"+System.currentTimeMillis())
+            .build();
+        //얼굴 등록
+        Response response = client.newCall(request).execute();
+        if(response.code() != 200){
+            log.info("err = {}",response.body().string());
+            throw new RuntimeException("얼굴 등록 실패");
+        }
+        //등록 기다리기
+//        try{
+//            Thread.sleep(600);
+//        }catch(InterruptedException e){
+//            e.printStackTrace();
+//        }
+        //얼굴인식 request 생성
+        Request recognitionRequest = new Request.Builder()
+            .url("https://apis.openapi.sk.com/nugufacecan/v1/recognize")
+            .post(requestBody)
+            .addHeader("app-id", APP_ID)
+            .addHeader("group-id", GROUP_ID)
+            .addHeader("appKey", APP_KEY)
+            .build();
+
+        //해당 회원 faceId 리턴
+        ObjectMapper objectMapper = new ObjectMapper();
+        Response recognitionResponse = null;
+        FaceRecognize faceRecognize = null;
+
+        log.info("faceRecognize={}",faceRecognize);
+
+        int maxAttempts = 5;
+        int interval = 1000; // 0.1초
+        boolean isRecognized = false;
+
+        for (int i = 0; i < maxAttempts && !isRecognized; i++) {
+            try {
+                Thread.sleep(interval);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            recognitionResponse = client.newCall(recognitionRequest).execute();
+            if (recognitionResponse.isSuccessful()) {
+                faceRecognize = objectMapper.readValue(recognitionResponse.body().string(), FaceRecognize.class);
+                if (faceRecognize.getFace_id() != null) {
+                    isRecognized = true;
+                    log.info("faceRecognize={}", faceRecognize);
+                    return faceRecognize.getFace_id();
+                }
+            }
+        }
+        throw new RuntimeException("얼굴 인식 실패");
+    }
+
+    @Override
+    public void faceDelete(String faceId) {
+        OkHttpClient client = new OkHttpClient();
+
+        //request 생성
+        Request request = new Request.Builder()
+            .url("https://apis.openapi.sk.com/nugufacecan/v1/face/"+faceId)
+            .delete(null)
+            .addHeader("app-id", APP_ID)
+            .addHeader("group-id", GROUP_ID)
+            .addHeader("subject-id", SUB_ID)
+            .addHeader("appKey", APP_KEY)
+            .build();
+
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("회원 로직 검사 에러 발생");
         }
-
-        throw new RuntimeException("검사 실패");
+        if(response.code() != 200){
+            log.info("res={}",response.body());
+            throw new RuntimeException("삭제 실패");
+        }
     }
 
     //MultipartFile -> File convert

@@ -1,6 +1,8 @@
 package com.dolfin.oasys.domain.face.model.dto;
 
-import java.lang.reflect.Member;
+import com.dolfin.oasys.domain.member.model.dto.MemberDto;
+import com.dolfin.oasys.domain.member.model.entity.Gender;
+import com.dolfin.oasys.domain.member.model.entity.Member;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,16 +19,18 @@ public class FaceResponse {
 
     private boolean isSenior;
 
-    private boolean isMember;
+    private boolean hasMemberShip;
 
-    private Member member;
+    private Gender gender;
 
+    MemberDto member;
 
-    public static FaceResponse from(boolean isMember, boolean isSenior, Member member){
+    public static FaceResponse from(boolean isMember, boolean isSenior, Gender gender, Member member){
         return FaceResponse.builder()
-            .isMember(isMember)
+            .hasMemberShip(isMember)
             .isSenior(isSenior)
-            .member(member)
+            .gender(gender)
+            .member(MemberDto.from(member))
             .build();
     }
 }
