@@ -15,7 +15,7 @@ public class VideoController {
             Process process = pb.start();
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(), "euc-kr"));
-            String line = " ";
+            String line = "  ";
             String output = "";
 
             while(line != null) {
