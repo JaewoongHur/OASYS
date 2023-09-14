@@ -23,8 +23,10 @@ public class VoiceController {
         // Get response from OpenAI API
 //        String answerText = callOpenAIApi(voiceText);
         String answerText = "GPT : 네! 안녕하세요";
+        VideoController.detect();
         return ResponseEntity.ok(answerText);
     }
+
 
     private String callOpenAIApi(String prompt) {
         RestTemplate restTemplate = new RestTemplate();
