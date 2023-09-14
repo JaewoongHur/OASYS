@@ -59,20 +59,20 @@ public class Member {
     @Column(name = "member_updatedAt", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
-    @Column(name = "member_isSenior", nullable = false)
-    private boolean isSenior;
+    @Column(name = "member_age", nullable = false)
+    private int age;
 
     @Column(name = "member_isDeleted", nullable = false, columnDefinition = "tinyint(1) default 0")
     private boolean isDeleted;
 
     //멤버 생성자
-    public static Member create(String faceId, String nickname, String phone, Role role, boolean isSenior){
+    public static Member create(String faceId, String nickname, String phone, Role role, int age){
         return Member.builder()
             .faceId(faceId)
             .nickName(nickname)
             .phone(phone)
             .role(role)
-            .isSenior(isSenior)
+            .age(age)
             .build();
     }
 }

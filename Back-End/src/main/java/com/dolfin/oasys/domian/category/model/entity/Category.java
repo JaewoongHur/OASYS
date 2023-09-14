@@ -29,11 +29,11 @@ public class Category {
     @Column(name = "cate_simpleTypeName", nullable = false)
     private String simpleTypeName;
 
-    @Column(name = "tellerType_id", nullable = false)
+    @Column(name = "cate_tellerType_id", nullable = false)
     private int tellerTypeId;
 
-    @Column(name = "description", nullable = false)
-    private String description;
+    @Column(name = "cate_desc", nullable = false)
+    private String desc;
 
     //카테고리 생성자
     public static Category create(String generalTypeName, String simpleTypeName,
@@ -42,7 +42,7 @@ public class Category {
             .generalTypeName(generalTypeName)
             .simpleTypeName(simpleTypeName)
             .tellerTypeId(tellerTypeId)
-            .description(description)
+            .desc(description)
             .build();
     }
 }
