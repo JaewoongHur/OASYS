@@ -13,7 +13,7 @@ function App() {
 
   const sendToBackend = async (text: string) => {
     try {
-      const response = await axios.post<string>("http://localhost:8081/voice", { text }, {
+      const response = await axios.post<string>("http://localhost:8081/gpt/voice", { text }, {
         headers: {
           'Content-Type': 'application/json'
         }
