@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Time;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.MediaType;
@@ -19,7 +18,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,11 +26,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 public class FaceServiceImpl implements FaceService{
+
     private final MemberRepository memberRepository;
-    private final String SUB_ID = "LXDARGRVOL";
-    private final String APP_ID = "V3BXR4ILE8";
-    private final String GROUP_ID = "8FTBECB6WN";
-    private final String APP_KEY = "X2k5RyJZFgwy5cIOOOM33Zt0dJQyOCY1jnx9UPp9";
+
+    @Value("${face.api.sub.id}")
+    private String SUB_ID;
+
+    @Value("${face.api.app.id}")
+    private String APP_ID;
+
+    @Value("${face.api.group.id}")
+    private String GROUP_ID;
+
+    @Value("${face.api.app.key}")
+    private String APP_KEY;
 
     @Override
     public FaceResponse faceRecognition(MultipartFile multipartFile) throws IOException {
@@ -120,12 +128,6 @@ public class FaceServiceImpl implements FaceService{
             log.info("err = {}",response.body().string());
             throw new RuntimeException("얼굴 등록 실패");
         }
-        //등록 기다리기
-//        try{
-//            Thread.sleep(600);
-//        }catch(InterruptedException e){
-//            e.printStackTrace();
-//        }
         //얼굴인식 request 생성
         Request recognitionRequest = new Request.Builder()
             .url("https://apis.openapi.sk.com/nugufacecan/v1/recognize")
