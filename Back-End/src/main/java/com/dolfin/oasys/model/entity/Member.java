@@ -1,10 +1,15 @@
-package com.dolfin.oasys.manager.model.entity;
+package com.dolfin.oasys.model.entity;
+
+import lombok.Builder;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "Member")
+@Getter
+@Builder
 public class Member {
 
     @Id

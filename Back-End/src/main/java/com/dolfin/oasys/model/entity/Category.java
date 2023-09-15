@@ -1,4 +1,4 @@
-package com.dolfin.oasys.manager.model.entity;
+package com.dolfin.oasys.model.entity;
 
 import lombok.Getter;
 
@@ -10,7 +10,8 @@ import javax.persistence.*;
 public class Category {
 
     @Id
-    @Column(name = "cate_Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cate_id")
     private Long cateId;
 
     @Column(name = "cate_generalTypeName")
@@ -19,10 +20,8 @@ public class Category {
     @Column(name = "cate_simpleTypeName")
     private String cateSimpleTypeName;
 
-    @Column(name = "cate_tellerType_id")
-    private Long cateTellerTypeId;
-
-    @Column(name = "cate_desc")
-    private String cateDesc;
+    @ManyToOne
+    @JoinColumn(name = "cate_tellerType_id")
+    private TellerType tellerType;
 
 }

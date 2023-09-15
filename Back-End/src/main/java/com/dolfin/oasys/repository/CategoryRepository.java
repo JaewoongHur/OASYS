@@ -1,6 +1,6 @@
-package com.dolfin.oasys.manager.repository;
+package com.dolfin.oasys.repository;
 
-import com.dolfin.oasys.manager.model.entity.Category;
+import com.dolfin.oasys.model.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
