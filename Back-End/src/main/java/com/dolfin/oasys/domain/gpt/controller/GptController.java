@@ -25,13 +25,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/gpt")
 public class GptController {
-    OpenAiService service = new OpenAiService("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");
+    OpenAiService service = new OpenAiService("api key");
 
     @PostMapping("/voice")
     public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
         String voiceText = voiceData.get("text");
         final List<ChatMessage> messages = new ArrayList<>();
-        final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(),  voiceText +"가 송금업무인지 출금업무인지 단답형으로 말해줘");
+        final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(),  voiceText);
         messages.add(systemMessage);
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                 .builder()
