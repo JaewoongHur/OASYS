@@ -20,7 +20,7 @@ public class VoiceController {
     public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
         String voiceText = voiceData.get("text");
         System.out.println(voiceText);
-        //  Get response from OpenAI API
+        //   Get response from OpenAI API
 //        String answerText = callOpenAIApi(voiceText);
         String answerText = "GPT : 네! 안녕하세요";
         VideoController.detect();
