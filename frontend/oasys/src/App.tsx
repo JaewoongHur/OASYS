@@ -12,7 +12,17 @@ function App() {
                 subText="통장 및 적금, 청약 신규, 자동이체, \n각종 변경, 분실 신고 등"
                 iconSrc={Bankbook}
             />
+            <TextButton
+                width="150px"
+                height="150px"
+                text="확인"
+                fontSize="50px"
+                onClick={() => {}}
+            />
             <TextButton width="100px" text="확인" onClick={() => {}} />
+            <TextButton width="100px" text="확인" disabled onClick={() => {}} />
+            <TextButton width="100px" text="확인" category="negative" onClick={() => {}} />
+            <TextButton width="100px" text="확인" category="negative" disabled onClick={() => {}} />
         </div>
     );
 }

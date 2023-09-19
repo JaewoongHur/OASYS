@@ -41,6 +41,7 @@ const BoxButtonWrapper = styled("button")<BoxButtonWrapperProps>`
     // Interaction Attribute
     transition: 0.3s;
     transform-origin: center;
+    user-select: none;
     cursor: pointer;
     &:hover {
         background-color: ${(props) => props.theme.colors.primary4};

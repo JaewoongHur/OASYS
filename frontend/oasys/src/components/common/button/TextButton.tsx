@@ -7,6 +7,7 @@ import { ButtonProps } from "@customTypes/commonProps";
 /* Props Type */
 interface TextButtonProps extends ButtonProps {
     category?: "positive" | "negative";
+    fontSize?: string;
     disabled?: boolean;
     onClick: () => void;
 }
@@ -14,7 +15,8 @@ interface TextButtonProps extends ButtonProps {
 type TextButtonWrapperProps = {
     width: string;
     height: string;
-    category: "positive" | "negative";
+    className: "positive" | "negative";
+    fontSize: string;
     disabled: boolean;
 };
 
@@ -29,25 +31,55 @@ const TextButtonWrapper = styled("button")<TextButtonWrapperProps>`
     box-sizing: border-box;
 
     // Style Attribute
-    background-color: ${(props) => props.theme.colors.primary3};
     border-radius: 20px;
-    border: none;
+    border: 5px solid;
 
     // Text Attribute
-    color: white;
     font-weight: 700;
-    font-size: 20px;
+    font-size: ${(props) => props.fontSize};
 
     // Interaction Attribute
     transition: 0.3s;
     transform-origin: center;
+    user-select: none;
     cursor: pointer;
-    &:hover {
-        background-color: ${(props) => props.theme.colors.primary4};
-    }
     &:active {
         transform: scale(0.95);
-        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
+    }
+    &:disabled {
+        cursor: default;
+        pointer-events: none;
+        &:active {
+            transform: scale(1);
+        }
+    }
+
+    // Positive Category Attribute
+    &.positive {
+        background-color: ${(props) => props.theme.colors.primary3};
+        border-color: transparent;
+        color: white;
+        &:hover {
+            background-color: ${(props) => props.theme.colors.primary4};
+        }
+        &:disabled {
+            background-color: ${(props) => props.theme.colors.gray3};
+        }
+    }
+
+    // Negative Category Attribute
+    &.negative {
+        background-color: transparent;
+        border-color: ${(props) => props.theme.colors.primary3};
+        color: ${(props) => props.theme.colors.primary3};
+        &:hover {
+            background-color: ${(props) => props.theme.colors.primary3};
+            color: white;
+        }
+        &:disabled {
+            border-color: ${(props) => props.theme.colors.gray3};
+            color: ${(props) => props.theme.colors.gray3};
+        }
     }
 `;
 
@@ -61,6 +93,7 @@ function TextButton(props: TextButtonProps) {
         height = "100%",
         text,
         category = "positive",
+        fontSize = "20px",
         disabled = false,
         onClick,
     } = props;
@@ -70,7 +103,8 @@ function TextButton(props: TextButtonProps) {
             type={type}
             width={width}
             height={height}
-            category={category}
+            className={category}
+            fontSize={fontSize}
             disabled={disabled}
             onClick={onClick}
         >
