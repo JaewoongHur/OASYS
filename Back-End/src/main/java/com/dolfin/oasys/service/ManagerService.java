@@ -2,18 +2,19 @@ package com.dolfin.oasys.service;
 
 import com.dolfin.oasys.model.dto.MemberDto;
 import com.dolfin.oasys.model.dto.TellerStatusDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
 
 public interface ManagerService {
     List<TellerStatusDTO> getTellerStatusList();
 
-    void addConsumerToConsultation(MemberDto.RequestMember requestMember) throws JsonProcessingException;
+    void addConsumerToWaitingList(MemberDto.RequestMember requestMember);
 
-    void completeConsultation(Long tellerType);
+    boolean nextConsumerToConsultation(String tellerType);
 
-    MemberDto.ResponseMember getMemberInfoByFaceId(Long TellerTypeId, int count) throws JsonProcessingException;
+    boolean completeConsultation(String tellerType);
+
+    MemberDto.ResponseMember getMemberInfoByFaceId(String faceId);
 
     void createMember(MemberDto.RequestNewMember requestNewMember);
 }

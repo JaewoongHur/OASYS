@@ -4,6 +4,9 @@ server:
 spring:
   # redis 설정
   redis:
+    template:
+      keySerializer: org.springframework.data.redis.serializer.StringRedisSerializer
+      valueSerializer: org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
     host: redis
     port: 6379
     database: 0

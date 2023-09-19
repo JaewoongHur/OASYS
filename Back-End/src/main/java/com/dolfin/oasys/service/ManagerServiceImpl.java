@@ -7,69 +7,99 @@ import com.dolfin.oasys.model.entity.TellerType;
 import com.dolfin.oasys.repository.MemberRepository;
 import com.dolfin.oasys.repository.TellerTypeRepository;
 import com.dolfin.oasys.util.JsonConverter;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerServiceImpl implements ManagerService {
-    private final ListOperations<String, String> tellerTypeStateList;
+    //총 고객 리스트
+    private final RedisTemplate<String, MemberDto.WaitingMember> consumerInfoList;
+    //상담 리스트
+    private final RedisTemplate<String, String> consultingList;
+    //대기 리스트
+    private final ListOperations<String, String> waitingList;
 
     private final TellerTypeRepository tellerTypeRepository;
     private final MemberRepository memberRepository;
-    private final JsonConverter jsonConverter;
+
     @Override
     public List<TellerStatusDTO> getTellerStatusList() {
         List<TellerStatusDTO> TellerStatusList = new ArrayList<>();
-
         for (TellerType tellerType : tellerTypeRepository.findAll()) {
-            List<String> consumerList = tellerTypeStateList.range(Long.toString(tellerType.getTellerTypeId()), 0, -1);
-            int consumerSize = consumerList.size();
+            List<String> consumerList = waitingList.range(Long.toString(tellerType.getTellerTypeId()), 0, -1);
+            Long tellerTypeId = tellerType.getTellerTypeId();
+            String nowCCFaceId = consultingList.opsForValue().get(tellerTypeId);
+
             TellerStatusList.add(TellerStatusDTO.builder()
-                    .tellerTypeId(tellerType.getTellerTypeId())
+                    .tellerTypeId(tellerTypeId)
                     .tellerTypeName(tellerType.getTellerTypeName())
-                    .isConsulting(consumerSize > 0)
-                    .consumerInfo(consumerList.get(0))
-                    .waitingConsumerCount(consumerSize > 1 ? consumerSize - 1 : 0)
-                    .waitingConsumerInfoList(consumerSize > 1 ? consumerList.subList(1, consumerSize) : null)
+                    .isConsulting(nowCCFaceId != null)
+                    .consultingCustomer(nowCCFaceId != null ? getDTOFindByFaceId(nowCCFaceId) : null)
+                    .waitingConsumerCount(consumerList.size())
+                    .waitingConsumerList(consumerList.stream().map(faceId -> getDTOFindByFaceId(faceId)).collect(Collectors.toList()))
                     .build());
         }
+        log.info("getTellerStatusList: \n");
+        log.info(TellerStatusList.toString());
         return TellerStatusList;
     }
 
-    @Override
-    public void addConsumerToConsultation(MemberDto.RequestMember requestMember) throws JsonProcessingException {
-        tellerTypeStateList.rightPush(
-                Long.toString(requestMember.getTellerTypeId()),
-                jsonConverter.objectConvertJson(
-                        MemberDto.WaitingMember
-                                .builder()
-                                .faceId(requestMember.getFaceId())
-                                .name(requestMember.getName())
-                                .phone(requestMember.getPhone())
-                                .cateTypeName(requestMember.getCateTypeName())
-                                .isMember(requestMember.isMember())
-                                .build()));
+    private MemberDto.responseConsumer getDTOFindByFaceId(String faceId) {
+        return MemberDto.responseConsumer
+                .builder()
+                .faceId(faceId)
+                .name(consumerInfoList.opsForValue().get(faceId).getName())
+                .build();
     }
 
     @Override
-    public void completeConsultation(Long tellerType) {
-        tellerTypeStateList.leftPop(Long.toString(tellerType));
+    public void addConsumerToWaitingList(MemberDto.RequestMember requestMember) {
+        log.info("addConsumerToConsultation");
+        waitingList.rightPush(Long.toString(requestMember.getTellerTypeId()), requestMember.getFaceId());
+        consumerInfoList.opsForValue().set(requestMember.getFaceId(),
+                MemberDto.WaitingMember
+                .builder()
+                .faceId(requestMember.getFaceId())
+                .name(requestMember.getName())
+                .phone(requestMember.getPhone())
+                .cateTypeName(requestMember.getCateTypeName())
+                .isMember(requestMember.isMember())
+                .build());
     }
 
     @Override
-    public MemberDto.ResponseMember getMemberInfoByFaceId(Long TellerTypeId, int count) throws JsonProcessingException {
-        MemberDto.WaitingMember waitingMember = jsonConverter.JsonConvertObject(
-                tellerTypeStateList.index(Long.toString(TellerTypeId), count),
-                MemberDto.WaitingMember.class);
+    public boolean nextConsumerToConsultation(String tellerType) {
+        log.info("nextConsumerToConsultation tellerType: " + tellerType);
+        String nextFaceId = waitingList.leftPop(tellerType);
+        if (nextFaceId != null) {
+            consultingList.opsForValue().set(tellerType, nextFaceId);
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public boolean completeConsultation(String tellerType) {
+        log.info("completeConsultation tellerType: " + tellerType);
+        String faceId = consultingList.opsForValue().get(tellerType);
+        if (faceId != null) {
+            return consumerInfoList.delete(faceId) && consultingList.delete(tellerType);
+        }
+        return false;
+    }
+
+    @Override
+    public MemberDto.ResponseMember getMemberInfoByFaceId(String faceId) {
+        MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(faceId);
         MemberDto.ResponseMember responseMember = MemberDto.ResponseMember
                 .builder()
                 .isMember(waitingMember.isMember())
