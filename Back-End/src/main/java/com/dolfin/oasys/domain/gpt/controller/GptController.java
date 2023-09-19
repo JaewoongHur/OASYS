@@ -27,35 +27,10 @@ import java.util.Map;
 public class GptController {
     OpenAiService service = new OpenAiService("api key ");
 
-    @PostMapping("/voice")
-    public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
-        String voiceText = voiceData.get("text");
+    @PostMapping
+    public void Init(){
         final List<ChatMessage> messages = new ArrayList<>();
-        final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(),  voiceText);
-        messages.add(systemMessage);
-        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
-                .builder()
-                .model("gpt-3.5-turbo")
-                .messages(messages)
-                .n(1)
-                .maxTokens(100)
-                .logitBias(new HashMap<>())
-                .build();
-        ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
-        service.streamChatCompletion(chatCompletionRequest)
-                .doOnError(Throwable::printStackTrace)
-                .blockingForEach(System.out::println);
-        //   Get response from OpenAI API
-//        String answerText = callOpenAIApi(voiceText);
-        String answerText = responseMessage.getContent();
-        VideoController.detect();
-        service.shutdownExecutor();
-        return ResponseEntity.ok(answerText);
-    }
-    @PostMapping("/question")
-    public void sendQuestion() throws Exception{
-        final List<ChatMessage> messages = new ArrayList<>();
-        final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "'돈 보내려구요' 가 송금업무인지 출금업무인지 단답형으로 말해줘");
+        final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "1. 인출 2. 입금 3. 송금 이라는 선택지가 있어. 앞으로 내가 하는 말이 어디에 속하는지 번호로 알려줘.");
         messages.add(systemMessage);
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                 .builder()
@@ -70,7 +45,51 @@ public class GptController {
                 .doOnError(Throwable::printStackTrace)
                 .blockingForEach(System.out::println);
         System.out.println(responseMessage.getContent());
+    }
+    @PostMapping("/voice")
+    public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
+        String voiceText = voiceData.get("text");
+        final List<ChatMessage> messages = new ArrayList<>();
+        final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(),  voiceText);
+        messages.add(systemMessage);
+        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
+                .builder()
+                .model("gpt-3.5-turbo")
+                .messages(messages)
+                .n(1)
+                .maxTokens(10)
+                .logitBias(new HashMap<>())
+                .build();
+        ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
+        service.streamChatCompletion(chatCompletionRequest)
+                .doOnError(Throwable::printStackTrace)
+                .blockingForEach(System.out::println);
+        //   Get response from OpenAI API
+//        String answerText = callOpenAIApi(voiceText);
+        String answerText = responseMessage.getContent();
+        VideoController.detect();
         service.shutdownExecutor();
+        return ResponseEntity.ok(answerText);
+    }
+//    @PostMapping("/question")
+//    public void sendQuestion() throws Exception{
+//        final List<ChatMessage> messages = new ArrayList<>();
+////        final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "'돈 보내려구요' 가 송금업무인지 출금업무인지 단답형으로 말해줘");
+//        messages.add(systemMessage);
+//        ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
+//                .builder()
+//                .model("gpt-3.5-turbo")
+//                .messages(messages)
+//                .n(1)
+//                .maxTokens(100)
+//                .logitBias(new HashMap<>())
+//                .build();
+//        ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
+//        service.streamChatCompletion(chatCompletionRequest)
+//                .doOnError(Throwable::printStackTrace)
+//                .blockingForEach(System.out::println);
+//        System.out.println(responseMessage.getContent());
+//        service.shutdownExecutor();
 
 //        try(    TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()){
 //
@@ -92,4 +111,4 @@ public class GptController {
 
 
 
-}
+

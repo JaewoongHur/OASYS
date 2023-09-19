@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSpeechRecognition } from 'react-speech-kit';
+import SpeechRecognition,{ useSpeechRecognition } from 'react-speech-recognition';
 import axios from 'axios';
 import './App.css';
 
@@ -39,8 +39,8 @@ function App() {
       const synth = window.speechSynthesis;
 
 
-
-
+      
+      
       let voices = synth.getVoices();
       voices = voices.filter(voice => voice.lang.includes('ko'));
       console.log(voices);
