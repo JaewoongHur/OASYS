@@ -1,7 +1,7 @@
 /* Import */
-import React from "react";
 import styled from "@emotion/styled";
 import { ButtonProps } from "@customTypes/commonProps";
+import lineBreakText from "@utils/format";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -93,21 +93,13 @@ const ButtonBodyWrapper = styled("div")`
 function BoxButton(props: BoxButtonProps) {
     const { type = "button", width, height = "100%", text, subText, iconSrc } = props;
 
-    // SubText Element Splitted by '\n'
-    const splittedSubText = subText.split("\\n").map((line) => (
-        <React.Fragment key={line}>
-            {line}
-            <br />
-        </React.Fragment>
-    ));
-
     return (
         <BoxButtonWrapper type={type} width={width} height={height}>
             <ButtonHeaderWrapper>
                 <ButtonTitleWrapper>{text}</ButtonTitleWrapper>
                 <ButtonIcon src={iconSrc} alt="category-icon" />
             </ButtonHeaderWrapper>
-            <ButtonBodyWrapper>{splittedSubText}</ButtonBodyWrapper>
+            <ButtonBodyWrapper>{lineBreakText(subText)}</ButtonBodyWrapper>
         </BoxButtonWrapper>
     );
 }

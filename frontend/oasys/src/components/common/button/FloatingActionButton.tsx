@@ -1,6 +1,7 @@
 /* Import */
 import styled from "@emotion/styled";
 import { ButtonProps } from "@customTypes/commonProps";
+import lineBreakText from "@utils/format";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -14,9 +15,16 @@ type FloatingActionButtonWrapperProps = {
 
 /* Style */
 const FloatingActionButtonWrapper = styled("button")<FloatingActionButtonWrapperProps>`
+    // Position Attribute
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     // Size Attribute
     width: ${(props) => props.width};
     height: ${(props) => props.height};
+    padding-top: 15px;
 
     // Style Attribute
     background-color: ${(props) => props.theme.colors.gray1};
@@ -52,7 +60,7 @@ function FloatingActionButton(props: ButtonProps) {
 
     return (
         <FloatingActionButtonWrapper type={type} width={width} height={height}>
-            {text}
+            {lineBreakText(text)}
         </FloatingActionButtonWrapper>
     );
 }
