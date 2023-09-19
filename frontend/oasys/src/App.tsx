@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SpeechRecognition,{ useSpeechRecognition } from 'react-speech-recognition';
+import { useSpeechRecognition } from 'react-speech-kit';
 import axios from 'axios';
 import './App.css';
 
@@ -39,10 +39,11 @@ function App() {
       const synth = window.speechSynthesis;
 
 
-      
-      
+
+
       let voices = synth.getVoices();
-      voices = voices.filter(voice => voice.lang.includes('ko'));
+      voices = voices.filter(voices => voices.lang.includes('ko'));
+
       console.log(voices);
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.voice = voices[1];
@@ -52,6 +53,11 @@ function App() {
     }
   };
 
+  const init=()=>{
+    const init = axios.post("http://localhost:8081/gpt");
+  }
+  
+  
   const toggleRecording = () => {
     if (isRecording) {
       stop();
@@ -67,6 +73,7 @@ function App() {
     <div>
       <div className="container">
         <div><span className="AnswerText">{value}</span></div>
+        <button onClick={init}>시작</button>
         <button className="BtnRecord" onClick={toggleRecording}>
           {isRecording ? "녹음 중지" : "녹음 시작"}
         </button>

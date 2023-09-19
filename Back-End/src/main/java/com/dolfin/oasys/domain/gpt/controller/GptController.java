@@ -25,7 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/gpt")
 public class GptController {
-    OpenAiService service = new OpenAiService("api key ");
+    OpenAiService service = new OpenAiService("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");
 
     @PostMapping
     public void Init(){
@@ -37,17 +37,15 @@ public class GptController {
                 .model("gpt-3.5-turbo")
                 .messages(messages)
                 .n(1)
-                .maxTokens(100)
+                .maxTokens(10)
                 .logitBias(new HashMap<>())
                 .build();
         ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
-        service.streamChatCompletion(chatCompletionRequest)
-                .doOnError(Throwable::printStackTrace)
-                .blockingForEach(System.out::println);
         System.out.println(responseMessage.getContent());
     }
     @PostMapping("/voice")
     public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
+        this.Init();
         String voiceText = voiceData.get("text");
         final List<ChatMessage> messages = new ArrayList<>();
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(),  voiceText);
@@ -57,16 +55,15 @@ public class GptController {
                 .model("gpt-3.5-turbo")
                 .messages(messages)
                 .n(1)
-                .maxTokens(10)
+                .maxTokens(50)
                 .logitBias(new HashMap<>())
                 .build();
         ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
-        service.streamChatCompletion(chatCompletionRequest)
-                .doOnError(Throwable::printStackTrace)
-                .blockingForEach(System.out::println);
+
         //   Get response from OpenAI API
 //        String answerText = callOpenAIApi(voiceText);
         String answerText = responseMessage.getContent();
+        System.out.println((answerText));
         VideoController.detect();
         service.shutdownExecutor();
         return ResponseEntity.ok(answerText);
