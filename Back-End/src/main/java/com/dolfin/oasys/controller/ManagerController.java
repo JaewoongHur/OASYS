@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
-//    @GetMapping("/tellerStatusList")
-//    public
+    @GetMapping("/health-check")
+    public String getHealth() {
+        return "Hello manager-service";
+    }
 }
