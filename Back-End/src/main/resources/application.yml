@@ -10,9 +10,14 @@ spring:
     
   # Datasource 설정
   datasource:
-    url: jdbc:mariadb://mariadb:3306/oasys
+    driver-class-name: org.mariadb.jdbc.Driver
     username: admin
     password: zxcv1234
+    url: jdbc:mariadb://j9a106.p.ssafy.io:3306/oasys
     hikari:
       maximum-pool-size: 10
-      connection-timeout: 20000
+      connection-init-sql: SELECT 1
+      connection-timeout: 5000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
