@@ -6,26 +6,29 @@ interface TextInputProps extends InputProps {
     label: string;
     name: string;
     placeholder: string;
-    error: boolean;
-    disabled: boolean;
+    value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 type InputContainerProps = {
     width: string;
     height: string;
+};
+
+type InputTagProps = {
     borderRadius: string;
 };
 
 const InputContainer = styled.div<InputContainerProps>`
     width: ${(props) => props.width || "auto"};
     height: ${(props) => props.height || "100%"};
-    border-radius: ${(props) => props.borderRadius || "auto"};
 `;
 
 const Label = styled.label``;
 
-const Input = styled.input``;
+const Input = styled.input<InputTagProps>`
+    border-radius: ${(props) => props.borderRadius || "auto"};
+`;
 
 const Error = styled.div``;
 
@@ -33,6 +36,7 @@ export default function TextInput(props: TextInputProps) {
     const {
         type,
         label,
+        value,
         name,
         placeholder,
         error,
@@ -43,15 +47,16 @@ export default function TextInput(props: TextInputProps) {
         borderRadius,
     } = props;
     return (
-        <InputContainer width={width} height={height} borderRadius={borderRadius}>
+        <InputContainer width={width} height={height}>
             <Label>{label}</Label>
             <Input
                 type={type}
                 placeholder={placeholder}
+                value={value}
                 name={name}
                 onChange={onChange}
+                borderRadius={borderRadius}
                 disabled={disabled}
-                width={width}
             />
             {error && <Error>빈 칸을 채우십시오.</Error>}
         </InputContainer>
