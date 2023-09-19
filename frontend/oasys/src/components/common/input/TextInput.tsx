@@ -3,6 +3,11 @@ import styled from "@emotion/styled";
 import { InputProps } from "@customTypes/commonProps";
 
 interface TextInputProps extends InputProps {
+    label: string;
+    name: string;
+    placeholder: string;
+    error: boolean;
+    disabled: boolean;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

@@ -8,12 +8,9 @@ export interface ButtonProps {
 
 export interface InputProps {
     type: "text" | "number" | "email" | "password";
-    label: string;
-    name?: string;
-    placeholder?: string;
-    error: boolean;
-    disabled?: boolean;
     width: string;
     height: string;
     borderRadius: string;
+    error: boolean;
+    disabled: boolean;
 }
