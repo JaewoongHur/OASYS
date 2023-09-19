@@ -25,7 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/gpt")
 public class GptController {
-    OpenAiService service = new OpenAiService("api key");
+    OpenAiService service = new OpenAiService("api key ");
 
     @PostMapping("/voice")
     public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
