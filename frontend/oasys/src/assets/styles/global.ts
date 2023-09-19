@@ -61,6 +61,40 @@ const globalStyles = css`
         src: url("src/assets/fonts/Pretendard-Black.woff") format("woff");
     }
 
+    @font-face {
+        font-family: "Cafe24 Ssurround Air";
+        src: url("src/assets/fonts/Cafe24-Ssurround-Air.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "Cafe24 Ssurround";
+        src: url("src/assets/fonts/Cafe24-Ssurround.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "Gmarket Sans Light";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")
+            format("woff");
+    }
+
+    @font-face {
+        font-family: "Gmarket Sans Medium";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+            format("woff");
+    }
+
+    @font-face {
+        font-family: "Gmarket Sans Bold";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
+            format("woff");
+    }
+
+    @font-face {
+        font-family: "Gangwon Edu Power";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff")
+            format("woff");
+    }
+
     * {
         font-family: "Pretendard", sans-serif;
         font-size: 16px;
@@ -110,6 +144,7 @@ const globalStyles = css`
     acronym,
     address,
     big,
+    button,
     cite,
     code,
     del,
