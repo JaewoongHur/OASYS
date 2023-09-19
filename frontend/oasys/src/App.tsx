@@ -1,5 +1,6 @@
 import BoxButton from "@components/common/button/BoxButton";
 import TextButton from "@components/common/button/TextButton";
+import FloatingActionButton from "@components/common/button/FloatingActionButton";
 import Bankbook from "@assets/icons/bankbook-icon.svg";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <TextButton width="100px" text="확인" disabled onClick={() => {}} />
             <TextButton width="100px" text="확인" category="negative" onClick={() => {}} />
             <TextButton width="100px" text="확인" category="negative" disabled onClick={() => {}} />
+            <FloatingActionButton width="150px" text="계좌/n이체" />
         </div>
     );
 }
