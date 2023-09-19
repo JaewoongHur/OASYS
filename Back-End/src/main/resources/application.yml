@@ -11,9 +11,8 @@ spring:
   # Datasource 설정
   datasource:
     url: jdbc:mariadb://mariadb:3306/oasys
+    username: admin
+    password: zxcv1234
     hikari:
       maximum-pool-size: 10
       connection-timeout: 20000
-
-  config:
-    import: classpath:application-secrets.yml
