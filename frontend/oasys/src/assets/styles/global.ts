@@ -62,24 +62,29 @@ const globalStyles = css`
     }
 
     @font-face {
-        font-family: "Cafe24 Ssurround";
+        font-family: "Cafe24 Ssurround Air";
         src: url("src/assets/fonts/Cafe24-Ssurround-Air.woff") format("woff");
     }
 
     @font-face {
-        font-family: "GmarketSansLight";
+        font-family: "Cafe24 Ssurround";
+        src: url("src/assets/fonts/Cafe24-Ssurround.woff") format("woff");
+    }
+
+    @font-face {
+        font-family: "Gmarket Sans Light";
         src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff")
             format("woff");
     }
 
     @font-face {
-        font-family: "GmarketSansMedium";
+        font-family: "Gmarket Sans Medium";
         src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
             format("woff");
     }
 
     @font-face {
-        font-family: "GmarketSansBold";
+        font-family: "Gmarket Sans Bold";
         src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff")
             format("woff");
     }
@@ -133,6 +138,7 @@ const globalStyles = css`
     acronym,
     address,
     big,
+    button,
     cite,
     code,
     del,
