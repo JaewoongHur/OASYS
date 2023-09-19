@@ -1,7 +1,6 @@
 package com.dolfin.oasys.domain.tts;
 
 import com.google.cloud.texttospeech.v1.*;
-import com.google.*;
 import com.google.protobuf.ByteString;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
