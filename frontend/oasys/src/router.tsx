@@ -1,5 +1,8 @@
 /* Import */
 import { RouteObject, createBrowserRouter } from "react-router-dom";
+import { Admin, AdminMain, AdminLogin } from "@pages/admin";
+import { Senior, SeniorHome, SeniorPhone } from "@pages/senior";
+import Junior from "@pages/junior";
 
 // ----------------------------------------------------------------------------------------------------
 
