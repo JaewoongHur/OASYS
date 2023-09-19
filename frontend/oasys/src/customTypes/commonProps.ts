@@ -1,7 +1,7 @@
 /* Export */
 export interface ButtonProps {
-    type: "submit" | "reset" | "button" | undefined;
+    type?: "submit" | "reset" | "button";
     width: string;
-    height: string;
+    height?: string;
     text: string;
 }

@@ -11,7 +11,7 @@ interface BoxButtonProps extends ButtonProps {
     iconSrc: string;
 }
 
-type SizeProps = {
+type BoxButtonWrapperProps = {
     width: string;
     height: string;
 };
@@ -19,17 +19,18 @@ type SizeProps = {
 // ----------------------------------------------------------------------------------------------------
 
 /* Style */
-const BoxButtonWrapper = styled("button")<SizeProps>`
+const BoxButtonWrapper = styled("button")<BoxButtonWrapperProps>`
     // Position Attribute
     display: flex;
     flex-direction: column;
 
     // Size Attribute
     width: ${(props) => props.width};
+    height: ${(props) => props.height};
     padding: 20px;
     box-sizing: border-box;
 
-    // Effect Attribute
+    // Style Attribute
     background-color: ${(props) => props.theme.colors.primary3};
     border: 10px solid white;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
@@ -57,7 +58,7 @@ const ButtonHeaderWrapper = styled("div")`
     align-items: center;
 
     // Size Attribute
-    width: auto;
+    width: calc(100% - 20px);
     height: 50px;
     margin: 10px;
 `;
@@ -75,8 +76,9 @@ const ButtonIcon = styled("img")`
 
 const ButtonBodyWrapper = styled("div")`
     // Size Attribute
-    width: auto;
+    width: calc(100% - 20px);
     margin: 10px;
+    box-sizing: border-box;
 
     // Text Attribute
     font-family: "Gmarket Sans Medium";
@@ -88,8 +90,9 @@ const ButtonBodyWrapper = styled("div")`
 
 /* Box Button Component */
 function BoxButton(props: BoxButtonProps) {
-    const { type, width, height, text, subText, iconSrc } = props;
+    const { type = "button", width, height = "100%", text, subText, iconSrc } = props;
 
+    // SubText Element Splitted by '\n'
     const splittedSubText = subText.split("\\n").map((line) => (
         <React.Fragment key={line}>
             {line}
