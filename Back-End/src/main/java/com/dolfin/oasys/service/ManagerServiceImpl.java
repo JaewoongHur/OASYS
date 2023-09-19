@@ -19,13 +19,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ManagerServiceImpl {
+public class ManagerServiceImpl implements ManagerService {
     private final ListOperations<String, String> tellerTypeStateList;
 
     private final TellerTypeRepository tellerTypeRepository;
     private final MemberRepository memberRepository;
     private final JsonConverter jsonConverter;
-
+    @Override
     public List<TellerStatusDTO> getTellerStatusList() {
         List<TellerStatusDTO> TellerStatusList = new ArrayList<>();
 
@@ -44,7 +44,7 @@ public class ManagerServiceImpl {
         return TellerStatusList;
     }
 
-
+    @Override
     public void addConsumerToConsultation(MemberDto.RequestMember requestMember) throws JsonProcessingException {
         tellerTypeStateList.rightPush(
                 Long.toString(requestMember.getTellerTypeId()),
@@ -59,10 +59,12 @@ public class ManagerServiceImpl {
                                 .build()));
     }
 
+    @Override
     public void completeConsultation(Long tellerType) {
         tellerTypeStateList.leftPop(Long.toString(tellerType));
     }
 
+    @Override
     public MemberDto.ResponseMember getMemberInfoByFaceId(Long TellerTypeId, int count) throws JsonProcessingException {
         MemberDto.WaitingMember waitingMember = jsonConverter.JsonConvertObject(
                 tellerTypeStateList.index(Long.toString(TellerTypeId), count),
@@ -86,6 +88,7 @@ public class ManagerServiceImpl {
         return responseMember;
     }
 
+    @Override
     public void createMember(MemberDto.RequestNewMember requestNewMember) {
         memberRepository.save(Member.builder()
                 .memberFaceId(requestNewMember.getFaceId())
