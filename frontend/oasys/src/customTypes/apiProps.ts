@@ -4,9 +4,9 @@ import { AxiosResponse } from "axios";
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export type ResponseFuncType = {
+export interface ResponseFuncType {
     [statusCode: number]: (response?: AxiosResponse) => void;
-};
+}
 
 export interface ProcessApiProps {
     responseFunc: ResponseFuncType;
