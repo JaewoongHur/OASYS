@@ -12,7 +12,7 @@ public class TellerStatusDTO {
     private Long tellerTypeId;
     private String tellerTypeName;
     private boolean isConsulting;
-    private String consumerInfo;
+    private MemberDto.responseConsumer consultingCustomer;
     private int waitingConsumerCount;
-    private List<String> waitingConsumerInfoList;
+    private List<MemberDto.responseConsumer> waitingConsumerList;
 }

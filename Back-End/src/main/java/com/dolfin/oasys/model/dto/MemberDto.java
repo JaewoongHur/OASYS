@@ -67,6 +67,17 @@ public class MemberDto {
         private boolean isMember;
     }
 
+    @Getter
+    @Setter
+    @ToString
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class responseConsumer {
+        private String faceId;
+        private String name;
+    }
+
 //    @Getter
 //    @Setter
 //    @ToString
