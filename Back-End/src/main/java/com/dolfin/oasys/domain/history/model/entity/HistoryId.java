@@ -1,4 +1,4 @@
-package com.dolfin.oasys.domian.history.model.entity;
+package com.dolfin.oasys.domain.history.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

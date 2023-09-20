@@ -1,4 +1,4 @@
-package com.dolfin.oasys.domian.category.model.entity;
+package com.dolfin.oasys.domain.category.model.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
