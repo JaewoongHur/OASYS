@@ -1,4 +1,4 @@
-package com.dolfin.oasys.domian.member.model.entity;
+package com.dolfin.oasys.domain.member.model.entity;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -74,5 +74,11 @@ public class Member {
             .role(role)
             .age(age)
             .build();
+    }
+
+    //멤버 isSenior
+    public boolean isSenior(){
+        if(this.age >= 65) return true;
+        else return false;
     }
 }

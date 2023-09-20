@@ -1,7 +1,7 @@
-package com.dolfin.oasys.domian.history.model.entity;
+package com.dolfin.oasys.domain.history.model.entity;
 
-import com.dolfin.oasys.domian.category.model.entity.Category;
-import com.dolfin.oasys.domian.member.model.entity.Member;
+import com.dolfin.oasys.domain.category.model.entity.Category;
+import com.dolfin.oasys.domain.member.model.entity.Member;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

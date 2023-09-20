@@ -1,4 +1,4 @@
-package com.dolfin.oasys.domian.category.model.dto;
+package com.dolfin.oasys.domain.category.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -23,7 +23,6 @@
 			<optional>true</optional>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -49,8 +48,6 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>5.6.15.Final</version>
 		</dependency>
-
-
 
 		<!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
@@ -116,9 +113,6 @@
 <!--			<scope>runtime</scope>-->
 <!--		</dependency>-->
 
-
-
-
 		<!--        maria db-->
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
@@ -137,9 +131,6 @@
 			<version>8.1.0</version>
 		</dependency>
 
-
-
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -150,7 +141,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 
 		<!--    s3      -->
 <!--		<dependency>-->
@@ -179,6 +169,30 @@
 <!--			<groupId>org.springframework.cloud</groupId>-->
 <!--			<artifactId>spring-cloud-starter-bootstrap</artifactId>-->
 <!--		</dependency>-->
+
+		<!-- okhttp -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>okhttp</artifactId>
+			<version>4.10.0</version>
+		</dependency>
+
+		<!-- sms notification -->
+		<dependency>
+			<groupId>net.nurigo</groupId>
+			<artifactId>sdk</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
+		<!-- twilio-java-sdk -->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>9.9.1</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>
