@@ -9,6 +9,7 @@ import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.OpenAiService;
+import org.python.util.PythonInterpreter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/gpt")
 public class GptController {
-    OpenAiService service = new OpenAiService("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");
+    OpenAiService service = new OpenAiService("your api key");
+    private PythonInterpreter py;
+
 
     @PostMapping
     public void Init(){
@@ -43,13 +46,15 @@ public class GptController {
         ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
         System.out.println(responseMessage.getContent());
     }
+
     @PostMapping("/voice")
     public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
-        this.Init();
         String voiceText = voiceData.get("text");
         final List<ChatMessage> messages = new ArrayList<>();
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(),  voiceText);
         messages.add(systemMessage);
+        final ChatMessage systemMessage2 = new ChatMessage(ChatMessageRole.SYSTEM.value(), "1. 인출 2. 입금 3. 송금 4.대출 상담 이라는 선택지가 있어. 앞으로 내가 하는 말이 어디에 속하는지 번호로만 알려줘.");
+        messages.add(systemMessage2);
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                 .builder()
                 .model("gpt-3.5-turbo")
@@ -64,8 +69,7 @@ public class GptController {
 //        String answerText = callOpenAIApi(voiceText);
         String answerText = responseMessage.getContent();
         System.out.println((answerText));
-        VideoController.detect();
-        service.shutdownExecutor();
+//        VideoController.detect();
         return ResponseEntity.ok(answerText);
     }
 //    @PostMapping("/question")
