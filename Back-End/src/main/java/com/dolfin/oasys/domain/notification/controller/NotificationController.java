@@ -1,7 +1,7 @@
-package com.dolfin.oasys.domian.notification.controller;
+package com.dolfin.oasys.domain.notification.controller;
 
-import com.dolfin.oasys.domian.notification.dto.SmsNotificationRequest;
-import com.dolfin.oasys.domian.notification.service.NotificationService;
+import com.dolfin.oasys.domain.notification.dto.SmsNotificationRequest;
+import com.dolfin.oasys.domain.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

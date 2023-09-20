@@ -1,6 +1,6 @@
-package com.dolfin.oasys.domian.category.repository;
+package com.dolfin.oasys.domain.category.repository;
 
-import com.dolfin.oasys.domian.category.model.entity.Category;
+import com.dolfin.oasys.domain.category.model.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.dolfin.oasys.domian.notification.service;
+package com.dolfin.oasys.domain.notification.service;
 
-import com.dolfin.oasys.domian.notification.dto.SmsNotificationRequest;
+import com.dolfin.oasys.domain.notification.dto.SmsNotificationRequest;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.type.PhoneNumber;

@@ -1,4 +1,4 @@
-package com.dolfin.oasys.domian.notification.dto;
+package com.dolfin.oasys.domain.notification.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

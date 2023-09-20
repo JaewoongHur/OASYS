@@ -5,7 +5,7 @@ import com.dolfin.oasys.domain.face.model.dto.FaceRecognize;
 import com.dolfin.oasys.domain.face.model.dto.FaceResponse;
 import com.dolfin.oasys.domain.member.model.entity.Gender;
 import com.dolfin.oasys.domain.member.model.entity.Member;
-import com.dolfin.oasys.domain.member.model.repository.MemberRepository;
+import com.dolfin.oasys.domain.member.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileOutputStream;

@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Builder
 @AllArgsConstructor
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class FaceResponse {
 
     private boolean isSenior;
