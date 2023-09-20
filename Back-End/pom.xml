@@ -23,7 +23,6 @@
 			<optional>true</optional>
 		</dependency>
 
-
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -115,9 +114,6 @@
 <!--			<version>0.11.5</version>-->
 <!--			<scope>runtime</scope>-->
 <!--		</dependency>-->
-
-
-
 
 		<!--        maria db-->
 <!--		<dependency>-->
