@@ -41,6 +41,7 @@ const FloatingActionButtonWrapper = styled("button")<FloatingActionButtonWrapper
     transition: 0.3s;
     transform-origin: center;
     user-select: none;
+    outline: none;
     cursor: pointer;
     &:hover {
         background-color: ${(props) => props.theme.colors.gray7};

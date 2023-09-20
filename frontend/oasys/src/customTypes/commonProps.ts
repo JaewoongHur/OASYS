@@ -1,16 +1,14 @@
 /* Export */
 export interface ButtonProps {
-    type?: "submit" | "reset" | "button";
+    type?: "reset" | "button";
     width: string;
     height?: string;
     text: string;
 }
 
 export interface InputProps {
-    type: "text" | "number" | "email" | "password";
+    type?: "text" | "number" | "password" | "file";
     width: string;
-    height: string;
+    height?: string;
     value: string;
-    error: boolean;
-    disabled: boolean;
 }

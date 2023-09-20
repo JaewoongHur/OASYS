@@ -1,64 +1,99 @@
+/* Import */
 import { ChangeEvent } from "react";
 import styled from "@emotion/styled";
 import { InputProps } from "@customTypes/commonProps";
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Props Type */
 interface TextInputProps extends InputProps {
-    label: string;
-    name: string;
-    placeholder: string;
-    borderRadius: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    readOnly?: boolean;
+    label?: string;
+    placeholder?: string;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-type InputContainerProps = {
+type InputWrapperProps = {
     width: string;
     height: string;
 };
 
-type InputTagProps = {
-    borderRadius: string;
-};
+// ----------------------------------------------------------------------------------------------------
 
-const InputContainer = styled.div<InputContainerProps>`
-    width: ${(props) => props.width || "auto"};
-    height: ${(props) => props.height || "100%"};
+/* Style */
+const InputContainer = styled("div")`
+    // Position Attribute
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
 `;
 
-const Label = styled.label``;
+const LabelWrapper = styled("label")`
+    // Text Attribute
+    color: ${(props) => props.theme.colors.primary3};
+    font-weight: 700;
 
-const Input = styled.input<InputTagProps>`
-    border-radius: ${(props) => props.borderRadius || "auto"};
+    // Interaction Attribute
+    user-select: none;
 `;
 
-const Error = styled.div``;
+const InputWrapper = styled("input")<InputWrapperProps>`
+    // Size Attribute
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+    padding: 10px;
+    box-sizing: border-box;
 
-export default function TextInput(props: TextInputProps) {
+    // Style Attribute
+    background-color: ${(props) => props.theme.colors.gray1};
+    border: 5px solid ${(props) => props.theme.colors.primary3};
+    border-radius: 20px;
+
+    // Text Attribute
+    color: ${(props) => props.theme.colors.gray7};
+    font-weight: 700;
+
+    // Interaction Attribute
+    transition: 0.3s;
+    outline: none;
+    :focus {
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    }
+`;
+
+// ----------------------------------------------------------------------------------------------------
+
+/* Text Input Component */
+function TextInput(props: TextInputProps) {
     const {
-        type,
-        label,
-        value,
-        name,
-        placeholder,
-        error,
-        disabled,
-        onChange,
+        type = "text",
         width,
-        height,
-        borderRadius,
+        height = "100%",
+        value,
+        readOnly = false,
+        label = "",
+        placeholder = "",
+        onChange,
     } = props;
+
     return (
-        <InputContainer width={width} height={height}>
-            <Label>{label}</Label>
-            <Input
+        <InputContainer>
+            <LabelWrapper htmlFor="text-input">{label}</LabelWrapper>
+            <InputWrapper
                 type={type}
-                placeholder={placeholder}
+                id="text-input"
+                width={width}
+                height={height}
                 value={value}
-                name={name}
+                readOnly={readOnly}
+                placeholder={placeholder}
                 onChange={onChange}
-                borderRadius={borderRadius}
-                disabled={disabled}
             />
-            {error && <Error>빈 칸을 채우십시오.</Error>}
         </InputContainer>
     );
 }
+
+// ----------------------------------------------------------------------------------------------------
+
+/* Export */
+export default TextInput;

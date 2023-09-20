@@ -42,6 +42,7 @@ const TextButtonWrapper = styled("button")<TextButtonWrapperProps>`
     transition: 0.3s;
     transform-origin: center;
     user-select: none;
+    outline: none;
     cursor: pointer;
     &:active {
         transform: scale(0.95);

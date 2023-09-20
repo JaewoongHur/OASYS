@@ -1,40 +1,53 @@
+/* Import */
 import styled from "@emotion/styled";
 import { InputProps } from "@customTypes/commonProps";
 
-interface TextAreaProps extends InputProps {
-    id: string;
-}
+// ----------------------------------------------------------------------------------------------------
 
-type TextAreaContainerProps = {
+/* Props Type */
+type TextAreaWrapperProps = {
     width: string;
     height: string;
 };
 
-type TextAreaTagProps = { width: string; height: string };
+// ----------------------------------------------------------------------------------------------------
 
-const TextAreaContainer = styled.div<TextAreaContainerProps>`
-    width: ${(props) => props.width || "100px"};
-    height: ${(props) => props.height || "300px"};
-    max-height: "1000px";
+/* Style */
+const TextAreaWrapper = styled("div")<TextAreaWrapperProps>`
+    // Size Attribute
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+    max-height: 80vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: hidden;
+
+    // Style Attribute
+    background-color: transparent;
+    border-left: 10px solid ${(props) => props.theme.colors.primary3};
+
+    // Text Attribute
+    color: ${(props) => props.theme.colors.gray7};
+    font-size: 100px;
+    font-weight: 900;
+
+    // Interaction Attribute
+    user-select: none;
 `;
 
-const TextAreaTag = styled.textarea<TextAreaTagProps>`
-    width: ${(props) => props.width || "100px"};
-    height: ${(props) => props.height || "300px"};
-    resize: none;
-    border: 10px solid transparent;
-    // background-color: transparent;
-`;
+// ----------------------------------------------------------------------------------------------------
 
-const Error = styled.div``;
-
-export default function TextArea(props: TextAreaProps) {
-    const { id, error, disabled, value, width, height } = props;
+/* Text Area Component */
+function TextArea(props: InputProps) {
+    const { width, height = "100%", value } = props;
     return (
-        <TextAreaContainer width={width} height={height}>
-            <TextAreaTag id={id} width={width} height={height} disabled={disabled} value={value}>
-                {error && <Error>빈 칸을 채우십시오.</Error>}
-            </TextAreaTag>
-        </TextAreaContainer>
+        <TextAreaWrapper width={width} height={height}>
+            {value}
+        </TextAreaWrapper>
     );
 }
+
+// ----------------------------------------------------------------------------------------------------
+
+/* Export */
+export default TextArea;
