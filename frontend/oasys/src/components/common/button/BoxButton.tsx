@@ -11,7 +11,7 @@ interface BoxButtonProps extends ButtonProps {
     iconSrc: string;
 }
 
-type BoxButtonWrapperProps = {
+type BoxButtonContainerProps = {
     width: string;
     height: string;
 };
@@ -19,7 +19,7 @@ type BoxButtonWrapperProps = {
 // ----------------------------------------------------------------------------------------------------
 
 /* Style */
-const BoxButtonWrapper = styled("button")<BoxButtonWrapperProps>`
+const BoxButtonContainer = styled("button")<BoxButtonContainerProps>`
     // Position Attribute
     display: flex;
     flex-direction: column;
@@ -42,6 +42,7 @@ const BoxButtonWrapper = styled("button")<BoxButtonWrapperProps>`
     transition: 0.3s;
     transform-origin: center;
     user-select: none;
+    outline: none;
     cursor: pointer;
     &:hover {
         background-color: ${(props) => props.theme.colors.primary4};
@@ -52,7 +53,7 @@ const BoxButtonWrapper = styled("button")<BoxButtonWrapperProps>`
     }
 `;
 
-const ButtonHeaderWrapper = styled("div")`
+const ButtonHeaderContainer = styled("div")`
     // Position Attribute
     display: flex;
     justify-content: space-between;
@@ -94,13 +95,13 @@ function BoxButton(props: BoxButtonProps) {
     const { type = "button", width, height = "100%", text, subText, iconSrc } = props;
 
     return (
-        <BoxButtonWrapper type={type} width={width} height={height}>
-            <ButtonHeaderWrapper>
+        <BoxButtonContainer type={type} width={width} height={height}>
+            <ButtonHeaderContainer>
                 <ButtonTitleWrapper>{text}</ButtonTitleWrapper>
                 <ButtonIcon src={iconSrc} alt="category-icon" />
-            </ButtonHeaderWrapper>
+            </ButtonHeaderContainer>
             <ButtonBodyWrapper>{lineBreakText(subText)}</ButtonBodyWrapper>
-        </BoxButtonWrapper>
+        </BoxButtonContainer>
     );
 }
 
