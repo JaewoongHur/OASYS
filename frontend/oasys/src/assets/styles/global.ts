@@ -89,6 +89,12 @@ const globalStyles = css`
             format("woff");
     }
 
+    @font-face {
+        font-family: "Gangwon Edu Power";
+        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff")
+            format("woff");
+    }
+
     * {
         font-family: "Pretendard", sans-serif;
         font-size: 16px;
