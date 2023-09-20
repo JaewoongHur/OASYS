@@ -5,11 +5,19 @@ spring:
   # Datasource 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/oasys#?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: ssafy
     # url: jdbc:mariadb://[서버주소]:[포트번호]/[DB명]
-    url: jdbc:mysql://localhost:3306/oasys?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    hikari:
+#      maximum-pool-size: 10
+#      connection-init-sql: SELECT 1
+#      connection-timeout: 5000
+#      idle-timeout: 600000
+#      max-lifetime: 1800000
+#      auto-commit: true
   jpa:
+    generate-ddl: true
     properties:
       hibernate:
         show_sql: true
@@ -20,7 +28,6 @@ spring:
   config:
     import: "file:./src/main/resources/env.yml"
 
-
 logging:
   level:
-    "[org.hibernate.type.descriptor.sql]": trace
+    org.hibernate.type.descriptor.sql: trace
