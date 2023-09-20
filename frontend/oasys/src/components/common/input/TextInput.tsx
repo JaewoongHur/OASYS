@@ -6,7 +6,7 @@ interface TextInputProps extends InputProps {
     label: string;
     name: string;
     placeholder: string;
-    value: string;
+    borderRadius: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 

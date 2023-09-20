@@ -10,7 +10,7 @@ export interface InputProps {
     type: "text" | "number" | "email" | "password";
     width: string;
     height: string;
-    borderRadius: string;
+    value: string;
     error: boolean;
     disabled: boolean;
 }

@@ -2,35 +2,39 @@ import styled from "@emotion/styled";
 import { InputProps } from "@customTypes/commonProps";
 
 interface TextAreaProps extends InputProps {
-    text: string;
+    id: string;
 }
 
 type TextAreaContainerProps = {
     width: string;
     height: string;
-    borderRadius: string;
 };
 
-const TextAreaContainer = styled.textarea<TextAreaContainerProps>`
-    width: ${(props) => props.width || "auto"};
-    height: ${(props) => props.height || "100%"};
-    border-radius: ${(props) => props.borderRadius || "auto"};
+type TextAreaTagProps = { width: string; height: string };
+
+const TextAreaContainer = styled.div<TextAreaContainerProps>`
+    width: ${(props) => props.width || "100px"};
+    height: ${(props) => props.height || "300px"};
+    max-height: "1000px";
+`;
+
+const TextAreaTag = styled.textarea<TextAreaTagProps>`
+    width: ${(props) => props.width || "100px"};
+    height: ${(props) => props.height || "300px"};
+    resize: none;
+    border: 10px solid transparent;
+    // background-color: transparent;
 `;
 
 const Error = styled.div``;
 
 export default function TextArea(props: TextAreaProps) {
-    const { error, disabled, text, width, height, borderRadius } = props;
+    const { id, error, disabled, value, width, height } = props;
     return (
-        <TextAreaContainer
-            width={width}
-            height={height}
-            borderRadius={borderRadius}
-            disabled={disabled}
-        >
-            여기에 TTS 텍스트가 들어갑니다.
-            {text}
-            {error && <Error>빈 칸을 채우십시오.</Error>}
+        <TextAreaContainer width={width} height={height}>
+            <TextAreaTag id={id} width={width} height={height} disabled={disabled} value={value}>
+                {error && <Error>빈 칸을 채우십시오.</Error>}
+            </TextAreaTag>
         </TextAreaContainer>
     );
 }
