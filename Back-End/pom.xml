@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -23,6 +23,7 @@
 			<optional>true</optional>
 		</dependency>
 
+
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -34,10 +35,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.boot</groupId>-->
-		<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
-		<!--        </dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-amqp</artifactId>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -49,10 +50,12 @@
 			<version>5.6.15.Final</version>
 		</dependency>
 
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.boot</groupId>-->
-		<!--            <artifactId>spring-boot-starter-data-redis</artifactId>-->
-		<!--        </dependency>-->
+
+
+		<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-data-redis</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -63,26 +66,26 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-bus</artifactId>-->
-		<!--        </dependency>-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-starter</artifactId>-->
-		<!--        </dependency>-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-starter-config</artifactId>-->
-		<!--        </dependency>-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
-		<!--        </dependency>-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>-->
-		<!--        </dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-bus</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-config</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,37 +95,40 @@
 		</dependency>
 
 		<!--        jwt -->
-		<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api &ndash;&gt;-->
-		<!--        <dependency>-->
-		<!--            <groupId>io.jsonwebtoken</groupId>-->
-		<!--            <artifactId>jjwt-api</artifactId>-->
-		<!--            <version>0.11.5</version>-->
-		<!--        </dependency>-->
-		<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl &ndash;&gt;-->
-		<!--        <dependency>-->
-		<!--            <groupId>io.jsonwebtoken</groupId>-->
-		<!--            <artifactId>jjwt-impl</artifactId>-->
-		<!--            <version>0.11.5</version>-->
-		<!--            <scope>runtime</scope>-->
-		<!--        </dependency>-->
-		<!--        &lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson &ndash;&gt;-->
-		<!--        <dependency>-->
-		<!--            <groupId>io.jsonwebtoken</groupId>-->
-		<!--            <artifactId>jjwt-jackson</artifactId>-->
-		<!--            <version>0.11.5</version>-->
-		<!--            <scope>runtime</scope>-->
-		<!--        </dependency>-->
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.jsonwebtoken</groupId>-->
+<!--			<artifactId>jjwt-api</artifactId>-->
+<!--			<version>0.11.5</version>-->
+<!--		</dependency>-->
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.jsonwebtoken</groupId>-->
+<!--			<artifactId>jjwt-impl</artifactId>-->
+<!--			<version>0.11.5</version>-->
+<!--			<scope>runtime</scope>-->
+<!--		</dependency>-->
+<!--		&lt;!&ndash; https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>io.jsonwebtoken</groupId>-->
+<!--			<artifactId>jjwt-jackson</artifactId>-->
+<!--			<version>0.11.5</version>-->
+<!--			<scope>runtime</scope>-->
+<!--		</dependency>-->
+
+
+
 
 		<!--        maria db-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.boot</groupId>-->
-		<!--            <artifactId>spring-boot-starter-jdbc</artifactId>-->
-		<!--        </dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
+<!--		</dependency>-->
 
-		<!--        <dependency>-->
-		<!--            <groupId>org.mariadb.jdbc</groupId>-->
-		<!--            <artifactId>mariadb-java-client</artifactId>-->
-		<!--        </dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.mariadb.jdbc</groupId>-->
+<!--			<artifactId>mariadb-java-client</artifactId>-->
+<!--		</dependency>-->
 
 		<!-- mysql-connector -->
 		<dependency>
@@ -130,6 +136,9 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<version>8.1.0</version>
 		</dependency>
+
+
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -142,57 +151,34 @@
 			<scope>test</scope>
 		</dependency>
 
+
 		<!--    s3      -->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-starter-aws</artifactId>-->
-		<!--            <version>2.0.1.RELEASE</version>-->
-		<!--        </dependency>-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-aws-context</artifactId>-->
-		<!--            <version>1.2.1.RELEASE</version>-->
-		<!--        </dependency>-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-aws-autoconfigure</artifactId>-->
-		<!--            <version>1.2.1.RELEASE</version>-->
-		<!--        </dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-aws</artifactId>-->
+<!--			<version>2.0.1.RELEASE</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-aws-context</artifactId>-->
+<!--			<version>1.2.1.RELEASE</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-aws-autoconfigure</artifactId>-->
+<!--			<version>1.2.1.RELEASE</version>-->
+<!--		</dependency>-->
 
 		<!--    RabbitMQ Test   -->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.amqp</groupId>-->
-		<!--            <artifactId>spring-rabbit-test</artifactId>-->
-		<!--            <scope>test</scope>-->
-		<!--        </dependency>-->
-		<!--        <dependency>-->
-		<!--            <groupId>org.springframework.cloud</groupId>-->
-		<!--            <artifactId>spring-cloud-starter-bootstrap</artifactId>-->
-		<!--        </dependency>-->
-
-		<!-- okhttp -->
-		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
-			<version>4.10.0</version>
-		</dependency>
-
-		<!-- sms notification -->
-		<dependency>
-			<groupId>net.nurigo</groupId>
-			<artifactId>sdk</artifactId>
-			<version>4.3.0</version>
-		</dependency>
-
-		<!-- twilio-java-sdk -->
-		<dependency>
-			<groupId>com.twilio.sdk</groupId>
-			<artifactId>twilio</artifactId>
-			<version>9.9.1</version>
-		</dependency>
-
-
-
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.amqp</groupId>-->
+<!--			<artifactId>spring-rabbit-test</artifactId>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-bootstrap</artifactId>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<build>
