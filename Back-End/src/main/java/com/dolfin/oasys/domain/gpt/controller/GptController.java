@@ -26,7 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/gpt")
 public class GptController {
-    OpenAiService service = new OpenAiService("your api key");
+    OpenAiService service = new OpenAiService("your api");
     private PythonInterpreter py;
 
 
@@ -51,16 +51,18 @@ public class GptController {
     public ResponseEntity<String> receiveVoiceText(@RequestBody Map<String, String> voiceData) {
         String voiceText = voiceData.get("text");
         final List<ChatMessage> messages = new ArrayList<>();
+        final ChatMessage systemMessage2 = new ChatMessage(ChatMessageRole.SYSTEM.value(), "1. 인출 2. 입금 3. 송금 4.대출 상담 이라는 선택지가 있어. 앞으로 내가 하는 말이 어디에 속하는지 번호만 알려줘.");
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(),  voiceText);
-        messages.add(systemMessage);
-        final ChatMessage systemMessage2 = new ChatMessage(ChatMessageRole.SYSTEM.value(), "1. 인출 2. 입금 3. 송금 4.대출 상담 이라는 선택지가 있어. 앞으로 내가 하는 말이 어디에 속하는지 번호로만 알려줘.");
         messages.add(systemMessage2);
+        messages.add(systemMessage);
+
+
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                 .builder()
                 .model("gpt-3.5-turbo")
                 .messages(messages)
                 .n(1)
-                .maxTokens(50)
+                .maxTokens(10)
                 .logitBias(new HashMap<>())
                 .build();
         ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();

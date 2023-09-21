@@ -9,27 +9,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/tts")
 public class TtsController {
 
     @PostMapping("/make")
-    public void makeTts(@RequestParam String str ) throws Exception{
+    public void makeTts(@RequestParam String str, @RequestParam String gender, @RequestParam String kind) throws Exception{
         try(    TextToSpeechClient textToSpeechClient = TextToSpeechClient.create()){
-//
+
+
             SynthesisInput input = SynthesisInput.newBuilder().setText(str).build();
+            VoiceSelectionParams voice;
+            if(gender.equals("female")) {
+                voice = VoiceSelectionParams.newBuilder().setLanguageCode("ko-KR").setSsmlGender(SsmlVoiceGender.FEMALE).build();
+            }
+            else{
+                voice = VoiceSelectionParams.newBuilder().setLanguageCode("ko-KR").setName("ko-KR-Wavenet-C").setSsmlGender(SsmlVoiceGender.MALE).build();
 
-            VoiceSelectionParams voice = VoiceSelectionParams.newBuilder().setLanguageCode("ko-KR").setSsmlGender(SsmlVoiceGender.FEMALE).build();
-
+            }
             AudioConfig audioConfig= AudioConfig.newBuilder().setAudioEncoding(AudioEncoding.MP3).build();
             SynthesizeSpeechResponse response = textToSpeechClient.synthesizeSpeech(input,voice,audioConfig);
 
             ByteString audioContents = response.getAudioContent();
 
-            try(OutputStream out = new FileOutputStream("output.mp3")){
+            try(OutputStream out = new FileOutputStream(kind+".mp3")){
                 out.write(audioContents.toByteArray());
-                System.out.println("Audio content written to file \"output.mp3\"");
+                System.out.println("Audio content written to file" +kind+"\".mp3\"");
             }
         }
     }
