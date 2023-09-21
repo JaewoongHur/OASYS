@@ -1,6 +1,6 @@
 /* Import */
 import styled from "@emotion/styled";
-import { ButtonProps } from "@customTypes/commonProps";
+import { ButtonProps } from "@customTypes/componentTypes";
 
 // ----------------------------------------------------------------------------------------------------
 
