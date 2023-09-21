@@ -1,5 +1,6 @@
 package com.dolfin.oasys.domain.face.service;
 
+import com.dolfin.oasys.domain.face.model.dto.DeleteDto;
 import com.dolfin.oasys.domain.face.model.dto.FaceResponse;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,9 +11,9 @@ public interface FaceService {
     FaceResponse faceRecognition(MultipartFile multipartFile) throws IOException;
 
     //얼굴 등록
-    String faceSave(MultipartFile multipartFile,String name) throws IOException;
+    String faceSave(MultipartFile multipartFile, String name, String phone, int age, String gender) throws IOException;
 
     //얼굴 삭제
-    void faceDelete(String faceId);
+    void faceDelete(DeleteDto deleteDto);
 
 }
