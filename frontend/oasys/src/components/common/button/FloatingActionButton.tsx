@@ -48,7 +48,7 @@ const FloatingActionButtonWrapper = styled("button")<FloatingActionButtonWrapper
         color: ${(props) => props.theme.colors.gray1};
     }
     &:active {
-        transform: scale(0.95);
+        transform: scale(0.85);
         box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 1);
     }
 `;
