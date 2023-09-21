@@ -1,4 +1,5 @@
 server:
+<<<<<<< HEAD
   port: 8081
 openai:
   apikey:  dummy
@@ -33,3 +34,30 @@ spring:
 logging:
   level:
     org.hibernate.type.descriptor.sql: trace
+=======
+  port: 8080
+
+spring:
+  # redis 설정
+  redis:
+    template:
+      keySerializer: org.springframework.data.redis.serializer.StringRedisSerializer
+      valueSerializer: org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer
+    host: redis
+    port: 6379
+    database: 0
+    
+  # Datasource 설정
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: admin
+    password: zxcv1234
+    url: jdbc:mariadb://j9a106.p.ssafy.io:3306/oasys
+    hikari:
+      maximum-pool-size: 10
+      connection-init-sql: SELECT 1
+      connection-timeout: 5000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
+>>>>>>> ba7f04fa2de67b3ed6367f05b149e02d520fe07f

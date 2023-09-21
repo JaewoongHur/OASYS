@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import { useSpeechRecognition } from 'react-speech-kit';
 import axios from 'axios';
@@ -81,6 +82,32 @@ function App() {
       </div>
     </div>
   );
+=======
+/* Import */
+import router from "@/router";
+import { RouterProvider } from "react-router-dom";
+import styled from "@emotion/styled";
+
+// ----------------------------------------------------------------------------------------------------
+
+/* Style */
+const MainContainer = styled("div")`
+    width: 100%;
+`;
+
+// ----------------------------------------------------------------------------------------------------
+
+/* App Component */
+function App() {
+    return (
+        <MainContainer>
+            <RouterProvider router={router} />
+        </MainContainer>
+    );
+>>>>>>> ba7f04fa2de67b3ed6367f05b149e02d520fe07f
 }
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Export */
 export default App;

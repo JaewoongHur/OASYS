@@ -53,6 +53,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+<<<<<<< HEAD
 		<!--hibernate-core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -64,6 +65,13 @@
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-data-redis</artifactId>-->
 <!--		</dependency>-->
+=======
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+>>>>>>> ba7f04fa2de67b3ed6367f05b149e02d520fe07f
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -125,15 +133,15 @@
 <!--		</dependency>-->
 
 		<!--        maria db-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-jdbc</artifactId>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.mariadb.jdbc</groupId>-->
-<!--			<artifactId>mariadb-java-client</artifactId>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+		</dependency>
 
 		<!-- mysql-connector -->
 		<dependency>
@@ -181,6 +189,7 @@
 <!--			<artifactId>spring-cloud-starter-bootstrap</artifactId>-->
 <!--		</dependency>-->
 
+<<<<<<< HEAD
 		<!-- okhttp -->
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
@@ -235,6 +244,15 @@
 		</dependency>
 
 
+=======
+		<!-- json -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.15.2</version>
+		</dependency>
+
+>>>>>>> ba7f04fa2de67b3ed6367f05b149e02d520fe07f
 	</dependencies>
 
 	<build>
