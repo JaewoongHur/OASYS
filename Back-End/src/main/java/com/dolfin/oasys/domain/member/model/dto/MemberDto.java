@@ -21,7 +21,7 @@ public class MemberDto {
     public static MemberDto from(Member member){
         return MemberDto.builder()
             .id(member.getId())
-            .name(member.getNickName())
+            .name(member.getNickname())
             .phone(member.getPhone())
             .build();
     }

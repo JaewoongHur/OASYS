@@ -18,19 +18,19 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 public class FaceResponse {
 
-    private boolean isSenior;
-
-    private boolean hasMemberShip;
+    private boolean senior;
 
     private Gender gender;
 
+    private boolean membership;
+
     MemberDto member;
 
-    public static FaceResponse from(boolean isMember, boolean isSenior, Gender gender, Member member){
+    public static FaceResponse from(boolean isSenior, Gender gender, boolean isMember, Member member){
         return FaceResponse.builder()
-            .hasMemberShip(isMember)
-            .isSenior(isSenior)
+            .senior(isSenior)
             .gender(gender)
+            .membership(isMember)
             .member(MemberDto.from(member))
             .build();
     }
