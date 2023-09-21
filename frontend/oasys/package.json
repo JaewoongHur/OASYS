@@ -18,7 +18,12 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.15.0",
+<<<<<<< HEAD
+        "react-speech-kit": "^3.0.1",
+        "react-speech-recognition": "^3.10.0"
+=======
         "zustand": "^4.4.1"
+>>>>>>> ba7f04fa2de67b3ed6367f05b149e02d520fe07f
     },
     "devDependencies": {
         "@types/node": "^20.6.0",
