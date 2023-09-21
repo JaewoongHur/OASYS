@@ -32,11 +32,14 @@ public class Member {
     @Column(name = "member_id")
     private long id;
 
-    @Column(name = "member_faceInfo", nullable = false, length = 15, unique = true)
+    @Column(name = "member_faceId", nullable = false, length = 15, unique = true)
     private String faceId;
 
-    @Column(name = "member_nickName", nullable = false)
-    private String nickName;
+    @Column(name = "member_subId", nullable = false, length = 15, unique = true)
+    private String subId;
+
+    @Column(name = "member_nickname", nullable = false)
+    private String nickname;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "member_gender", nullable = false, length = 6)
@@ -66,10 +69,12 @@ public class Member {
     private boolean isDeleted;
 
     //멤버 생성자
-    public static Member create(String faceId, String nickname, String phone, Role role, int age){
+    public static Member create(String faceId, String subId, String nickname, String phone, Role role, int age, String gender){
         return Member.builder()
             .faceId(faceId)
-            .nickName(nickname)
+            .subId(subId)
+            .nickname(nickname)
+            .gender(gender.equals("MALE") ? Gender.MALE : Gender.FEMALE)
             .phone(phone)
             .role(role)
             .age(age)

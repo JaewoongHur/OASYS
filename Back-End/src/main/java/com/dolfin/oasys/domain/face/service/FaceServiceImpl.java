@@ -1,12 +1,16 @@
 package com.dolfin.oasys.domain.face.service;
 
+import com.dolfin.oasys.domain.face.model.dto.DeleteDto;
 import com.dolfin.oasys.domain.face.model.dto.FaceDetect;
 import com.dolfin.oasys.domain.face.model.dto.FaceRecognize;
 import com.dolfin.oasys.domain.face.model.dto.FaceResponse;
+import com.dolfin.oasys.domain.face.model.dto.SubCreate;
 import com.dolfin.oasys.domain.member.model.entity.Gender;
 import com.dolfin.oasys.domain.member.model.entity.Member;
+import com.dolfin.oasys.domain.member.model.entity.Role;
 import com.dolfin.oasys.domain.member.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.twilio.twiml.voice.Application;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,9 +33,6 @@ public class FaceServiceImpl implements FaceService{
 
     private final MemberRepository memberRepository;
 
-    @Value("${face.api.sub.id}")
-    private String SUB_ID;
-
     @Value("${face.api.app.id}")
     private String APP_ID;
 
@@ -43,10 +44,12 @@ public class FaceServiceImpl implements FaceService{
 
     @Override
     public FaceResponse faceRecognition(MultipartFile multipartFile) throws IOException {
+        OkHttpClient client = new OkHttpClient();
+
         //인풋 파일 정보 추출
         String fileName = multipartFile.getOriginalFilename();
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
-        OkHttpClient client = new OkHttpClient();
+
         //파일로 변환
         File convFile = multipartFileToFile(multipartFile);
 
@@ -74,7 +77,7 @@ public class FaceServiceImpl implements FaceService{
         //이미 회원인 경우
         if(faceRecognize.getFace_id() != null){
             Member member = memberRepository.findByFaceId(faceRecognize.getFace_id());
-            return FaceResponse.from(true, member.isSenior(), member.getGender(), member);
+            return FaceResponse.from(member.isSenior(), member.getGender(), true, member);
         }else{
             //request body 생성
             RequestBody detectRequestBody = new MultipartBody.Builder()
@@ -93,41 +96,135 @@ public class FaceServiceImpl implements FaceService{
             FaceDetect faceDetect = objectMapper.readValue(detectResponse.body().string(), FaceDetect.class);
 
             Gender gender = faceDetect.getFaces().get(0).getGender().equals("male") ? Gender.MALE : Gender.FEMALE;
-            if(faceDetect.getFaces().get(0).getAge() >= 60){
-                return FaceResponse.from(false, true, gender, Member.builder().build());
+            if(faceDetect.getFaces().get(0).getAge() >= 65){
+                //TODO 얼굴 객체 저장후 face_id 관리자 서버로 넘기기
+                return FaceResponse.from(true, gender,false, Member.builder().build());
             }
-            return FaceResponse.from(false,false, gender, Member.builder().build());
+            return FaceResponse.from(false, gender,false, Member.builder().build());
         }
     }
 
     @Override
-    public String faceSave(MultipartFile multipartFile, String name) throws IOException{
-        String fileName = multipartFile.getOriginalFilename();
-        String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+    public String faceSave(MultipartFile multipartFile, String name, String phone, int age,String gender) throws IOException{
         OkHttpClient client = new OkHttpClient();
 
+        String fileName = multipartFile.getOriginalFilename();
+        String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+
         File convFile = multipartFileToFile(multipartFile);
+
         //request body 생성
         RequestBody requestBody = new MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("image", fileName, RequestBody.create(MediaType.parse("image/"+extension), convFile))
             .build();
+
+        //페이스 객체 생성
+        String subId = faceCreateAtServer(name, client, requestBody);
+        String faceId = getFaceId(client, requestBody);
+        memberRepository.save(Member.create(faceId, subId, name, phone, Role.NORMAL, age, gender));
+        return faceId;
+    }
+
+    @Override
+    public void faceDelete(DeleteDto deleteDto) {
+        OkHttpClient client = new OkHttpClient();
+
+        //face 삭제
+//        Request faceRequest = new Request.Builder()
+//            .url("https://apis.openapi.sk.com/nugufacecan/v1/face/"+deleteDto.getFaceId())
+//            .delete(null)
+//            .addHeader("app-id", APP_ID)
+//            .addHeader("group-id", GROUP_ID)
+//            .addHeader("subject-id", deleteDto.getSubId())
+//            .addHeader("appKey", APP_KEY)
+//            .build();
+//
+//        Response faceResponse = null;
+//        try {
+//            faceResponse = client.newCall(faceRequest).execute();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        if(faceResponse.code() != 200){
+//            log.info("res={}",faceResponse.body());
+//            throw new RuntimeException("face 삭제 실패");
+//        }
+
+        //sub 삭제
+        Request subRequest = new Request.Builder()
+            .url("https://apis.openapi.sk.com/nugufacecan/v1/subject/"+deleteDto.getSubId())
+            .delete(null)
+            .addHeader("app-id", APP_ID)
+            .addHeader("group-id", GROUP_ID)
+            .addHeader("appKey", APP_KEY)
+            .build();
+
+        Response subResponse = null;
+        try {
+            subResponse = client.newCall(subRequest).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(subResponse.code() != 200){
+            log.info("res={}",subResponse.body());
+            throw new RuntimeException("sub 삭제 실패");
+        }
+    }
+
+    //MultipartFile -> File convert
+    private File multipartFileToFile(MultipartFile file) throws IOException {
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        return convFile;
+    }
+
+    //페이스 객체 생성
+    private String faceCreateAtServer(String name, OkHttpClient client, RequestBody requestBody)
+        throws IOException {
+
+        Request subRequest = new Request.Builder()
+            .url("https://apis.openapi.sk.com/nugufacecan/v1/subject")
+            .post(RequestBody.create(MediaType.parse("application/json"), ""))
+            .addHeader("accept", "application/json")
+            .addHeader("app-id", APP_ID)
+            .addHeader("group-id", GROUP_ID)
+            .addHeader("appKey", APP_KEY)
+            .addHeader("subject-name", name.hashCode()+"_"+System.currentTimeMillis())
+            .build();
+
+        Response subResponse = client.newCall(subRequest).execute();
+        ObjectMapper objectMapper = new ObjectMapper();
+        SubCreate subCreate = objectMapper.readValue(subResponse.body().string(), SubCreate.class);
+        String subId = subCreate.getSubject_id();
+
+        log.info("subId = {}", subCreate.getSubject_id());
+
         //등록 request 생성
-        Request request = new Request.Builder()
+        Request faceRequest = new Request.Builder()
             .url("https://apis.openapi.sk.com/nugufacecan/v1/face")
             .post(requestBody)
             .addHeader("app-id", APP_ID)
             .addHeader("group-id", GROUP_ID)
-            .addHeader("subject-id", SUB_ID)
+            .addHeader("subject-id", subId)
             .addHeader("appKey", APP_KEY)
             .addHeader("face-name", name.hashCode()+"_"+System.currentTimeMillis())
             .build();
         //얼굴 등록
-        Response response = client.newCall(request).execute();
-        if(response.code() != 200){
-            log.info("err = {}",response.body().string());
+        Response faceResponse = client.newCall(faceRequest).execute();
+        if(faceResponse.code() != 200){
+            log.info("err = {}",faceResponse.body().string());
             throw new RuntimeException("얼굴 등록 실패");
         }
+        return subId;
+    }
+
+    //페이스 아이디 조회
+    private String getFaceId(OkHttpClient client, RequestBody requestBody) throws IOException {
         //얼굴인식 request 생성
         Request recognitionRequest = new Request.Builder()
             .url("https://apis.openapi.sk.com/nugufacecan/v1/recognize")
@@ -137,12 +234,10 @@ public class FaceServiceImpl implements FaceService{
             .addHeader("appKey", APP_KEY)
             .build();
 
-        //해당 회원 faceId 리턴
+        //해당 회원 faceId 조회
         ObjectMapper objectMapper = new ObjectMapper();
         Response recognitionResponse = null;
         FaceRecognize faceRecognize = null;
-
-        log.info("faceRecognize={}",faceRecognize);
 
         int maxAttempts = 5;
         int interval = 1000; // 0.1초
@@ -165,42 +260,5 @@ public class FaceServiceImpl implements FaceService{
             }
         }
         throw new RuntimeException("얼굴 인식 실패");
-    }
-
-    @Override
-    public void faceDelete(String faceId) {
-        OkHttpClient client = new OkHttpClient();
-
-        //request 생성
-        Request request = new Request.Builder()
-            .url("https://apis.openapi.sk.com/nugufacecan/v1/face/"+faceId)
-            .delete(null)
-            .addHeader("app-id", APP_ID)
-            .addHeader("group-id", GROUP_ID)
-            .addHeader("subject-id", SUB_ID)
-            .addHeader("appKey", APP_KEY)
-            .build();
-
-        Response response = null;
-        try {
-            response = client.newCall(request).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(response.code() != 200){
-            log.info("res={}",response.body());
-            throw new RuntimeException("삭제 실패");
-        }
-    }
-
-    //MultipartFile -> File convert
-    private File multipartFileToFile(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-
-        return convFile;
     }
 }
