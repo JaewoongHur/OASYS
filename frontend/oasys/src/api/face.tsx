@@ -10,12 +10,17 @@ import { AxiosResponse } from "axios";
 /* Post Face */
 const postFace = async <T = UserState,>(props: ApiProps): Promise<T> => {
     const { responseFunc, data } = props;
+    console.log(`donghyun_data: ${data.userPic}`);
     try {
-        const response = await instance.post<T, AxiosResponse<T>>("/face/recognition", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
+        const response = await instance.post<T, AxiosResponse<T>>(
+            "/face/recognition",
+            data.userPic,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
             },
-        });
+        );
         processApiResponse({ responseFunc, response });
         return response.data;
     } catch (error) {

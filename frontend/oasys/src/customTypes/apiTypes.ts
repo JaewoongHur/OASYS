@@ -15,6 +15,6 @@ export interface ProcessApiProps {
 
 export interface ApiProps {
     responseFunc: ResponseFuncType;
-    data: { [key: string]: string };
+    data: { [key: string]: unknown };
     routeTo?: (path: string) => void;
 }

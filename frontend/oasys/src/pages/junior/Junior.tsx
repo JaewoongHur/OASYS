@@ -6,7 +6,8 @@ import { menuData, serviceData } from "@config/bankingConfig";
 import BlackLogo from "@assets/images";
 import { UserState } from "@customTypes/storeTypes";
 import useUserStore from "@/store";
-import { postFace } from "@api/face";
+import postFace from "@api/face";
+import Webcam from "react-webcam";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -118,14 +119,17 @@ function Junior() {
     useEffect(() => {
         async function fetchUserInfo() {
             const formData = new FormData();
-            const userPic = new File(, "./image.png");
-            formData.append("userPic", userPic);
+            // formData.append("userPic", userPic);
             await postFace({
                 responseFunc: {
-                    200: () => {},
+                    200: (response) => {
+                        if (response) setUserInfo(response.data);
+                    },
                     400: () => {},
                 },
-                data: formData,
+                data: {
+                    userPic: formData,
+                },
             });
         }
         fetchUserInfo();
@@ -133,6 +137,7 @@ function Junior() {
 
     return (
         <JuniorContainer>
+            <Webcam />
             <MenuContainer>
                 <HeaderContainer>
                     <LogoBox src={BlackLogo} />
