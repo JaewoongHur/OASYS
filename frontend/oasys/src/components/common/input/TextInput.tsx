@@ -1,7 +1,7 @@
 /* Import */
 import { ChangeEvent } from "react";
 import styled from "@emotion/styled";
-import { InputProps } from "@customTypes/commonProps";
+import { InputProps } from "@customTypes/componentTypes";
 
 // ----------------------------------------------------------------------------------------------------
 
