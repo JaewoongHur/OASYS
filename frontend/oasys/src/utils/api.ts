@@ -1,5 +1,5 @@
 /* Import */
-import { ProcessApiProps } from "@customTypes/apiProps";
+import { ProcessApiProps } from "@customTypes/apiTypes";
 
 // ----------------------------------------------------------------------------------------------------
 
