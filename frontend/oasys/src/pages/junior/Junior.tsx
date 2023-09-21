@@ -1,8 +1,12 @@
 /* Import */
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 import { BoxButton, FloatingActionButton } from "@components/common/button";
 import { menuData, serviceData } from "@config/bankingConfig";
 import BlackLogo from "@assets/images";
+import { UserState } from "@customTypes/storeTypes";
+import useUserStore from "@/store";
+import { postFace } from "@api/face";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -109,6 +113,24 @@ const FabContainer = styled("div")`
 
 /* Junior Page */
 function Junior() {
+    const [userInfo, setUserInfo] = useState<UserState>(useUserStore());
+
+    useEffect(() => {
+        async function fetchUserInfo() {
+            const formData = new FormData();
+            const userPic = new File(, "./image.png");
+            formData.append("userPic", userPic);
+            await postFace({
+                responseFunc: {
+                    200: () => {},
+                    400: () => {},
+                },
+                data: formData,
+            });
+        }
+        fetchUserInfo();
+    }, [userInfo]);
+
     return (
         <JuniorContainer>
             <MenuContainer>
