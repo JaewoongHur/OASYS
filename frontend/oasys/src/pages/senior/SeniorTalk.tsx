@@ -39,7 +39,7 @@ function SeniorTalk() {
       const receivedText = response.data;
 
       setValue(receivedText);
-      textToSpeech(receivedText);
+      // textToSpeech(receivedText);
     } catch (error) {
       console.error("Error sending voice text to backend:", error);
     }
@@ -58,6 +58,7 @@ function SeniorTalk() {
             if (Date.now() - lastSpeechTime > 3000) {
                 stop();
                 setIsRecording(false);
+                sendToBackend(value);
                 setLastSpeechTime(null);  // Reset the last speech time when silence is detected
             }
         }, 1000);
