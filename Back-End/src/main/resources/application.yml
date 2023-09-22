@@ -3,7 +3,7 @@ server:
 
 logging:
   level:
-    root: DEBUG
+    com.dolfin.oasys: DEBUG
     
 spring:
   # redis 설정
