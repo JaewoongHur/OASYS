@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+logging:
+  level:
+    com.dolfin.oasys: DEBUG
+    
 spring:
   # redis 설정
   redis:
