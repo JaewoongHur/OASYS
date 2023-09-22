@@ -39,11 +39,42 @@ function SeniorTalk() {
       const receivedText = response.data;
 
       setValue(receivedText);
+      sendTextMessage(receivedText);
+
       // textToSpeech(receivedText);
     } catch (error) {
       console.error("Error sending voice text to backend:", error);
     }
   };
+
+  const sendTextMessage = async (text: string) => {
+    try {
+
+      let name = "허재웅";
+      let phone = "01092458696";
+      let teller = 2;
+      let waitPeople = 3;
+      let work = text;
+
+      const smsNotificationRequest = {
+        name: name,
+        phone: phone,
+        teller: teller,
+        waitPeople: waitPeople,
+        work: work
+      };
+
+      const response = await axios.post<string>("http://localhost:8081/api/v1/notification/send", smsNotificationRequest, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+    } catch (error) {
+      console.error("Error sending messafe", error);
+    }
+  };
+
 
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
@@ -55,7 +86,7 @@ function SeniorTalk() {
   useEffect(() => {
     if (isRecording && lastSpeechTime) {
         const checkSilenceInterval = setInterval(() => {
-            if (Date.now() - lastSpeechTime > 3000) {
+            if (Date.now() - lastSpeechTime > 2000) {
                 stop();
                 setIsRecording(false);
                 sendToBackend(value);
