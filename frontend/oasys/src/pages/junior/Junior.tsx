@@ -1,13 +1,13 @@
 /* Import */
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { BoxButton, FloatingActionButton } from "@components/common/button";
 import { menuData, serviceData } from "@config/bankingConfig";
 import BlackLogo from "@assets/images";
 import { UserState } from "@customTypes/storeTypes";
 import useUserStore from "@/store";
 import postFace from "@api/face";
-import Webcam from "react-webcam";
+import useRouter from "@hooks/useRouter";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -115,30 +115,43 @@ const FabContainer = styled("div")`
 /* Junior Page */
 function Junior() {
     const [userInfo, setUserInfo] = useState<UserState>(useUserStore());
+    const [selectedFile, setSelectedFile] = useState(null);
+    const { routeTo } = useRouter();
+    const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+    };
 
-    useEffect(() => {
-        async function fetchUserInfo() {
-            const formData = new FormData();
-            // formData.append("userPic", userPic);
-            await postFace({
-                responseFunc: {
-                    200: (response) => {
-                        if (response) setUserInfo(response.data);
-                    },
-                    400: () => {},
+    const handleUpload = async () => {
+        const formData = new FormData();
+        formData.append("multipartFile", selectedFile);
+        await postFace({
+            responseFunc: {
+                200: (response) => {
+                    if (response) {
+                        console.log("받아온 데이터:", response.data);
+                        setUserInfo(response.data);
+                        if (response.data.senior) routeTo("/senior/talk");
+                    }
                 },
-                data: {
-                    userPic: formData,
-                },
-            });
-        }
-        fetchUserInfo();
-    }, [userInfo]);
+                400: () => {},
+            },
+            data: {
+                multipartFile: formData,
+            },
+        });
+    };
 
     return (
         <JuniorContainer>
-            <Webcam />
+            {/* <Webcam /> */}
             <MenuContainer>
+                <div>
+                    <input type="file" onChange={handleFileInputChange} accept="image/*" />
+                    <button type="button" onClick={handleUpload}>
+                        업로드
+                    </button>
+                </div>
                 <HeaderContainer>
                     <LogoBox src={BlackLogo} />
                     <HeaderTitleWrapper>오아시스 은행</HeaderTitleWrapper>
