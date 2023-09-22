@@ -148,7 +148,7 @@ function Junior() {
         <JuniorContainer>
             {/* <Webcam /> */}
             <MenuContainer>
-                <div>
+                <div style={{ position: "fixed" }}>
                     <input type="file" onChange={handleFileInputChange} accept="image/*" />
                     <button type="button" onClick={handleUpload}>
                         업로드
