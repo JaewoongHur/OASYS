@@ -2,24 +2,19 @@ import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 import axios from "axios";
 import "./SeniorTalk.css";
-import styled from "@emotion/styled";
+// import styled from "@emotion/styled";
 import Footer from "@/components/common/footer/Footer";
-import BackgroundImage from "@/assets/images/background image.png";
-import gifWoman from "./oasys_woman1.gif";
-
-const MainImg = styled("div")`
-    background-image: url(${BackgroundImage});
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
-`;
+import { DefaultMan, DefaultWoman, TalkingMan, TalkingWoman } from "@assets/images";
+import useUserStore from "@/store";
 
 function SeniorTalk() {
     const [value, setValue] = useState<string>("");
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
+    const [imageSource, setImageSource] = useState<string>("");
+    const gender = useUserStore((state) => state.gender);
 
+    console.log(gender);
     const handleMic = () => {
         setIsRecording(!isRecording);
     };
@@ -118,28 +113,32 @@ function SeniorTalk() {
             setIsRecording(true);
         }
     };
+    useEffect(() => {
+        if (gender === "FEMALE") {
+            setImageSource(!isRecording ? TalkingMan : DefaultMan);
+        } else {
+            setImageSource(!isRecording ? TalkingWoman : DefaultWoman);
+        }
+    }, [gender, isRecording]);
 
     return (
         <div className="seniorTalkContainer">
-            <img src={gifWoman} alt="Description of GIF" className="leftGif" />
+            <img src={imageSource} alt="Image description" className="leftGif" />;
             <div>
                 <span className="answerText">{value}</span>
             </div>
-            <button type="button" className="btnRecord" onClick={toggleRecording}>
+            <button className="btnRecord" onClick={toggleRecording}>
                 {isRecording ? "음성 인식 중입니다 🎧" : "말하기 💬"}
             </button>
             <div className="ocean">
-                <div className="wave" />
-                <div className="wave" />
+                <div className="wave"></div>
+                <div className="wave"></div>
             </div>
-            <MainImg>
-                {/* <img src={AIwoman} width="25%" height="100%" alt="AI woman" /> */}
-                <Footer
-                    backgroundColor={!isRecording ? "#222222" : "#E5552F"}
-                    text={!isRecording ? "잠시만 기다려주세요." : "지금 말씀해보세요."}
-                    onClick={handleMic}
-                />
-            </MainImg>
+            <Footer
+                backgroundColor={!isRecording ? "#222222" : "#E5552F"}
+                text={!isRecording ? "잠시만 기다려주세요." : "지금 말씀해보세요."}
+                onClick={handleMic}
+            />
         </div>
     );
 }
