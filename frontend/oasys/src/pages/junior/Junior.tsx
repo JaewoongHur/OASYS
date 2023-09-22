@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { ChangeEvent, useState } from "react";
 import { BoxButton, FloatingActionButton } from "@components/common/button";
 import { menuData, serviceData } from "@config/bankingConfig";
-import BlackLogo from "@assets/images";
+import { BlackLogo } from "@assets/images";
 import { UserState } from "@customTypes/storeTypes";
 import useUserStore from "@/store";
 import postFace from "@api/face";
@@ -117,6 +117,7 @@ function Junior() {
     const [userInfo, setUserInfo] = useState<UserState>(useUserStore());
     const [selectedFile, setSelectedFile] = useState(null);
     const { routeTo } = useRouter();
+    const updateUserInfo = useUserStore((state) => state.updateUserInfo);
     const handleFileInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files[0];
         setSelectedFile(file);
@@ -131,6 +132,7 @@ function Junior() {
                     if (response) {
                         console.log("받아온 데이터:", response.data);
                         setUserInfo(response.data);
+                        updateUserInfo(response.data);
                         if (response.data.senior) routeTo("/senior/talk");
                     }
                 },
