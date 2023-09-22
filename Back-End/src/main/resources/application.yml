@@ -1,40 +1,4 @@
 server:
-<<<<<<< HEAD
-  port: 8081
-openai:
-  apikey:  dummy
-
-spring:
-  # Datasource 설정
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/oasys#?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: ssafy
-    # url: jdbc:mariadb://[서버주소]:[포트번호]/[DB명]
-#    hikari:
-#      maximum-pool-size: 10
-#      connection-init-sql: SELECT 1
-#      connection-timeout: 5000
-#      idle-timeout: 600000
-#      max-lifetime: 1800000
-#      auto-commit: true
-  jpa:
-    generate-ddl: true
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
-    hibernate:
-      ddl-auto: create
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-  config:
-    import: "file:./src/main/resources/env.yml"
-
-logging:
-  level:
-    org.hibernate.type.descriptor.sql: trace
-=======
   port: 8080
 
 spring:
@@ -49,7 +13,6 @@ spring:
     
   # Datasource 설정
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
     username: admin
     password: zxcv1234
     url: jdbc:mariadb://j9a106.p.ssafy.io:3306/oasys
@@ -60,4 +23,3 @@ spring:
       idle-timeout: 600000
       max-lifetime: 1800000
       auto-commit: true
->>>>>>> ba7f04fa2de67b3ed6367f05b149e02d520fe07f
