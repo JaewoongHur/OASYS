@@ -9,6 +9,7 @@ function SeniorPhone() {
     const webcamRef = useRef<Webcam | null>(null);
     const [imgSrc, setImgSrc] = useState<string | null>(null);
     const [userInfo, setUserInfo] = useState<UserState>(useUserStore());
+    const updateUserInfo = useUserStore((state) => state.updateUserInfo);
     const { routeTo } = useRouter();
 
     function DataURIToBlob(dataURI: string) {
@@ -43,6 +44,7 @@ function SeniorPhone() {
                     200: (response) => {
                         console.log("받아온 데이터:", response?.data);
                         setUserInfo(response?.data);
+                        updateUserInfo(response?.data);
                         if (response?.data.senior) routeTo("/senior/talk");
                         if (!response?.data.senior) routeTo("/");
                     },
