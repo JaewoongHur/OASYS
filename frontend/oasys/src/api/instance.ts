@@ -8,7 +8,7 @@ const { VITE_SERVER_URL } = import.meta.env;
 
 /* Axios Instance */
 const instance: AxiosInstance = axios.create({
-    baseURL: VITE_SERVER_URL,
+    baseURL: `${VITE_SERVER_URL}/api/v1`,
     timeout: 10000,
     headers: {
         "Access-Control-Allow-Credentials": true,
