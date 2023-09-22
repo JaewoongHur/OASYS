@@ -77,6 +77,7 @@ public class FaceServiceImpl implements FaceService{
         //이미 회원인 경우
         if(faceRecognize.getFace_id() != null){
             Member member = memberRepository.findByFaceId(faceRecognize.getFace_id());
+            convFile.delete();
             return FaceResponse.from(member.isSenior(), member.getGender(), true, member);
         }else{
             //request body 생성
@@ -97,9 +98,11 @@ public class FaceServiceImpl implements FaceService{
 
             Gender gender = faceDetect.getFaces().get(0).getGender().equals("male") ? Gender.MALE : Gender.FEMALE;
             if(faceDetect.getFaces().get(0).getAge() >= 65){
+                convFile.delete();
                 //TODO 얼굴 객체 저장후 face_id 관리자 서버로 넘기기
                 return FaceResponse.from(true, gender,false, Member.builder().build());
             }
+            convFile.delete();
             return FaceResponse.from(false, gender,false, Member.builder().build());
         }
     }
@@ -123,6 +126,7 @@ public class FaceServiceImpl implements FaceService{
         String subId = faceCreateAtServer(name, client, requestBody);
         String faceId = getFaceId(client, requestBody);
         memberRepository.save(Member.create(faceId, subId, name, phone, Role.NORMAL, age, gender));
+        convFile.delete();
         return faceId;
     }
 

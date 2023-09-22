@@ -6,6 +6,10 @@ target/
 !**/src/main/resources/application.yml
 
 src/main/resources/env.yml
+/blob
+/grandma.jpg
+/qqqw.jfif
+/qtqew.jpg
 
 ### STS ###
 .apt_generated
