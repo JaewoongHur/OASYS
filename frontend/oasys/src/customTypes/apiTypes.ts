@@ -12,3 +12,9 @@ export interface ProcessApiProps {
     responseFunc: ResponseFuncType;
     response: AxiosResponse;
 }
+
+export interface ApiProps {
+    responseFunc: ResponseFuncType;
+    data: { [key: string]: unknown };
+    routeTo?: (path: string) => void;
+}

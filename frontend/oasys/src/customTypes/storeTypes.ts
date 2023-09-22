@@ -9,3 +9,11 @@ export interface UserState {
         phone: string;
     };
 }
+
+export interface Notification {
+    name: string;
+    phone: string;
+    teller: number;
+    waitPeople: number;
+    work: string;
+}
