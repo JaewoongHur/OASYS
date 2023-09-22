@@ -24,7 +24,6 @@ function SeniorTalk() {
   const [value, setValue] = useState<string>('');
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
-  const [mic, setMic] = useState(true);
 
   const handleMic = () => {
       setIsRecording(!isRecording);
