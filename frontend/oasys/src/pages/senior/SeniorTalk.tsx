@@ -33,6 +33,7 @@ function SeniorTalk() {
             const receivedText = response.data;
 
             setValue(receivedText);
+            sendTextMessage(receivedText);
             // textToSpeech(receivedText);
         } catch (error) {
             console.error("Error sending voice text to backend:", error);
@@ -123,7 +124,7 @@ function SeniorTalk() {
 
     return (
         <div className="seniorTalkContainer">
-            <img src={imageSource} alt="Image description" className="leftGif" />;
+            <img src={imageSource} alt="Image description" className="leftGif" />
             <div>
                 <span className="answerText">{value}</span>
             </div>
