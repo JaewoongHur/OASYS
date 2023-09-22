@@ -67,6 +67,9 @@ public class NotificationServiceImpl implements NotificationService{
         message.setText(text.toString());
 
         SingleMessageSentResponse response = null;
+
+//        System.out.println(notificationRequest.getName());
+
         try {
             response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
             log.info("res={}", response);

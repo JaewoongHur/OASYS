@@ -7,7 +7,7 @@ import { AxiosResponse } from "axios";
 
 // ----------------------------------------------------------------------------------------------------
 
-/* Post Face */
+/* Face Recognition with HTTP Post Method */
 const postFace = async <T = UserState,>(props: ApiProps): Promise<T> => {
     const { responseFunc, data } = props;
     try {
