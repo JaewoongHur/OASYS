@@ -68,13 +68,13 @@ public class ManagerServiceImpl implements ManagerService {
         waitingList.rightPush(Long.toString(requestMember.getTellerTypeId()), requestMember.getFaceId());
         consumerInfoList.opsForValue().set(requestMember.getFaceId(),
                 MemberDto.WaitingMember
-                .builder()
-                .faceId(requestMember.getFaceId())
-                .name(requestMember.getName())
-                .phone(requestMember.getPhone())
-                .cateTypeName(requestMember.getCateTypeName())
-                .isMember(requestMember.isMember())
-                .build());
+                        .builder()
+                        .faceId(requestMember.getFaceId())
+                        .name(requestMember.getName())
+                        .phone(requestMember.getPhone())
+                        .cateTypeName(requestMember.getCateTypeName())
+                        .isMember(requestMember.isMember())
+                        .build());
     }
 
     @Override
@@ -85,6 +85,7 @@ public class ManagerServiceImpl implements ManagerService {
             return false;
         }
         String nextFaceId = waitingList.leftPop(tellerType);
+        log.info("nextConsumerFaceId: " + nextFaceId);
 
         log.info(nextFaceId);
         if (nextFaceId != null) {
