@@ -80,7 +80,13 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public boolean nextConsumerToConsultation(String tellerType) {
         log.info("nextConsumerToConsultation tellerType: " + tellerType);
-        log.info(consultingList.opsForValue().get(tellerType));
+        Class<?> keyType = consultingList.getKeySerializer().getClass();
+        Class<?> valueType = consultingList.getValueSerializer().getClass();
+
+        log.info("Key Type: " + keyType.getName());
+        log.info("Value Type: " + valueType.getName());
+
+        log.info(String.valueOf(consultingList.opsForValue().get(tellerType) == null));
         if (consultingList.opsForValue().get(tellerType) != null) {
             log.error("상담중인 고객 : " + consultingList.opsForValue().get(tellerType));
             return false;
