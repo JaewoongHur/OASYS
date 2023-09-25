@@ -6,7 +6,6 @@ import com.dolfin.oasys.model.entity.Member;
 import com.dolfin.oasys.model.entity.TellerType;
 import com.dolfin.oasys.repository.MemberRepository;
 import com.dolfin.oasys.repository.TellerTypeRepository;
-import com.dolfin.oasys.util.JsonConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
@@ -81,6 +80,7 @@ public class ManagerServiceImpl implements ManagerService {
     public boolean nextConsumerToConsultation(String tellerType) {
         log.info("nextConsumerToConsultation tellerType: " + tellerType);
         if (consultingList.opsForValue().get(tellerType) != null) {
+            log.error("상담중인 고객 : " + consultingList.opsForValue().get(tellerType));
             return false;
         }
         String nextFaceId = waitingList.leftPop(tellerType);
@@ -88,6 +88,7 @@ public class ManagerServiceImpl implements ManagerService {
             consultingList.opsForValue().set(tellerType, nextFaceId);
             return true;
         }
+        log.error("대기인원이 없습니다.");
         return false;
     }
 
@@ -139,5 +140,20 @@ public class ManagerServiceImpl implements ManagerService {
                 .build());
     }
 
+    @Override
+    public String consumerInfoList() {
+        String result = "consumerInfoList: ";
+        List<String> keys = new ArrayList<>(consumerInfoList.keys("*"));
+
+        List<String> allListValues = new ArrayList<>();
+        for (String key : keys) {
+            List<MemberDto.WaitingMember> waitingMembers = consumerInfoList.opsForList().range(key, 0, -1);
+            result += waitingMembers.stream()
+                    .map(MemberDto.WaitingMember::toString)
+                    .collect(Collectors.toList());
+        }
+
+        return result;
+    }
 
 }
