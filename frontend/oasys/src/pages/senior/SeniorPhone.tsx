@@ -28,7 +28,7 @@ function SeniorPhone() {
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot();
-
+        console.log(imageSrc);
         async function fetchUserInfo() {
             if (typeof imageSrc === "string") {
                 setImgSrc(imageSrc);

@@ -1,6 +1,7 @@
 /* Import */
 import { RouteObject, createBrowserRouter } from "react-router-dom";
 import { Admin, AdminMain, AdminLogin } from "@pages/admin";
+import Home from "@pages/home";
 import { Senior, SeniorHome, SeniorPhone, SeniorTalk } from "@pages/senior";
 import Junior from "@pages/junior";
 
@@ -9,8 +10,13 @@ import Junior from "@pages/junior";
 /* Data for Router */
 const routeList: RouteObject[] = [
     {
-        id: "junior",
+        id: "home",
         path: "/",
+        element: <Home />,
+    },
+    {
+        id: "junior",
+        path: "/junior",
         element: <Junior />,
     },
     {
