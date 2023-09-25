@@ -64,6 +64,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public void addConsumerToWaitingList(MemberDto.RequestMember requestMember) {
         log.info("addConsumerToConsultation");
+        log.info("Input: " + requestMember);
         waitingList.rightPush(Long.toString(requestMember.getTellerTypeId()), requestMember.getFaceId());
         consumerInfoList.opsForValue().set(requestMember.getFaceId(),
                 MemberDto.WaitingMember
@@ -115,11 +116,16 @@ public class ManagerServiceImpl implements ManagerService {
             responseMember.setGender(member.getMemberGender());
         }
 
+        log.info("getMemberInfoByFaceId");
+        log.info("responseMember: " + responseMember);
+
         return responseMember;
     }
 
     @Override
     public void createMember(MemberDto.RequestNewMember requestNewMember) {
+        log.info("createMember");
+        log.info("requestNewMember: " + requestNewMember);
         memberRepository.save(Member.builder()
                 .memberFaceId(requestNewMember.getFaceId())
                 .memberAge(requestNewMember.getAge())
