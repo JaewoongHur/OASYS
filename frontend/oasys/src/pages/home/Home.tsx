@@ -1,3 +1,4 @@
+/* Import */
 import postFace from "@api/face";
 import { UserState } from "@customTypes/storeTypes";
 import useRouter from "@hooks/useRouter";
@@ -5,6 +6,9 @@ import useUserStore from "@/store";
 import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Home Page */
 function Home() {
     const webcamRef = useRef<Webcam | null>(null);
     const [imgSrc, setImgSrc] = useState<string | null>(null);
@@ -69,4 +73,7 @@ function Home() {
     );
 }
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Export */
 export default Home;
