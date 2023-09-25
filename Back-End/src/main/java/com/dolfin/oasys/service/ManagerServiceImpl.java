@@ -86,8 +86,7 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("Key Type: " + keyType.getName());
         log.info("Value Type: " + valueType.getName());
 
-        log.info(String.valueOf(consultingList.opsForValue().get(tellerType) == null));
-        if (consultingList.opsForValue().get(tellerType) != null) {
+        if (consultingList.hasKey(tellerType) != null) {
             log.error("상담중인 고객 : " + consultingList.opsForValue().get(tellerType));
             return false;
         }
