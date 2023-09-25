@@ -14,7 +14,7 @@ const globalStyles = css`
     @font-face {
         font-family: "Pretendard";
         font-weight: 200;
-        src: url("src/assets/fonts/Pretendard-Extralight.woff") format("woff");
+        src: url("src/assets/fonts/Pretendard-ExtraLight.woff") format("woff");
     }
 
     @font-face {
@@ -39,7 +39,7 @@ const globalStyles = css`
     @font-face {
         font-family: "Pretendard";
         font-weight: 600;
-        src: url("src/assets/fonts/Pretendard-Semibold.woff") format("woff");
+        src: url("src/assets/fonts/Pretendard-SemiBold.woff") format("woff");
     }
 
     @font-face {
