@@ -9,6 +9,7 @@ import com.dolfin.oasys.repository.TellerTypeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +85,8 @@ public class ManagerServiceImpl implements ManagerService {
             return false;
         }
         String nextFaceId = waitingList.leftPop(tellerType);
+
+        log.info(nextFaceId);
         if (nextFaceId != null) {
             consultingList.opsForValue().set(tellerType, nextFaceId);
             return true;
@@ -145,15 +148,28 @@ public class ManagerServiceImpl implements ManagerService {
         String result = "consumerInfoList: ";
         List<String> keys = new ArrayList<>(consumerInfoList.keys("*"));
 
-        List<String> allListValues = new ArrayList<>();
         for (String key : keys) {
-            List<MemberDto.WaitingMember> waitingMembers = consumerInfoList.opsForList().range(key, 0, -1);
-            result += waitingMembers.stream()
-                    .map(MemberDto.WaitingMember::toString)
-                    .collect(Collectors.toList());
+            MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(key);
+            result += waitingMember.toString();
+            log.info(waitingMember.toString());
         }
 
         return result;
+    }
+
+    @Override
+    public void flushAll() {
+        // 총 고객 리스트 삭제
+        consumerInfoList.getConnectionFactory().getConnection().flushAll();
+
+        // 상담 리스트 삭제
+        consultingList.getConnectionFactory().getConnection().flushAll();
+
+        // 대기 리스트 삭제
+        waitingList.getOperations().execute((RedisCallback<Void>) connection -> {
+            connection.flushAll();
+            return null;
+        });
     }
 
 }

@@ -23,6 +23,13 @@ public class ManagerController {
         return "Hello manager-service";
     }
 
+    @GetMapping("/health-check/redisFlushAll")
+    public String redisFlushAll() {
+        log.info("redisFlushAll");
+        managerService.flushAll();
+        return "redisFlushAll";
+    }
+
     @GetMapping("/consumer")
     public String getAllConsumerInfo() {
         log.info("consumerInfoList");
