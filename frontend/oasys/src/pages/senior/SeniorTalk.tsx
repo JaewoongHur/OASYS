@@ -43,8 +43,8 @@ function SeniorTalk() {
     const sendTextMessage = async (text: string) => {
     try {
 
-      let name = "허재웅";
-      let phone = "01092458696";
+      let name = "";
+      let phone = "";
       let teller = 2;
       let waitPeople = 3;
       let work = text;
