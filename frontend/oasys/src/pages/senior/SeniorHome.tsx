@@ -1,3 +1,4 @@
+/* Import */
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 import axios from "axios";
@@ -7,6 +8,9 @@ import Footer from "@/components/common/footer/Footer";
 import { DefaultMan, DefaultWoman, TalkingMan, TalkingWoman } from "@assets/images";
 import useUserStore from "@/store";
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Senior Home Page */
 function SeniorHome() {
     const [value, setValue] = useState<string>("");
     const [isRecording, setIsRecording] = useState<boolean>(false);
