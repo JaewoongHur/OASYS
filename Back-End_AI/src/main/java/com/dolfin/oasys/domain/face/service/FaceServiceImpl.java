@@ -1,5 +1,6 @@
 package com.dolfin.oasys.domain.face.service;
 
+import com.dolfin.oasys.domain.face.exception.InvalidImageException;
 import com.dolfin.oasys.domain.face.model.dto.DeleteDto;
 import com.dolfin.oasys.domain.face.model.dto.FaceDetect;
 import com.dolfin.oasys.domain.face.model.dto.FaceRecognize;
@@ -10,7 +11,6 @@ import com.dolfin.oasys.domain.member.model.entity.Member;
 import com.dolfin.oasys.domain.member.model.entity.Role;
 import com.dolfin.oasys.domain.member.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.twilio.twiml.voice.Application;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -72,7 +72,12 @@ public class FaceServiceImpl implements FaceService{
         Response response = client.newCall(request).execute();
         FaceRecognize faceRecognize = objectMapper.readValue(response.body().string(), FaceRecognize.class);
 
+        if(faceRecognize.getCode() == 3004) {
+            throw new InvalidImageException();
+        }
+
         log.info("faceRecognize={}",faceRecognize.toString());
+
 
         //이미 회원인 경우
         if(faceRecognize.getFace_id() != null){
