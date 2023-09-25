@@ -15,7 +15,7 @@ public class MemberDto {
         private Long userId;
         private String faceId;
         private String phone;
-        private String Name;
+        private String name;
         private Long tellerTypeId;
         private String cateTypeName;
     }

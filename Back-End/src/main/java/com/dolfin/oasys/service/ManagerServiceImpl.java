@@ -80,6 +80,9 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public boolean nextConsumerToConsultation(String tellerType) {
         log.info("nextConsumerToConsultation tellerType: " + tellerType);
+        if (consultingList.opsForValue().get(tellerType) != null) {
+            return false;
+        }
         String nextFaceId = waitingList.leftPop(tellerType);
         if (nextFaceId != null) {
             consultingList.opsForValue().set(tellerType, nextFaceId);
@@ -103,6 +106,7 @@ public class ManagerServiceImpl implements ManagerService {
         MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(faceId);
         MemberDto.ResponseMember responseMember = MemberDto.ResponseMember
                 .builder()
+                .faceId(waitingMember.getFaceId())
                 .isMember(waitingMember.isMember())
                 .name(waitingMember.getName())
                 .phone(waitingMember.getPhone())

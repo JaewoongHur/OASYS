@@ -54,8 +54,8 @@ public class ManagerController {
         if (managerService.nextConsumerToConsultation(Long.toString(tellerType))) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        log.error("대기 인원이 없습니다.");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("대기 인원이 없습니다.");
+        log.error("대기 인원이 없거나 상담 중인 고객이 있습니다.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("대기 인원이 없거나 상담 중인 고객이 있습니다.");
     }
     
     //상담 완료
