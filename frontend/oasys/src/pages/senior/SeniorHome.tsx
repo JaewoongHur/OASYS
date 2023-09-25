@@ -18,30 +18,8 @@ function SeniorHome() {
     const [imageSource, setImageSource] = useState<string>("");
     const gender = useUserStore((state) => state.gender);
 
-    console.log(gender);
     const handleMic = () => {
         setIsRecording(!isRecording);
-    };
-
-    const sendToBackend = async (text: string) => {
-        try {
-            const response = await axios.post<string>(
-                "http://localhost:8081/gpt/voice",
-                { text },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-            const receivedText = response.data;
-
-            setValue(receivedText);
-            sendTextMessage(receivedText);
-            // textToSpeech(receivedText);
-        } catch (error) {
-            console.error("Error sending voice text to backend:", error);
-        }
     };
 
     const sendTextMessage = async (text: string) => {
@@ -60,7 +38,7 @@ function SeniorHome() {
                 work,
             };
 
-            const response = await axios.post<string>(
+            await axios.post<string>(
                 "http://localhost:8081/api/v1/notification/send",
                 smsNotificationRequest,
                 {
@@ -70,7 +48,7 @@ function SeniorHome() {
                 },
             );
         } catch (error) {
-            console.error("Error sending messafe", error);
+            console.error("Error sending message", error);
         }
     };
 
@@ -82,6 +60,27 @@ function SeniorHome() {
     });
 
     useEffect(() => {
+        const sendToBackend = async (text: string) => {
+            try {
+                const response = await axios.post<string>(
+                    "http://localhost:8081/api/v1/voice/tts",
+                    { text },
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    },
+                );
+                const receivedText = response.data;
+
+                setValue(receivedText);
+                sendTextMessage(receivedText);
+                // textToSpeech(receivedText);
+            } catch (error) {
+                console.error("Error sending voice text to backend:", error);
+            }
+        };
+
         if (isRecording && lastSpeechTime) {
             const checkSilenceInterval = setInterval(() => {
                 if (Date.now() - lastSpeechTime > 3000) {
@@ -94,21 +93,8 @@ function SeniorHome() {
 
             return () => clearInterval(checkSilenceInterval);
         }
-    }, [isRecording, lastSpeechTime, stop]);
-
-    const textToSpeech = (text: string) => {
-        if ("speechSynthesis" in window) {
-            const synth = window.speechSynthesis;
-            let voices = synth.getVoices();
-            voices = voices.filter((voice) => voice.lang.includes("ko"));
-            console.log(voices);
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.voice = voices[1];
-            synth.speak(utterance);
-        } else {
-            console.warn("Your browser does not support text to speech.");
-        }
-    };
+        return () => {};
+    }, [isRecording, lastSpeechTime, stop, value]);
 
     const toggleRecording = () => {
         if (isRecording) {
@@ -130,11 +116,11 @@ function SeniorHome() {
 
     return (
         <div className="seniorTalkContainer">
-            <img src={imageSource} alt="Image description" className="leftGif" />
+            <img src={imageSource} alt="description" className="leftGif" />
             <div>
                 <span className="answerText">{value}</span>
             </div>
-            <button className="btnRecord" onClick={toggleRecording}>
+            <button type="button" className="btnRecord" onClick={toggleRecording}>
                 {isRecording ? "음성 인식 중입니다 🎧" : "말하기 💬"}
             </button>
             <div className="ocean">
@@ -150,4 +136,7 @@ function SeniorHome() {
     );
 }
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Export */
 export default SeniorHome;

@@ -23,7 +23,6 @@ const postFace = async <T = UserState,>(props: ApiProps): Promise<T> => {
         processApiResponse({ responseFunc, response });
         return response.data;
     } catch (error) {
-        console.log(error);
         throw new Error("Failed to postFace");
     }
 };
