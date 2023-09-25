@@ -23,6 +23,12 @@ public class ManagerController {
         return "Hello manager-service";
     }
 
+    @GetMapping("/health-check2")
+    public String getHealth2() {
+        log.info("health-check manager-service");
+        return "Hello manager-service";
+    }
+
     //상담리스트 체크
     @GetMapping("/teller/list")
     public ResponseEntity getTellerStatusList() {
