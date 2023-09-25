@@ -8,7 +8,7 @@ export interface UserState {
         name: string;
         phone: string;
     };
-    updateUserInfo: (data: Partial<UserState>) => void;
+    updateUserState: (data: Partial<UserState>) => void;
 }
 
 export interface Notification {
