@@ -1,6 +1,5 @@
 /* Import */
 import postFace from "@api/face";
-import { UserState } from "@customTypes/storeTypes";
 import useRouter from "@hooks/useRouter";
 import useUserStore from "@/store";
 import { useRef, useState, useCallback } from "react";
@@ -12,8 +11,7 @@ import Webcam from "react-webcam";
 function Home() {
     const webcamRef = useRef<Webcam | null>(null);
     const [imgSrc, setImgSrc] = useState<string | null>(null);
-    const [userInfo, setUserInfo] = useState<UserState>(useUserStore());
-    const updateUserInfo = useUserStore((state) => state.updateUserInfo);
+    const updateUserInfo = useUserStore((state) => state.updateUserState);
     const { routeTo } = useRouter();
 
     function DataURIToBlob(dataURI: string) {
@@ -25,14 +23,13 @@ function Home() {
         const mimeString = splitDataURI[0].split(":")[1].split(";")[0];
 
         const ia = new Uint8Array(byteString.length);
-        for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+        for (let i = 0; i < byteString.length; i += 1) ia[i] = byteString.charCodeAt(i);
 
         return new Blob([ia], { type: mimeString });
     }
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot();
-        console.log(imageSrc);
         async function fetchUserInfo() {
             if (typeof imageSrc === "string") {
                 setImgSrc(imageSrc);
@@ -46,8 +43,6 @@ function Home() {
             await postFace({
                 responseFunc: {
                     200: (response) => {
-                        console.log("받아온 데이터:", response?.data);
-                        setUserInfo(response?.data);
                         updateUserInfo(response?.data);
                         if (response?.data.senior) routeTo("/senior/talk");
                         if (!response?.data.senior) routeTo("/");
@@ -60,7 +55,7 @@ function Home() {
             });
         }
         fetchUserInfo();
-    }, [webcamRef, setImgSrc, routeTo, imgSrc]);
+    }, [webcamRef, setImgSrc, routeTo, updateUserInfo]);
 
     return (
         <>
