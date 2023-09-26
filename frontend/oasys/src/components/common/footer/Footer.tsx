@@ -1,19 +1,25 @@
 /* Import */
 import styled from "@emotion/styled";
 import { FooterProps } from "@customTypes/componentTypes";
-import { MicOn, MicOff } from "@/assets/icons";
+import { MicOn, MicOff } from "@assets/icons";
 
 // ----------------------------------------------------------------------------------------------------
 
 /* Style */
 const FooterContainer = styled("div")`
     // Position Attribute
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: fixed;
     z-index: 10;
 
     // Size Attribute
-    width: 100vw;
+    width: 100%;
     bottom: 0;
+
+    // Interaction Attribute
+    user-select: none;
 `;
 
 const FooterIcon = styled("img")`
@@ -28,6 +34,7 @@ const FooterTextWrapper = styled("div")<FooterProps>`
     justify-content: center;
 
     // Size Attribute
+    width: 100%;
     height: 2em;
 
     // Style Attribute
@@ -39,7 +46,7 @@ const FooterTextWrapper = styled("div")<FooterProps>`
     // Text Attribute
     color: white;
     font-size: 40px;
-    font-weight: 500;
+    font-weight: 700;
 `;
 
 // ----------------------------------------------------------------------------------------------------

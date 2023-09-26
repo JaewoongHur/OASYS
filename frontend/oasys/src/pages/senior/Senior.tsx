@@ -3,15 +3,30 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 import "./SeniorTalk.css";
-// import styled from "@emotion/styled";
-import Footer from "@/components/common/footer/Footer";
+import styled from "@emotion/styled";
+import Footer from "@components/common/footer";
 import { DefaultMan, DefaultWoman, TalkingMan, TalkingWoman } from "@assets/images";
 import useUserStore from "@/store";
 import postMessage from "@api/notification";
+import WaveAnimation from "@/components/common/animation";
 
 // ----------------------------------------------------------------------------------------------------
 
-/* Senior Home Page */
+/* Style */
+const SeniorContainer = styled("div")`
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: ${(props) => props.theme.colors.gray1};
+`;
+
+// ----------------------------------------------------------------------------------------------------
+
+/* Senior Page */
 function Senior() {
     const [value, setValue] = useState<string>("");
     const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -98,7 +113,7 @@ function Senior() {
     }, [gender, isRecording]);
 
     return (
-        <div className="seniorTalkContainer">
+        <SeniorContainer>
             <img src={imageSource} alt="description" className="leftGif" />
             <div>
                 <span className="answerText">{value}</span>
@@ -106,12 +121,9 @@ function Senior() {
             <button type="button" className="btnRecord" onClick={toggleRecording}>
                 {isRecording ? "음성 인식 중입니다 🎧" : "말하기 💬"}
             </button>
-            <div className="ocean">
-                <div className="wave" />
-                <div className="wave" />
-            </div>
+            <WaveAnimation />
             <Footer isRecording={isRecording} />
-        </div>
+        </SeniorContainer>
     );
 }
 
