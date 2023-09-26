@@ -4,7 +4,6 @@ import { Admin, AdminMain, AdminLogin } from "@pages/admin";
 import Home from "@pages/home";
 import { Senior, SeniorHome, SeniorPhone } from "@pages/senior";
 import Junior from "@pages/junior";
-import Test1 from "./pages/home/Test1";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -14,11 +13,6 @@ const routeList: RouteObject[] = [
         id: "home",
         path: "/",
         element: <Home />,
-    },
-    {
-        id: "test",
-        path: "/test",
-        element: <Test1 />,
     },
     {
         id: "junior",
