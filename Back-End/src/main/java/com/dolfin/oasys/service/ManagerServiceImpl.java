@@ -83,16 +83,13 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public boolean nextConsumerToConsultation(String tellerType) {
         log.info("nextConsumerToConsultation tellerType: " + tellerType);
-
         if (consultingList.hasKey(CONSULTING + tellerType)) {
             log.error("상담중인 고객 : " + consultingList.opsForValue().get(CONSULTING + tellerType));
             return false;
         }
-        log.info("waiting");
         String nextFaceId = waitingList.leftPop(WAITING + tellerType);
         log.info("nextConsumerFaceId: " + nextFaceId);
-
-        log.info(nextFaceId);
+        
         if (nextFaceId != null) {
             consultingList.opsForValue().set(CONSULTING + tellerType, nextFaceId);
             return true;
@@ -114,6 +111,7 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public MemberDto.ResponseMember getMemberInfoByFaceId(String faceId) {
         MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(faceId);
+        if (waitingMember == null) return null;
         MemberDto.ResponseMember responseMember = MemberDto.ResponseMember
                 .builder()
                 .faceId(waitingMember.getFaceId())
@@ -150,28 +148,9 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public String consumerInfoList() {
-        String result = "consumerInfoList: ";
-        List<String> keys = new ArrayList<>(consumerInfoList.keys("*"));
-
-        for (String key : keys) {
-            MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(key);
-            result += waitingMember.toString();
-            log.info(waitingMember.toString());
-        }
-
-        return result;
-    }
-
-    @Override
     public void flushAll() {
-        // 총 고객 리스트 삭제
         consumerInfoList.getConnectionFactory().getConnection().flushAll();
-
-        // 상담 리스트 삭제
         consultingList.getConnectionFactory().getConnection().flushAll();
-
-        // 대기 리스트 삭제
         waitingList.getOperations().execute((RedisCallback<Void>) connection -> {
             connection.flushAll();
             return null;

@@ -18,7 +18,5 @@ public interface ManagerService {
 
     void createMember(MemberDto.RequestNewMember requestNewMember);
 
-    String consumerInfoList();
-
     void flushAll();
 }
