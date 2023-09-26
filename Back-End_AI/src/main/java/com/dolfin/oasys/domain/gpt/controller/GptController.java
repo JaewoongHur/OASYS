@@ -34,16 +34,16 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GptController {
 
-//    @Value("${gpt.api.key}")
-//    private String key;
+    @Value("${gpt.api.key}")
+    private String key;
 
 
     private OpenAiService service;
 
-//    @PostConstruct
-//    public void connectGPT(){
-//        this.service = new OpenAiService(key);
-//    }
+    @PostConstruct
+    public void connectGPT(){
+        this.service = new OpenAiService(key);
+    }
 
 
     private PythonInterpreter py;

@@ -11,21 +11,21 @@ public class ErrorResponse {
     private String code;
     private String message;
 
-    private ErrorResponse(final ErrorCode exception) {
-        this.code = exception.getCode();
-        this.message = exception.getMessage();
+    private ErrorResponse(final ErrorCode errorCode) {
+        this.code = errorCode.getCode();
+        this.message = errorCode.getMessage();
     }
 
-    public ErrorResponse(final ErrorCode exception, final String message) {
-        this.code = exception.getCode();
+    public ErrorResponse(final ErrorCode errorCode, final String message) {
+        this.code = errorCode.getCode();
         this.message = message;
     }
 
-    public static ErrorResponse of(final ErrorCode exception) {
-        return new ErrorResponse(exception);
+    public static ErrorResponse of(final ErrorCode errorCode) {
+        return new ErrorResponse(errorCode);
     }
 
-    public static ErrorResponse of(final ErrorCode exception, final String message) {
-        return new ErrorResponse(exception, message);
+    public static ErrorResponse of(final ErrorCode errorCode, final String message) {
+        return new ErrorResponse(errorCode, message);
     }
 }

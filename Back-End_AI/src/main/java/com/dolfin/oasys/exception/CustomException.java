@@ -1,20 +1,20 @@
 package com.dolfin.oasys.exception;
 
 public class CustomException extends RuntimeException{
-    private final ErrorCode exception;
+    private final ErrorCode errorCode;
 
-    public CustomException(String message, ErrorCode exception) {
+    public CustomException(String message, ErrorCode errorCode) {
         super(message);
-        this.exception = exception;
+        this.errorCode = errorCode;
     }
 
 
-    public CustomException(ErrorCode exception) {
-        super(exception.getMessage());
-        this.exception = exception;
+    public CustomException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
     }
 
     public ErrorCode getException() {
-        return exception;
+        return errorCode;
     }
 }
