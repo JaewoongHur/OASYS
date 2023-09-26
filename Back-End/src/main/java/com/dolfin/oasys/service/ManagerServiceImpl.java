@@ -37,7 +37,7 @@ public class ManagerServiceImpl implements ManagerService {
         for (TellerType tellerType : tellerTypeRepository.findAll()) {
             List<String> consumerList = waitingList.range(Long.toString(tellerType.getTellerTypeId()), 0, -1);
             Long tellerTypeId = tellerType.getTellerTypeId();
-            String nowCCFaceId = consultingList.opsForValue().get(tellerTypeId);
+            String nowCCFaceId = consultingList.opsForValue().get(Long.toString(tellerTypeId));
 
             TellerStatusList.add(TellerStatusDTO.builder()
                     .tellerTypeId(tellerTypeId)
