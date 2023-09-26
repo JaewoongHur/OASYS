@@ -24,6 +24,10 @@ public enum ErrorCode {
      * IMAGE
      */
     INVALID_IMAGE_EXCEPTION(HttpStatus.BAD_REQUEST, "INVALID_IMAGE_VALUE", "이미지가 유효하지 않습니다"),
+
+    API_CONNECT_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "API_CONNECT_EXCEPTION","API 서버와 통신에 실패했습니다."),
+
+    COMMUNICATION_LIMIT_EXCEPTION(HttpStatus.TOO_MANY_REQUESTS,"COMMUNICATION_LIMIT_EXCEPTION","지정된 요청 횟수를 초과했습니다.")
     ;
 
     private final HttpStatus status;

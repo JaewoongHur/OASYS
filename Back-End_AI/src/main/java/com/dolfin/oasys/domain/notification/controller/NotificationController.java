@@ -1,6 +1,6 @@
 package com.dolfin.oasys.domain.notification.controller;
 
-import com.dolfin.oasys.domain.notification.dto.SmsNotificationRequest;
+import com.dolfin.oasys.domain.notification.dto.SMSNotificationRequest;
 import com.dolfin.oasys.domain.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,10 +17,10 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @PostMapping("/send")
-    public ResponseEntity<Void> send(@RequestBody SmsNotificationRequest notificationRequest){
-        System.out.println(notificationRequest);
-        notificationService.sendSmsNotification(notificationRequest);
+    @PostMapping("/message")
+    public ResponseEntity<Void> send(@RequestBody SMSNotificationRequest smsNotificationRequest){
+        System.out.println(smsNotificationRequest);
+        notificationService.sendSmsNotification(smsNotificationRequest);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
