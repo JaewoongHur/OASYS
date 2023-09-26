@@ -7,6 +7,7 @@ import com.dolfin.oasys.domain.face.service.FaceService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +25,18 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/faces")
 public class FaceController {
+    @Value("${face.api.value}")
+    private static int MAX_VALUE;
 
     private final FaceService faceService;
 
-    private final static int MAX_COUNT = 20;
     private static int currentCount = 0;
+
     @PostMapping(path = "/recognition", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<FaceResponse> faceRecognition(@RequestPart(name = "multipartFile") MultipartFile multipartFile)throws IOException {
-        if(currentCount == MAX_COUNT){
+        if(currentCount == MAX_VALUE){
             throw new CommunicationLimitException();
         }
         currentCount++;
@@ -44,7 +47,7 @@ public class FaceController {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<String> saveTest(@RequestPart(name = "multipartFile") MultipartFile multipartFile)throws IOException {
-        if(currentCount == MAX_COUNT){
+        if(currentCount == MAX_VALUE){
             throw new CommunicationLimitException();
         }
         currentCount++;
@@ -54,7 +57,7 @@ public class FaceController {
 
     @DeleteMapping("/deleteTest")
     public ResponseEntity<Void> deleteTest(@RequestBody DeleteDto deleteDto) {
-        if(currentCount == MAX_COUNT){
+        if(currentCount == MAX_VALUE){
             throw new CommunicationLimitException();
         }
         currentCount++;
