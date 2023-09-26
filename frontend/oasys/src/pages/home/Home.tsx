@@ -1,5 +1,5 @@
 /* Import */
-import postFace from "@api/face";
+import postFace from "@api/faces";
 import useRouter from "@hooks/useRouter";
 import useUserStore from "@/store";
 import { useRef, useState, useCallback } from "react";

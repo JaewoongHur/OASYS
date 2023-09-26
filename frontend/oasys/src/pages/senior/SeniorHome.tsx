@@ -1,12 +1,13 @@
 /* Import */
+import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
-import axios from "axios";
 import "./SeniorTalk.css";
 // import styled from "@emotion/styled";
 import Footer from "@/components/common/footer/Footer";
 import { DefaultMan, DefaultWoman, TalkingMan, TalkingWoman } from "@assets/images";
 import useUserStore from "@/store";
+import postMessage from "@api/notification";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -22,35 +23,21 @@ function SeniorHome() {
         setIsRecording(!isRecording);
     };
 
-    const sendTextMessage = async (text: string) => {
-        try {
-            const name = "";
-            const phone = "";
-            const teller = 2;
-            const waitPeople = 3;
-            const work = text;
-
-            const smsNotificationRequest = {
-                name,
-                phone,
-                teller,
-                waitPeople,
-                work,
-            };
-
-            await axios.post<string>(
-                "http://localhost:8081/api/v1/notification/send",
-                smsNotificationRequest,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
-        } catch (error) {
-            console.error("Error sending message", error);
-        }
-    };
+    async function sendTextMessage() {
+        await postMessage({
+            responseFunc: {
+                200: () => {},
+                400: () => {},
+            },
+            data: {
+                name: "",
+                phone: "",
+                teller: 2,
+                waitPeople: 3,
+                work: "",
+            },
+        });
+    }
 
     const { listen, stop } = useSpeechRecognition({
         onResult: (result) => {
@@ -74,7 +61,7 @@ function SeniorHome() {
                 const receivedText = response.data;
 
                 setValue(receivedText);
-                sendTextMessage(receivedText);
+                sendTextMessage();
                 // textToSpeech(receivedText);
             } catch (error) {
                 console.error("Error sending voice text to backend:", error);
