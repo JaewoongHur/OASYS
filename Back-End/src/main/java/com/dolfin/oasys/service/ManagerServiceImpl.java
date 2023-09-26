@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerServiceImpl implements ManagerService {
+    private final String WAITING = "tellerWaiting";
+    private final String CONSULTING = "tellerConsulting";
     //총 고객 리스트
     private final RedisTemplate<String, MemberDto.WaitingMember> consumerInfoList;
     //상담 리스트
@@ -35,9 +38,9 @@ public class ManagerServiceImpl implements ManagerService {
     public List<TellerStatusDTO> getTellerStatusList() {
         List<TellerStatusDTO> TellerStatusList = new ArrayList<>();
         for (TellerType tellerType : tellerTypeRepository.findAll()) {
-            List<String> consumerList = waitingList.range(Long.toString(tellerType.getTellerTypeId()), 0, -1);
             Long tellerTypeId = tellerType.getTellerTypeId();
-            String nowCCFaceId = consultingList.opsForValue().get(Long.toString(tellerTypeId));
+            List<String> consumerList = waitingList.range(WAITING + tellerTypeId, 0, -1);
+            String nowCCFaceId = consultingList.opsForValue().get(CONSULTING + Long.valueOf(tellerTypeId));
 
             TellerStatusList.add(TellerStatusDTO.builder()
                     .tellerTypeId(tellerTypeId)
@@ -65,7 +68,7 @@ public class ManagerServiceImpl implements ManagerService {
     public void addConsumerToWaitingList(MemberDto.RequestMember requestMember) {
         log.info("addConsumerToConsultation");
         log.info("Input: " + requestMember);
-        waitingList.rightPush(Long.toString(requestMember.getTellerTypeId()), requestMember.getFaceId());
+        waitingList.rightPush(WAITING + requestMember.getTellerTypeId(), requestMember.getFaceId());
         consumerInfoList.opsForValue().set(requestMember.getFaceId(),
                 MemberDto.WaitingMember
                         .builder()
@@ -81,29 +84,17 @@ public class ManagerServiceImpl implements ManagerService {
     public boolean nextConsumerToConsultation(String tellerType) {
         log.info("nextConsumerToConsultation tellerType: " + tellerType);
 
-        Class<?> keyType = consultingList.getKeySerializer().getClass();
-        Class<?> valueType = consultingList.getValueSerializer().getClass();
-        log.info("consultingList: ");
-        log.info("Key Type: " + keyType.getName());
-        log.info("Value Type: " + valueType.getName());
-
-        keyType = consumerInfoList.getKeySerializer().getClass();
-        valueType = consumerInfoList.getValueSerializer().getClass();
-        log.info("consumerInfoList: ");
-        log.info("Key Type: " + keyType.getName());
-        log.info("Value Type: " + valueType.getName());
-
-        if (Boolean.TRUE.equals(consultingList.hasKey(tellerType))) {
-            log.error("상담중인 고객 : " + consultingList.opsForValue().get(tellerType));
+        if (consultingList.hasKey(CONSULTING + tellerType)) {
+            log.error("상담중인 고객 : " + consultingList.opsForValue().get(CONSULTING + tellerType));
             return false;
         }
         log.info("waiting");
-        String nextFaceId = waitingList.leftPop(tellerType);
+        String nextFaceId = waitingList.leftPop(WAITING + tellerType);
         log.info("nextConsumerFaceId: " + nextFaceId);
 
         log.info(nextFaceId);
         if (nextFaceId != null) {
-            consultingList.opsForValue().set(tellerType, nextFaceId);
+            consultingList.opsForValue().set(CONSULTING + tellerType, nextFaceId);
             return true;
         }
         log.error("대기인원이 없습니다.");
@@ -113,9 +104,9 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public boolean completeConsultation(String tellerType) {
         log.info("completeConsultation tellerType: " + tellerType);
-        String faceId = consultingList.opsForValue().get(tellerType);
+        String faceId = consultingList.opsForValue().getAndDelete(CONSULTING + tellerType);
         if (faceId != null) {
-            return consumerInfoList.delete(faceId) && consultingList.delete(tellerType);
+            return consumerInfoList.delete(faceId);
         }
         return false;
     }
