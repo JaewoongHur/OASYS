@@ -44,7 +44,7 @@ function Home() {
                 responseFunc: {
                     200: (response) => {
                         updateUserInfo(response?.data);
-                        if (response?.data.senior) routeTo("/senior/talk");
+                        if (response?.data.senior) routeTo("/senior");
                         if (!response?.data.senior) routeTo("/junior");
                     },
                     400: () => {},

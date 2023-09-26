@@ -6,6 +6,10 @@ export interface ButtonProps {
     text: string;
 }
 
+export interface FooterProps {
+    isRecording: boolean;
+}
+
 export interface InputProps {
     type?: "text" | "number" | "password" | "file";
     width: string;
