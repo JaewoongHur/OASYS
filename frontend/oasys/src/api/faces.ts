@@ -12,7 +12,7 @@ const postFaces = async <T = UserState>(props: ApiProps): Promise<T> => {
     const { responseFunc, data } = props;
     try {
         const response = await instance.post<T, AxiosResponse<T>>(
-            "/face/recognition",
+            "/faces/recognition",
             data.multipartFile,
             {
                 headers: {
