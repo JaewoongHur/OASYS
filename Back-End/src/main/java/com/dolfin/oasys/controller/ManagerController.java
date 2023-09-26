@@ -30,12 +30,6 @@ public class ManagerController {
         return "redisFlushAll";
     }
 
-    @GetMapping("/consumer")
-    public String getAllConsumerInfo() {
-        log.info("consumerInfoList");
-        return managerService.consumerInfoList();
-    }
-
     //상담리스트 체크
     @GetMapping("/teller/list")
     public ResponseEntity getTellerStatusList() {
@@ -52,7 +46,9 @@ public class ManagerController {
     //유저 정보 꺼내기
     @GetMapping("/consumer/{faceId}")
     public ResponseEntity getMemberInfoByFaceId(@PathVariable String faceId) {
-        return ResponseEntity.status(HttpStatus.OK).body(managerService.getMemberInfoByFaceId(faceId));
+        MemberDto.ResponseMember responseMember = managerService.getMemberInfoByFaceId(faceId);
+        if (responseMember == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.OK).body(responseMember);
     }
 
     //다음 손님 받기
