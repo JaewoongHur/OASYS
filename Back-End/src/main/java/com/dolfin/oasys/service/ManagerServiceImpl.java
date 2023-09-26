@@ -80,9 +80,16 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public boolean nextConsumerToConsultation(String tellerType) {
         log.info("nextConsumerToConsultation tellerType: " + tellerType);
+
         Class<?> keyType = consultingList.getKeySerializer().getClass();
         Class<?> valueType = consultingList.getValueSerializer().getClass();
+        log.info("consultingList: ");
+        log.info("Key Type: " + keyType.getName());
+        log.info("Value Type: " + valueType.getName());
 
+        keyType = consumerInfoList.getKeySerializer().getClass();
+        valueType = consumerInfoList.getValueSerializer().getClass();
+        log.info("consumerInfoList: ");
         log.info("Key Type: " + keyType.getName());
         log.info("Value Type: " + valueType.getName());
 
@@ -90,6 +97,7 @@ public class ManagerServiceImpl implements ManagerService {
             log.error("상담중인 고객 : " + consultingList.opsForValue().get(tellerType));
             return false;
         }
+        log.info("waiting");
         String nextFaceId = waitingList.leftPop(tellerType);
         log.info("nextConsumerFaceId: " + nextFaceId);
 
