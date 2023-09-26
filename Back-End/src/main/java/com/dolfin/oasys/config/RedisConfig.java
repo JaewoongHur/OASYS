@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 @EnableRedisRepositories
@@ -30,7 +31,10 @@ public class RedisConfig {
     public RedisTemplate<String, MemberDto.WaitingMember> memberDtoRedisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, MemberDto.WaitingMember> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
-        template.setDefaultSerializer(new Jackson2JsonRedisSerializer<>(MemberDto.WaitingMember.class));
+        template.setEnableTransactionSupport(true);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new Jackson2JsonRedisSerializer(MemberDto.WaitingMember.class));
+        template.setHashKeySerializer(new StringRedisSerializer());
         return template;
     }
 
@@ -39,6 +43,11 @@ public class RedisConfig {
     public RedisTemplate<String, String> stringRedisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, String> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
+        template.setEnableTransactionSupport(true);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(new StringRedisSerializer());
         return template;
     }
 
