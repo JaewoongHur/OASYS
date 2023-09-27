@@ -1,7 +1,9 @@
 package com.dolfin.oasys.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -10,6 +12,8 @@ import java.sql.Timestamp;
 @Table(name = "Member")
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
 
     @Id
