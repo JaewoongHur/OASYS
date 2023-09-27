@@ -6,7 +6,7 @@ import { Wave } from "@assets/icons";
 // ----------------------------------------------------------------------------------------------------
 
 /* Style */
-const waveKeyframes = keyframes`
+const WaveKeyframes = keyframes`
     0% {
         // Size Attribute
         margin-left: 0;
@@ -17,7 +17,7 @@ const waveKeyframes = keyframes`
     }
 `;
 
-const swellKeyframes = keyframes`
+const SwellKeyframes = keyframes`
     0%, 100% {
         // Interaction Attribute
         transform: translate3d(0, -25px, 0);
@@ -55,7 +55,7 @@ const WaveWrapper = styled("div")`
     background: url(${Wave}) repeat-x;
 
     // Interaction Attribute
-    animation: ${waveKeyframes} 20s cubic-bezier(0.35, 0.45, 0.65, 0.55) infinite;
+    animation: ${WaveKeyframes} 20s cubic-bezier(0.35, 0.45, 0.65, 0.55) infinite;
     transform: translate3d(0, 0, 0);
 
     // Second Wave Animation Attribute
@@ -63,8 +63,8 @@ const WaveWrapper = styled("div")`
         top: -8em;
         opacity: 1;
         animation:
-            ${waveKeyframes} 15s cubic-bezier(0.45, 0.35, 0.55, 0.35) -1s infinite,
-            ${swellKeyframes} 15s ease -1s infinite;
+            ${WaveKeyframes} 15s cubic-bezier(0.45, 0.35, 0.55, 0.35) -1s infinite,
+            ${SwellKeyframes} 15s ease -1s infinite;
     }
 
     // Third Wave Animation Attribute
@@ -72,8 +72,8 @@ const WaveWrapper = styled("div")`
         top: -5em;
         opacity: 1;
         animation:
-            ${waveKeyframes} 10s cubic-bezier(0.35, 0.5, 0.6, 0.55) -2s infinite,
-            ${swellKeyframes} 10s ease -2s infinite;
+            ${WaveKeyframes} 10s cubic-bezier(0.35, 0.5, 0.6, 0.55) -2s infinite,
+            ${SwellKeyframes} 10s ease -2s infinite;
     }
 `;
 
