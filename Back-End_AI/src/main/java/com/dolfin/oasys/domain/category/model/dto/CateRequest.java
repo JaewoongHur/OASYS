@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CateRequest {
+
     private String generalTypeName;
+
     private String simpleTypeName;
 }
