@@ -7,8 +7,8 @@ import { ListeningMan, ListeningWoman, TalkingMan, TalkingWoman } from "@assets/
 
 /* Style */
 const AttendantContainer = styled("div")`
-    z-index: 1;
-    height: 100%;
+    z-index: 10;
+    height: 100vh;
 `;
 
 const AttendantWrapper = styled("img")``;
