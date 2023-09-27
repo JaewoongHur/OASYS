@@ -1,14 +1,3 @@
-.seniorTalkContainer {
-    position: relative;
-    text-align: center;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: #f2f3f5;
-}
-
 .btnRecord {
     padding: 30px 60px;
     margin-top: 20px;
@@ -38,7 +27,8 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background: #e5552f;
+    background: #f28e27;
+    opacity: 0.55;
 }
 
 .wave {

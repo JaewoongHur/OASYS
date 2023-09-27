@@ -11,10 +11,11 @@ export interface UserState {
     updateUserState: (data: Partial<UserState>) => void;
 }
 
-export interface Notification {
+export interface NoticeState {
     name: string;
     phone: string;
     teller: number;
     waitPeople: number;
     work: string;
+    updateNoticeState: (data: Partial<NoticeState>) => void;
 }

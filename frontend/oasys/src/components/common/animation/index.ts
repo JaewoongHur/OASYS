@@ -1,7 +1,7 @@
 /* Import */
-import Senior from "./Senior";
+import WaveAnimation from "./WaveAnimation";
 
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export default Senior;
+export default WaveAnimation;
