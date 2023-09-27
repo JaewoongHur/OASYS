@@ -26,7 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/v1/faces")
 public class FaceController {
     @Value("${face.api.value}")
-    private static int MAX_VALUE;
+    private int MAX_VALUE;
 
     private final FaceService faceService;
 
