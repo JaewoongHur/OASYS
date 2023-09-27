@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,7 +133,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         return responseMember;
     }
-
+    @Transactional
     @Override
     public void createMember(MemberDto.RequestNewMember requestNewMember) {
         log.info("createMember");
