@@ -1,19 +1,19 @@
 package com.dolfin.oasys.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+@DynamicInsert
 @Entity
 @Table(name = "Member")
 @Getter
-@Builder
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Member {
 
 

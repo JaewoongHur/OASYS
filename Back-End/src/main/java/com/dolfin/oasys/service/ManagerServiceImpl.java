@@ -138,13 +138,13 @@ public class ManagerServiceImpl implements ManagerService {
     public void createMember(MemberDto.RequestNewMember requestNewMember) {
         log.info("createMember");
         log.info("requestNewMember: " + requestNewMember);
-        memberRepository.save(Member.builder()
-                .memberFaceId(requestNewMember.getFaceId())
-                .memberAge(requestNewMember.getAge())
-                .memberPhone(requestNewMember.getPhone())
-                .memberGender(requestNewMember.getGender())
-                .memberNickName(requestNewMember.getName())
-                .build());
+        Member member = new Member();
+        member.setMemberFaceId(requestNewMember.getFaceId());
+        member.setMemberAge(requestNewMember.getAge());
+        member.setMemberGender(requestNewMember.getGender());
+        member.setMemberPhone(requestNewMember.getPhone());
+        member.setMemberNickName(requestNewMember.getName());
+        log.info(memberRepository.save(member).toString());
     }
 
     @Override
