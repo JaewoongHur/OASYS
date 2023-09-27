@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
+import Header from "@components/common/header";
 
 function Admin() {
     return (
-        <div>
-            관리자 페이지
+        <>
+            <Header />
+            <div>관리자 페이지</div>
             <Outlet />
-        </div>
+        </>
     );
 }
 
