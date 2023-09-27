@@ -2,6 +2,7 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import Overlay from "@/components/common/overlay/Overlay";
+import { css } from "@emotion/react";
 
 // ----------------------------------------------------------------------------------------------------
 /* Props Type */
@@ -13,23 +14,23 @@ interface ModalType {
     posX: string;
     posY: string;
     center?: boolean;
+    overlayOn: boolean;
 }
 
 // ----------------------------------------------------------------------------------------------------
 /* Style */
-const ModalContainer = styled("div")`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-`;
 const ModalContent = styled("div")<ModalType>`
     width: ${(props) => props.width};
     height: ${(props) => props.height};
-    transform: translate(0%, 0%) ${(props) => (props.posX ? `translateX(${props.posX})` : "")}
-        ${(props) => (props.posY ? `translateY(${props.posY})` : "")};
+    ${(props) =>
+        props.center &&
+        css`
+            bottom: 50%;
+            left: 50%;
+        `}
+    transform: translate(-50%, 50%) ${(props) => (props.posX ? `translateX(${props.posX})` : "")}${(
+        props,
+    ) => (props.posY ? `translateY(${props.posY})` : "")};
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,6 +55,7 @@ function Modal({
     posX,
     posY,
     center,
+    overlayOn,
 }: PropsWithChildren<ModalType>) {
     const [visible, setVisible] = useState<boolean>(false);
 
@@ -68,7 +70,7 @@ function Modal({
     }, [openModal]);
     return (
         visible && (
-            <ModalContainer>
+            <>
                 <ModalContent
                     width={width}
                     height={height}
@@ -76,18 +78,21 @@ function Modal({
                     posX={posX}
                     posY={posY}
                     center={center}
+                    overlayOn
                 >
                     {children}
                 </ModalContent>
-                <Overlay
-                    onClick={(e: React.MouseEvent) => {
-                        e.preventDefault();
-                        if (getModal) {
-                            getModal();
-                        }
-                    }}
-                />
-            </ModalContainer>
+                {overlayOn && (
+                    <Overlay
+                        onClick={(e: React.MouseEvent) => {
+                            e.preventDefault();
+                            if (getModal) {
+                                getModal();
+                            }
+                        }}
+                    />
+                )}
+            </>
         )
     );
 }
