@@ -33,7 +33,7 @@ public class MemberDto {
         private String cateTypeName;
         private boolean isMember;
         private int age;
-        private Long memberId;
+        private Long userId;
         private String gender;
     }
 
@@ -49,7 +49,6 @@ public class MemberDto {
         private String phone;
         private int age;
         private String gender;
-        private String cateTypeName;
     }
 
     @Getter

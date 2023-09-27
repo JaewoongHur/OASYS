@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -123,7 +122,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         if (waitingMember.isMember()) {
             Member member = memberRepository.findByMemberFaceId(waitingMember.getFaceId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 faceId 입니다."));
-            responseMember.setMemberId(member.getMemberId());
+            responseMember.setUserId(member.getMemberId());
             responseMember.setAge(member.getMemberAge());
             responseMember.setGender(member.getMemberGender());
         }
