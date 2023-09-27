@@ -36,10 +36,10 @@ public class Member {
     @Column(name = "member_role", columnDefinition = "VARCHAR(6) DEFAULT '0'")
     private String memberRole;
 
-    @Column(name = "member_createdAt", nullable = false, updatable = false)
+    @Column(name = "member_createdAt", updatable = false)
     private Timestamp memberCreatedAt;
 
-    @Column(name = "member_updatedAt", nullable = false)
+    @Column(name = "member_updatedAt")
     private Timestamp memberUpdatedAt;
 
     @Column(name = "member_age")
