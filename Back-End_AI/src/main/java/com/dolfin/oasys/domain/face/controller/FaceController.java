@@ -3,6 +3,7 @@ package com.dolfin.oasys.domain.face.controller;
 import com.dolfin.oasys.domain.face.exception.CommunicationLimitException;
 import com.dolfin.oasys.domain.face.model.dto.DeleteDto;
 import com.dolfin.oasys.domain.face.model.dto.FaceResponse;
+import com.dolfin.oasys.domain.face.model.dto.FaceSaveResponse;
 import com.dolfin.oasys.domain.face.service.FaceService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -46,13 +47,13 @@ public class FaceController {
     @PostMapping(path = "/saveTest", consumes = {
         MediaType.APPLICATION_JSON_VALUE,
         MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<String> saveTest(@RequestPart(name = "multipartFile") MultipartFile multipartFile)throws IOException {
+    public ResponseEntity<FaceSaveResponse> saveTest(@RequestPart(name = "multipartFile") MultipartFile multipartFile)throws IOException {
         if(currentCount == MAX_VALUE){
             throw new CommunicationLimitException();
         }
         currentCount++;
-        String faceId = faceService.faceSave(multipartFile, "나문희","01012341234",78, "FEMALE");
-        return new ResponseEntity<>(faceId, HttpStatus.OK);
+        FaceSaveResponse faceSaveResponse = faceService.faceSave(multipartFile, "name");
+        return new ResponseEntity<>(faceSaveResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteTest")
