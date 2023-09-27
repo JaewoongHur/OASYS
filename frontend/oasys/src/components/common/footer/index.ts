@@ -1,7 +1,7 @@
 /* Import */
-import Senior from "./Senior";
+import Footer from "./Footer";
 
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export default Senior;
+export default Footer;
