@@ -140,7 +140,7 @@ public class ManagerServiceImpl implements ManagerService {
         memberRepository.save(Member.builder()
                 .memberFaceId(requestNewMember.getFaceId())
                 .memberAge(requestNewMember.getAge())
-                .memberPhone(requestNewMember.getGender())
+                .memberPhone(requestNewMember.getPhone())
                 .memberGender(requestNewMember.getGender())
                 .memberNickName(requestNewMember.getName())
                 .build());
