@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Member {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -24,7 +25,7 @@ public class Member {
     @Column(name = "member_faceId")
     private String memberFaceId;
 
-    @Column(name = "member_nickName")
+    @Column(name = "member_nickName", nullable = false)
     private String memberNickName;
 
     @Column(name = "member_gender")
@@ -36,10 +37,10 @@ public class Member {
     @Column(name = "member_role", columnDefinition = "VARCHAR(6) DEFAULT '0'")
     private String memberRole;
 
-    @Column(name = "member_createdAt", updatable = false)
+    @Column(name = "member_createdAt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp memberCreatedAt;
 
-    @Column(name = "member_updatedAt")
+    @Column(name = "member_updatedAt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Timestamp memberUpdatedAt;
 
     @Column(name = "member_age")
