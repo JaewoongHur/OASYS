@@ -6,6 +6,7 @@ import { Theme } from "@emotion/react";
 /* Theme Style */
 const theme: Theme = {
     colors: {
+        primary0: "#FFCC99",
         primary1: "#F28E27",
         primary2: "#FC7528",
         primary3: "#E5552F",
@@ -13,6 +14,7 @@ const theme: Theme = {
         primary5: "#662715",
         secondary: "#39B0A8",
         alert: "#FC3728",
+        allow: "#23C552",
         gray1: "#F2F3F5",
         gray2: "#CCCCCC",
         gray3: "#AAAAAA",

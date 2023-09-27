@@ -1,18 +1,18 @@
 /* Import */
 import { ApiProps } from "@customTypes/apiTypes";
-import { UserState } from "@customTypes/storeTypes";
+import { AxiosResponse } from "axios";
 import instance from "@api/instance";
 import processApiResponse from "@utils/api";
-import { AxiosResponse } from "axios";
+import { UserState } from "@customTypes/storeTypes";
 
 // ----------------------------------------------------------------------------------------------------
 
 /* Face Recognition with HTTP Post Method */
-const postFace = async <T = UserState,>(props: ApiProps): Promise<T> => {
+const postFaces = async <T = UserState>(props: ApiProps): Promise<T> => {
     const { responseFunc, data } = props;
     try {
         const response = await instance.post<T, AxiosResponse<T>>(
-            "/face/recognition",
+            "/faces/recognition",
             data.multipartFile,
             {
                 headers: {
@@ -30,4 +30,4 @@ const postFace = async <T = UserState,>(props: ApiProps): Promise<T> => {
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export default postFace;
+export default postFaces;
