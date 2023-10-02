@@ -25,6 +25,9 @@ public class Member {
     @Column(name = "member_faceId")
     private String memberFaceId;
 
+    @Column(name = "member_subId")
+    private String memberSubId;
+
     @Column(name = "member_nickName", nullable = false)
     private String memberNickName;
 
