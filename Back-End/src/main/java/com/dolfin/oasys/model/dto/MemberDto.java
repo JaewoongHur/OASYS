@@ -14,6 +14,7 @@ public class MemberDto {
         private boolean isMember;
         private Long userId;
         private String faceId;
+        private String subId;
         private String phone;
         private String name;
         private Long tellerTypeId;
@@ -28,6 +29,7 @@ public class MemberDto {
     @NoArgsConstructor
     public static class ResponseMember {
         private String faceId;
+        private String subId;
         private String name;
         private String phone;
         private String cateTypeName;
@@ -45,6 +47,7 @@ public class MemberDto {
     @NoArgsConstructor
     public static class RequestNewMember {
         private String faceId;
+        private String subId;
         private String name;
         private String phone;
         private int age;
@@ -60,6 +63,7 @@ public class MemberDto {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class WaitingMember {
         private String faceId;
+        private String subId;
         private String name;
         private String phone;
         private String cateTypeName;
@@ -74,6 +78,7 @@ public class MemberDto {
     @NoArgsConstructor
     public static class responseConsumer {
         private String faceId;
+        private String subId;
         private String name;
     }
 

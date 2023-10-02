@@ -60,6 +60,7 @@ public class ManagerServiceImpl implements ManagerService {
         return MemberDto.responseConsumer
                 .builder()
                 .faceId(faceId)
+                .subId(consumerInfoList.opsForValue().get(faceId).getSubId())
                 .name(consumerInfoList.opsForValue().get(faceId).getName())
                 .build();
     }
@@ -73,6 +74,7 @@ public class ManagerServiceImpl implements ManagerService {
                 MemberDto.WaitingMember
                         .builder()
                         .faceId(requestMember.getFaceId())
+                        .subId(requestMember.getSubId())
                         .name(requestMember.getName())
                         .phone(requestMember.getPhone())
                         .cateTypeName(requestMember.getCateTypeName())
@@ -115,6 +117,7 @@ public class ManagerServiceImpl implements ManagerService {
         MemberDto.ResponseMember responseMember = MemberDto.ResponseMember
                 .builder()
                 .faceId(waitingMember.getFaceId())
+                .subId(waitingMember.getSubId())
                 .isMember(waitingMember.isMember())
                 .name(waitingMember.getName())
                 .phone(waitingMember.getPhone())
@@ -140,6 +143,7 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("requestNewMember: " + requestNewMember);
         Member member = new Member();
         member.setMemberFaceId(requestNewMember.getFaceId());
+        member.setMemberSubId(requestNewMember.getSubId());
         member.setMemberAge(requestNewMember.getAge());
         member.setMemberGender(requestNewMember.getGender());
         member.setMemberPhone(requestNewMember.getPhone());
