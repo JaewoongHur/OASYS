@@ -6,7 +6,7 @@ import "./SeniorTalk.css";
 // import styled from "@emotion/styled";
 import Footer from "@/components/common/footer/Footer";
 import { DefaultMan, DefaultWoman, TalkingMan, TalkingWoman } from "@assets/images";
-import useUserStore from "@/store";
+import { useUserStore } from "@/store";
 
 // ----------------------------------------------------------------------------------------------------
 

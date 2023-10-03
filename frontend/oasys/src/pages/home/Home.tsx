@@ -1,7 +1,7 @@
 /* Import */
 import postFace from "@api/face";
 import useRouter from "@hooks/useRouter";
-import useUserStore from "@/store";
+import { useUserStore } from "@/store";
 import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 
