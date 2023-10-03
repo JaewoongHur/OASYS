@@ -4,7 +4,8 @@ import DefaultMan from "./OASYS-AI-man-default-unscreen.gif";
 import DefaultWoman from "./OASYS-AI-woman-default-unscreen.gif";
 import TalkingMan from "./OASYS-AI-man-talk-unscreen.gif";
 import TalkingWoman from "./OASYS-AI-woman-talk-unscreen.gif";
+import OasysLogo from "./Logo-white.png";
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export { BlackLogo, DefaultMan, DefaultWoman, TalkingMan, TalkingWoman };
+export { BlackLogo, DefaultMan, DefaultWoman, TalkingMan, TalkingWoman, OasysLogo };

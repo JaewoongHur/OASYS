@@ -1,6 +1,6 @@
 /* Import */
 import { create } from "zustand";
-import { UserState } from "@customTypes/storeTypes";
+import { UserState, LoginState } from "@customTypes/storeTypes";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -22,7 +22,13 @@ const useUserStore = create<UserState>((set) => ({
         })),
 }));
 
+/* Login Store */
+const useAuthStore = create<LoginState>((set) => ({
+    isAuthenticated: false,
+    login: () => set({ isAuthenticated: true }),
+}));
+
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export default useUserStore;
+export { useUserStore, useAuthStore };

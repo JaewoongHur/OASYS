@@ -11,6 +11,11 @@ export interface UserState {
     updateUserState: (data: Partial<UserState>) => void;
 }
 
+export interface LoginState {
+    isAuthenticated: boolean;
+    login: () => void;
+}
+
 export interface Notification {
     name: string;
     phone: string;

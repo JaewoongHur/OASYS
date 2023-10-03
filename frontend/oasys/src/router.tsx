@@ -52,12 +52,12 @@ const routeList: RouteObject[] = [
                 path: "",
                 element: <AdminMain />,
             },
-            {
-                id: "admin-login",
-                path: "login",
-                element: <AdminLogin />,
-            },
         ],
+    },
+    {
+        id: "admin-login",
+        path: "/admin/login",
+        element: <AdminLogin />,
     },
 ];
 
