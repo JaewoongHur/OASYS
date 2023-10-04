@@ -1,13 +1,14 @@
 /* Import */
-import axios from "axios";
+import Footer from "@components/common/footer";
+import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
-import styled from "@emotion/styled";
-import Footer from "@components/common/footer";
 import useUserStore from "@/store";
 import postMessage from "@api/notification";
+import { postQuestion, postConfirm } from "@api/voice";
 import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
 import { TextArea } from "@components/common/input";
+import useRouter from "@hooks/useRouter";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -64,9 +65,11 @@ const PushButton = styled("button")`
 /* Senior Page */
 function Senior() {
     const [value, setValue] = useState<string>("");
+    const [confirm, setConfirm] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
     const gender = useUserStore((state) => state.gender);
+    const { routeTo } = useRouter();
 
     async function sendTextMessage() {
         await postMessage({
@@ -92,41 +95,63 @@ function Senior() {
     });
 
     useEffect(() => {
-        const sendToBackend = async (text: string) => {
-            try {
-                const response = await axios.post<string>(
-                    "http://localhost:8081/api/v1/voice/tts",
-                    { text },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
+        async function askBusiness(text: string) {
+            await postQuestion({
+                responseFunc: {
+                    200: (response) => {
+                        const receivedText = response?.data;
+                        setValue(receivedText);
+                        setConfirm(true);
                     },
-                );
-                const receivedText = response.data;
+                    400: () => {},
+                },
+                data: {
+                    text,
+                    gender,
+                },
+            });
+        }
 
-                setValue(receivedText);
-                sendTextMessage();
-                // textToSpeech(receivedText);
-            } catch (error) {
-                console.error("Error sending voice text to backend:", error);
-            }
-        };
+        async function confirmBusiness(text: string) {
+            await postConfirm({
+                responseFunc: {
+                    200: (response) => {
+                        const receivedText = response?.data;
+                        setValue(receivedText);
+                        if (response?.data) {
+                            sendTextMessage();
+                        } else {
+                            setConfirm(false);
+                            routeTo("/senior");
+                        }
+                    },
+                    400: () => {},
+                },
+                data: {
+                    text,
+                    gender,
+                },
+            });
+        }
 
         if (isRecording && lastSpeechTime) {
             const checkSilenceInterval = setInterval(() => {
                 if (Date.now() - lastSpeechTime > 3000) {
                     stop();
                     setIsRecording(false);
-                    sendToBackend(value);
-                    setLastSpeechTime(null); // Reset the last speech time when silence is detected
+                    if (confirm) {
+                        confirmBusiness(value);
+                    } else {
+                        askBusiness(value);
+                    }
+                    setLastSpeechTime(null);
                 }
             }, 1000);
 
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-    }, [isRecording, lastSpeechTime, stop, value]);
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, routeTo]);
 
     const toggleRecording = () => {
         if (isRecording) {
