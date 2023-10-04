@@ -2,6 +2,8 @@ FROM nginx:alpine
 
 VOLUME /etc/letsencrypt
 
+USER root 
+
 COPY ./dist /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY /etc/letsencrypt /etc/letsencrypt
