@@ -1,6 +1,7 @@
 /* Import */
 import styled from "@emotion/styled";
 import { ButtonProps } from "@customTypes/componentTypes";
+import React from "react";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -10,6 +11,8 @@ interface TextButtonProps extends ButtonProps {
     fontSize?: string;
     disabled?: boolean;
     onClick: () => void;
+    onKeyDown?: (e: React.KeyboardEvent) => void;
+    tabIndex?: number;
 }
 
 type TextButtonWrapperProps = {
@@ -97,6 +100,8 @@ function TextButton(props: TextButtonProps) {
         fontSize = "20px",
         disabled = false,
         onClick,
+        onKeyDown,
+        tabIndex,
     } = props;
 
     return (
@@ -108,6 +113,8 @@ function TextButton(props: TextButtonProps) {
             fontSize={fontSize}
             disabled={disabled}
             onClick={onClick}
+            onKeyDown={onKeyDown}
+            tabIndex={tabIndex}
         >
             {text}
         </TextButtonWrapper>

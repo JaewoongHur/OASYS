@@ -10,7 +10,9 @@ interface TextInputProps extends InputProps {
     readOnly?: boolean;
     label?: string;
     placeholder?: string;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onClick?: (event: React.MouseEvent) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 type InputWrapperProps = {
@@ -36,8 +38,7 @@ const LabelWrapper = styled("label")`
     // Interaction Attribute
     user-select: none;
 `;
-
-const InputWrapper = styled("input")<InputWrapperProps>`
+const InputIconWrapper = styled("div")<InputWrapperProps>`
     // Size Attribute
     width: ${(props) => props.width};
     height: ${(props) => props.height};
@@ -59,6 +60,18 @@ const InputWrapper = styled("input")<InputWrapperProps>`
     :focus {
         box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
     }
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+const InputWrapper = styled("input")`
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
 `;
 
 // ----------------------------------------------------------------------------------------------------
@@ -74,21 +87,24 @@ function TextInput(props: TextInputProps) {
         label = "",
         placeholder = "",
         onChange,
+        onClick,
+        onKeyDown,
     } = props;
 
     return (
-        <InputContainer>
+        <InputContainer onClick={onClick}>
             <LabelWrapper htmlFor="text-input">{label}</LabelWrapper>
-            <InputWrapper
-                type={type}
-                id="text-input"
-                width={width}
-                height={height}
-                value={value}
-                readOnly={readOnly}
-                placeholder={placeholder}
-                onChange={onChange}
-            />
+            <InputIconWrapper width={width} height={height}>
+                <InputWrapper
+                    type={type}
+                    id="text-input"
+                    value={value}
+                    readOnly={readOnly}
+                    placeholder={placeholder}
+                    onChange={onChange}
+                    onKeyDown={onKeyDown}
+                />
+            </InputIconWrapper>
         </InputContainer>
     );
 }
