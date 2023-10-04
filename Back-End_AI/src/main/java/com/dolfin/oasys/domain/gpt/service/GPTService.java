@@ -234,9 +234,9 @@ public class GPTService {
 
             }
             else{
-
+                receive = new PlayerMP3(filePath+"확인_실패_여자.mp3");
                 answerText = null;
-
+                receive.playing();
             }
         }
         else{
@@ -246,7 +246,9 @@ public class GPTService {
                 receive.playing();
             }
             else {
-                answerText= null;
+                receive = new PlayerMP3(filePath+"확인_실패_여자.mp3");
+                answerText = null;
+                receive.playing();
 
             }
         }
