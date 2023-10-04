@@ -34,3 +34,10 @@ spring:
       idle-timeout: 600000
       max-lifetime: 1800000
       auto-commit: true
+
+# prometheus 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
