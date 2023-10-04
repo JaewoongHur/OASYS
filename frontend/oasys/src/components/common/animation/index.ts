@@ -1,7 +1,8 @@
 /* Import */
+import AttendantAnimation from "./AttendantAnimation";
 import WaveAnimation from "./WaveAnimation";
 
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export default WaveAnimation;
+export { AttendantAnimation, WaveAnimation };
