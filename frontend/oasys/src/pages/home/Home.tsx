@@ -2,7 +2,7 @@
 import postFace from "@api/faces";
 import useRouter from "@hooks/useRouter";
 import { useUserStore } from "@/store";
-import { useRef, useState, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import Webcam from "react-webcam";
 
 // ----------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ import Webcam from "react-webcam";
 /* Home Page */
 function Home() {
     const webcamRef = useRef<Webcam | null>(null);
-    const [imgSrc, setImgSrc] = useState<string | null>(null);
+    // const [imgSrc, setImgSrc] = useState<string | null>(null);
     const updateUserInfo = useUserStore((state) => state.updateUserState);
     const { routeTo } = useRouter();
 
@@ -31,9 +31,9 @@ function Home() {
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot();
         async function fetchUserInfo() {
-            if (typeof imageSrc === "string") {
-                setImgSrc(imageSrc);
-            }
+            // if (typeof imageSrc === "string") {
+            //     setImgSrc(imageSrc);
+            // }
             const formData = new FormData();
             if (typeof imageSrc === "string") {
                 const file = DataURIToBlob(imageSrc);
@@ -55,7 +55,7 @@ function Home() {
             });
         }
         fetchUserInfo();
-    }, [webcamRef, setImgSrc, routeTo, updateUserInfo]);
+    }, [webcamRef, routeTo, updateUserInfo]);
 
     return (
         <div onClick={capture}>

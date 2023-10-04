@@ -3,7 +3,7 @@ import Footer from "@components/common/footer";
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
-import useUserStore from "@/store";
+import { useUserStore } from "@/store";
 import postMessage from "@api/notification";
 import { postQuestion, postConfirm } from "@api/voice";
 import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
