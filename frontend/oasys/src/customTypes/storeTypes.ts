@@ -16,10 +16,11 @@ export interface LoginState {
     login: () => void;
 }
 
-export interface Notification {
+export interface NoticeState {
     name: string;
     phone: string;
     teller: number;
     waitPeople: number;
     work: string;
+    updateNoticeState: (data: Partial<NoticeState>) => void;
 }

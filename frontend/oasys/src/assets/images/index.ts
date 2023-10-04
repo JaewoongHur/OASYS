@@ -1,11 +1,11 @@
 /* Import */
 import BlackLogo from "./black-logo.png";
-import DefaultMan from "./OASYS-AI-man-default-unscreen.gif";
-import DefaultWoman from "./OASYS-AI-woman-default-unscreen.gif";
-import TalkingMan from "./OASYS-AI-man-talk-unscreen.gif";
-import TalkingWoman from "./OASYS-AI-woman-talk-unscreen.gif";
-import OasysLogo from "./Logo-white.png";
+import WhiteLogo from "./white-logo.png";
+import ListeningMan from "./man-attendant-listening.gif";
+import ListeningWoman from "./woman-attendant-listening.gif";
+import TalkingMan from "./man-attendant-talking.gif";
+import TalkingWoman from "./woman-attendant-talking.gif";
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export { BlackLogo, DefaultMan, DefaultWoman, TalkingMan, TalkingWoman, OasysLogo };
+export { BlackLogo, WhiteLogo, ListeningMan, ListeningWoman, TalkingMan, TalkingWoman };

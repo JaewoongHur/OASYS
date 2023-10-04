@@ -14,6 +14,10 @@ type TextAreaWrapperProps = {
 
 /* Style */
 const TextAreaWrapper = styled("div")<TextAreaWrapperProps>`
+    // Position Attribute
+    z-index: 10;
+    flex-grow: 1;
+
     // Size Attribute
     width: ${(props) => props.width};
     height: ${(props) => props.height};
@@ -39,7 +43,7 @@ const TextAreaWrapper = styled("div")<TextAreaWrapperProps>`
 
 /* Text Area Component */
 function TextArea(props: InputProps) {
-    const { width, height = "100%", value } = props;
+    const { width, height = "fit-content", value } = props;
     return (
         <TextAreaWrapper width={width} height={height}>
             {value}

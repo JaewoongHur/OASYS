@@ -6,6 +6,15 @@ export interface ButtonProps {
     text: string;
 }
 
+export interface FooterProps {
+    isRecording: boolean;
+}
+
+export interface AnimationProps {
+    isRecording: boolean;
+    userGender: "MALE" | "FEMALE" | undefined;
+}
+
 export interface InputProps {
     type?: "text" | "number" | "password" | "file";
     width: string;

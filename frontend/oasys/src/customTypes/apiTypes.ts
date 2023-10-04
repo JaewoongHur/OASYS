@@ -13,6 +13,11 @@ export interface ProcessApiProps {
     response: AxiosResponse;
 }
 
+export interface QuestionDataType {
+    text: string;
+    gender: "MALE" | "FEMALE" | undefined;
+}
+
 export interface ApiProps {
     responseFunc: ResponseFuncType;
     data: { [key: string]: unknown };

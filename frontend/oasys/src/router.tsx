@@ -1,9 +1,9 @@
 /* Import */
-import { RouteObject, createBrowserRouter } from "react-router-dom";
 import { Admin, AdminMain, AdminLogin } from "@pages/admin";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 import Home from "@pages/home";
-import { Senior, SeniorHome, SeniorPhone } from "@pages/senior";
 import Junior from "@pages/junior";
+import Senior from "@pages/senior";
 import Test1 from "./pages/home/Test1";
 
 // ----------------------------------------------------------------------------------------------------
@@ -29,18 +29,6 @@ const routeList: RouteObject[] = [
         id: "senior",
         path: "/senior",
         element: <Senior />,
-        children: [
-            {
-                id: "senior-home",
-                path: "",
-                element: <SeniorHome />,
-            },
-            {
-                id: "senior-phone",
-                path: "phone",
-                element: <SeniorPhone />,
-            },
-        ],
     },
     {
         id: "admin",

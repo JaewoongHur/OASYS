@@ -11,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +60,7 @@ public class ManagerServiceImpl implements ManagerService {
         return MemberDto.responseConsumer
                 .builder()
                 .faceId(faceId)
+                .subId(consumerInfoList.opsForValue().get(faceId).getSubId())
                 .name(consumerInfoList.opsForValue().get(faceId).getName())
                 .build();
     }
@@ -73,6 +74,7 @@ public class ManagerServiceImpl implements ManagerService {
                 MemberDto.WaitingMember
                         .builder()
                         .faceId(requestMember.getFaceId())
+                        .subId(requestMember.getSubId())
                         .name(requestMember.getName())
                         .phone(requestMember.getPhone())
                         .cateTypeName(requestMember.getCateTypeName())
@@ -115,6 +117,7 @@ public class ManagerServiceImpl implements ManagerService {
         MemberDto.ResponseMember responseMember = MemberDto.ResponseMember
                 .builder()
                 .faceId(waitingMember.getFaceId())
+                .subId(waitingMember.getSubId())
                 .isMember(waitingMember.isMember())
                 .name(waitingMember.getName())
                 .phone(waitingMember.getPhone())
@@ -123,7 +126,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         if (waitingMember.isMember()) {
             Member member = memberRepository.findByMemberFaceId(waitingMember.getFaceId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 faceId 입니다."));
-            responseMember.setMemberId(member.getMemberId());
+            responseMember.setUserId(member.getMemberId());
             responseMember.setAge(member.getMemberAge());
             responseMember.setGender(member.getMemberGender());
         }
@@ -133,18 +136,19 @@ public class ManagerServiceImpl implements ManagerService {
 
         return responseMember;
     }
-
+    @Transactional
     @Override
     public void createMember(MemberDto.RequestNewMember requestNewMember) {
         log.info("createMember");
         log.info("requestNewMember: " + requestNewMember);
-        memberRepository.save(Member.builder()
-                .memberFaceId(requestNewMember.getFaceId())
-                .memberAge(requestNewMember.getAge())
-                .memberPhone(requestNewMember.getGender())
-                .memberGender(requestNewMember.getGender())
-                .memberNickName(requestNewMember.getName())
-                .build());
+        Member member = new Member();
+        member.setMemberFaceId(requestNewMember.getFaceId());
+        member.setMemberSubId(requestNewMember.getSubId());
+        member.setMemberAge(requestNewMember.getAge());
+        member.setMemberGender(requestNewMember.getGender());
+        member.setMemberPhone(requestNewMember.getPhone());
+        member.setMemberNickName(requestNewMember.getName());
+        log.info(memberRepository.save(member).toString());
     }
 
     @Override

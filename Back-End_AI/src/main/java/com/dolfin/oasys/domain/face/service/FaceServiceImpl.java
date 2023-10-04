@@ -6,6 +6,7 @@ import com.dolfin.oasys.domain.face.model.dto.DeleteDto;
 import com.dolfin.oasys.domain.face.model.dto.FaceDetect;
 import com.dolfin.oasys.domain.face.model.dto.FaceRecognize;
 import com.dolfin.oasys.domain.face.model.dto.FaceResponse;
+import com.dolfin.oasys.domain.face.model.dto.FaceSaveResponse;
 import com.dolfin.oasys.domain.face.model.dto.SubCreate;
 import com.dolfin.oasys.domain.member.model.entity.Gender;
 import com.dolfin.oasys.domain.member.model.entity.Member;
@@ -116,7 +117,7 @@ public class FaceServiceImpl implements FaceService{
     }
 
     @Override
-    public String faceSave(MultipartFile multipartFile, String name, String phone, int age,String gender) throws IOException{
+    public FaceSaveResponse faceSave(MultipartFile multipartFile, String name) throws IOException{
         String fileName = multipartFile.getOriginalFilename();
         String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
 
@@ -131,9 +132,8 @@ public class FaceServiceImpl implements FaceService{
         //페이스 객체 생성
         String subId = faceCreateAtServer(name, client, requestBody);
         String faceId = getFaceId(client, requestBody);
-        memberRepository.save(Member.create(faceId, subId, name, phone, Role.NORMAL, age, gender));
         convFile.delete();
-        return faceId;
+        return FaceSaveResponse.from(faceId,subId);
     }
 
     @Override
