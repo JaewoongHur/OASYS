@@ -1,6 +1,6 @@
 /* Import */
 import styled from "@emotion/styled";
-import { OasysLogo } from "@assets/images";
+import { WhiteLogo } from "@assets/images";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ const HeaderSub = styled("div")``;
 function Header() {
     return (
         <HeaderContainer>
-            <HeaderIcon src={OasysLogo} alt="Oasys-Logo" />
+            <HeaderIcon src={WhiteLogo} alt="Oasys-Logo" />
             <HeaderTextWrapper>
                 <HeaderMain>오아시스 은행</HeaderMain>
                 <HeaderSub>역삼역 지점</HeaderSub>
