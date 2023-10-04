@@ -35,7 +35,7 @@ const FloatingActionButtonWrapper = styled("button")<FloatingActionButtonWrapper
     // Text Attribute
     color: ${(props) => props.theme.colors.gray7};
     font-family: "Gangwon Edu Power";
-    font-size: 30px;
+    font-size: 26px;
 
     // Interaction Attribute
     transition: 0.3s;
