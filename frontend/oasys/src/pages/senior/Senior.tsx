@@ -103,6 +103,11 @@ function Senior() {
                         setValue(receivedText);
                         setConfirm(true);
                         // toggleRecording();
+
+                        setTimeout(() => {
+                            listen();
+                            setIsRecording(true);
+                        }, 3500);
                     },
                     400: () => {},
                 },

@@ -46,6 +46,7 @@ function Test1() {
                     openModal={isOpenModal}
                     getModal={onClickModal}
                     overlayOn
+                    position="fixed"
                 >
                     <div>이곳에 children이 들어갑니다.</div>
                     <TextButton width="50%" height="50%" onClick={onClickModal} text="closeModal" />
