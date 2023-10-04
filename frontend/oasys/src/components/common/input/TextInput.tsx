@@ -11,8 +11,8 @@ interface TextInputProps extends InputProps {
     label?: string;
     placeholder?: string;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-    inputIconSrc?: string;
     onClick?: (event: React.MouseEvent) => void;
+    onKeyDown?: (event: React.KeyboardEvent) => void;
 }
 
 type InputWrapperProps = {
@@ -73,10 +73,6 @@ const InputWrapper = styled("input")`
     background-color: transparent;
     cursor: pointer;
 `;
-const InputIcon = styled("img")`
-    width: 10%;
-    height: 80%;
-`;
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -91,8 +87,8 @@ function TextInput(props: TextInputProps) {
         label = "",
         placeholder = "",
         onChange,
-        inputIconSrc,
         onClick,
+        onKeyDown,
     } = props;
 
     return (
@@ -106,8 +102,8 @@ function TextInput(props: TextInputProps) {
                     readOnly={readOnly}
                     placeholder={placeholder}
                     onChange={onChange}
+                    onKeyDown={onKeyDown}
                 />
-                <InputIcon src={inputIconSrc} alt="inputIcon" />
             </InputIconWrapper>
         </InputContainer>
     );
