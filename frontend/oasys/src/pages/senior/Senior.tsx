@@ -9,6 +9,7 @@ import { postQuestion, postConfirm } from "@api/voice";
 import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
 import { TextArea } from "@components/common/input";
 import useRouter from "@hooks/useRouter";
+import Numpad from "@components/numpad";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -172,6 +173,7 @@ function Senior() {
                 <PushButton type="button" onClick={toggleRecording}>
                     {isRecording ? "음성 인식 중입니다 🎧" : "말하기 💬"}
                 </PushButton>
+                <Numpad />
             </SeniorBodyContainer>
             <WaveAnimation />
             <Footer isRecording={isRecording} />
