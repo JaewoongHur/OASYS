@@ -4,6 +4,7 @@ VOLUME /etc/letsencrypt
 
 COPY ./dist /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY /etc/letsencrypt /etc/letsencrypt
 COPY .env.production ./.env
 EXPOSE 80
 # Start nginx
