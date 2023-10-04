@@ -2,7 +2,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
-import "./SeniorTalk.css";
 import styled from "@emotion/styled";
 import Footer from "@components/common/footer";
 import useUserStore from "@/store";
@@ -14,22 +13,50 @@ import { TextArea } from "@components/common/input";
 
 /* Style */
 const SeniorContainer = styled("div")`
+    // Position Attribute
     position: relative;
-    height: 100vh;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    // Size Attribute
+    height: 100vh;
     overflow: hidden;
+
+    // Style Attribute
     background-color: ${(props) => props.theme.colors.gray1};
+
+    // Interaction Attribute
     user-select: none;
 `;
 
 const SeniorBodyContainer = styled("div")`
+    // Position Attribute
     display: flex;
     justify-content: left;
+    align-items: center;
+
+    // Size Attribute
     width: 100%;
+`;
+
+const PushButton = styled("button")`
+    padding: 30px 60px;
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: transparent;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 50px;
+    font-weight: bold;
+    z-index: 2;
+
+    &:hover {
+        background-color: transparent;
+    }
 `;
 
 // ----------------------------------------------------------------------------------------------------
@@ -117,9 +144,9 @@ function Senior() {
             <SeniorBodyContainer>
                 <AttendantAnimation isRecording={isRecording} userGender={gender} />
                 <TextArea width="100%" value={value} />
-                <button type="button" className="btnRecord" onClick={toggleRecording}>
+                <PushButton type="button" onClick={toggleRecording}>
                     {isRecording ? "음성 인식 중입니다 🎧" : "말하기 💬"}
-                </button>
+                </PushButton>
             </SeniorBodyContainer>
             <WaveAnimation />
             <Footer isRecording={isRecording} />

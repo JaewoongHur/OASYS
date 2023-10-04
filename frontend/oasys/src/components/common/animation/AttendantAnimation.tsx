@@ -7,11 +7,17 @@ import { ListeningMan, ListeningWoman, TalkingMan, TalkingWoman } from "@assets/
 
 /* Style */
 const AttendantContainer = styled("div")`
+    // Position Attribute
     z-index: 10;
+
+    // Size Attribute
     height: 100vh;
 `;
 
-const AttendantWrapper = styled("img")``;
+const AttendantWrapper = styled("img")`
+    // Size Attribute
+    height: 100vh;
+`;
 
 // ----------------------------------------------------------------------------------------------------
 
