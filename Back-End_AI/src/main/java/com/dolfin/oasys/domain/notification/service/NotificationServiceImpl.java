@@ -1,6 +1,6 @@
 package com.dolfin.oasys.domain.notification.service;
 
-import com.dolfin.oasys.domain.notification.dto.SmsNotificationRequest;
+import com.dolfin.oasys.domain.notification.dto.SMSNotificationRequest;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.type.PhoneNumber;
@@ -50,20 +50,20 @@ public class NotificationServiceImpl implements NotificationService{
     }
 
     @Override
-    public void sendSmsNotification(SmsNotificationRequest notificationRequest) {
+    public void sendSmsNotification(SMSNotificationRequest smsNotificationRequest) {
         StringBuilder text = new StringBuilder();
         text.append("[OASYS]")
-            .append("\n이름: ").append(notificationRequest.getName())
-            .append("\n창구번호: ").append(notificationRequest.getTeller())
-            .append("\n대기인 수: ").append(notificationRequest.getWaitPeople())
-            .append("\n접수 업무: ").append(notificationRequest.getWork());
+            .append("\n이름: ").append(smsNotificationRequest.getName())
+            .append("\n창구번호: ").append(smsNotificationRequest.getTeller())
+            .append("\n대기인 수: ").append(smsNotificationRequest.getWaitPeople())
+            .append("\n접수 업무: ").append(smsNotificationRequest.getWork());
         Message message = new Message();
 
         log.info("sendnum={}",SEND_NUM);
         log.info("apikey={}",SMS_KEY);
         log.info("apisec={}",SMS_SECRET);
         message.setFrom(SEND_NUM);
-        message.setTo(notificationRequest.getPhone());
+        message.setTo(smsNotificationRequest.getPhone());
         message.setText(text.toString());
 
         SingleMessageSentResponse response = null;

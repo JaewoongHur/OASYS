@@ -23,10 +23,11 @@ public class ManagerController {
         return "Hello manager-service";
     }
 
-    @GetMapping("/health-check2")
-    public String getHealth2() {
-        log.info("health-check manager-service");
-        return "Hello manager-service";
+    @GetMapping("/health-check/redisFlushAll")
+    public String redisFlushAll() {
+        log.info("redisFlushAll");
+        managerService.flushAll();
+        return "redisFlushAll";
     }
 
     //상담리스트 체크
@@ -45,7 +46,9 @@ public class ManagerController {
     //유저 정보 꺼내기
     @GetMapping("/consumer/{faceId}")
     public ResponseEntity getMemberInfoByFaceId(@PathVariable String faceId) {
-        return ResponseEntity.status(HttpStatus.OK).body(managerService.getMemberInfoByFaceId(faceId));
+        MemberDto.ResponseMember responseMember = managerService.getMemberInfoByFaceId(faceId);
+        if (responseMember == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.status(HttpStatus.OK).body(responseMember);
     }
 
     //다음 손님 받기
@@ -54,8 +57,8 @@ public class ManagerController {
         if (managerService.nextConsumerToConsultation(Long.toString(tellerType))) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-        log.error("대기 인원이 없습니다.");
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("대기 인원이 없습니다.");
+        log.error("대기 인원이 없거나 상담 중인 고객이 있습니다.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("대기 인원이 없거나 상담 중인 고객이 있습니다.");
     }
     
     //상담 완료

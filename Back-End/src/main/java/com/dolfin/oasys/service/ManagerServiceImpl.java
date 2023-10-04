@@ -6,12 +6,13 @@ import com.dolfin.oasys.model.entity.Member;
 import com.dolfin.oasys.model.entity.TellerType;
 import com.dolfin.oasys.repository.MemberRepository;
 import com.dolfin.oasys.repository.TellerTypeRepository;
-import com.dolfin.oasys.util.JsonConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerServiceImpl implements ManagerService {
+    private final String WAITING = "tellerWaiting";
+    private final String CONSULTING = "tellerConsulting";
     //총 고객 리스트
     private final RedisTemplate<String, MemberDto.WaitingMember> consumerInfoList;
     //상담 리스트
@@ -35,9 +38,9 @@ public class ManagerServiceImpl implements ManagerService {
     public List<TellerStatusDTO> getTellerStatusList() {
         List<TellerStatusDTO> TellerStatusList = new ArrayList<>();
         for (TellerType tellerType : tellerTypeRepository.findAll()) {
-            List<String> consumerList = waitingList.range(Long.toString(tellerType.getTellerTypeId()), 0, -1);
             Long tellerTypeId = tellerType.getTellerTypeId();
-            String nowCCFaceId = consultingList.opsForValue().get(tellerTypeId);
+            List<String> consumerList = waitingList.range(WAITING + tellerTypeId, 0, -1);
+            String nowCCFaceId = consultingList.opsForValue().get(CONSULTING + Long.valueOf(tellerTypeId));
 
             TellerStatusList.add(TellerStatusDTO.builder()
                     .tellerTypeId(tellerTypeId)
@@ -57,6 +60,7 @@ public class ManagerServiceImpl implements ManagerService {
         return MemberDto.responseConsumer
                 .builder()
                 .faceId(faceId)
+                .subId(consumerInfoList.opsForValue().get(faceId).getSubId())
                 .name(consumerInfoList.opsForValue().get(faceId).getName())
                 .build();
     }
@@ -65,35 +69,43 @@ public class ManagerServiceImpl implements ManagerService {
     public void addConsumerToWaitingList(MemberDto.RequestMember requestMember) {
         log.info("addConsumerToConsultation");
         log.info("Input: " + requestMember);
-        waitingList.rightPush(Long.toString(requestMember.getTellerTypeId()), requestMember.getFaceId());
+        waitingList.rightPush(WAITING + requestMember.getTellerTypeId(), requestMember.getFaceId());
         consumerInfoList.opsForValue().set(requestMember.getFaceId(),
                 MemberDto.WaitingMember
-                .builder()
-                .faceId(requestMember.getFaceId())
-                .name(requestMember.getName())
-                .phone(requestMember.getPhone())
-                .cateTypeName(requestMember.getCateTypeName())
-                .isMember(requestMember.isMember())
-                .build());
+                        .builder()
+                        .faceId(requestMember.getFaceId())
+                        .subId(requestMember.getSubId())
+                        .name(requestMember.getName())
+                        .phone(requestMember.getPhone())
+                        .cateTypeName(requestMember.getCateTypeName())
+                        .isMember(requestMember.isMember())
+                        .build());
     }
 
     @Override
     public boolean nextConsumerToConsultation(String tellerType) {
         log.info("nextConsumerToConsultation tellerType: " + tellerType);
-        String nextFaceId = waitingList.leftPop(tellerType);
+        if (consultingList.hasKey(CONSULTING + tellerType)) {
+            log.error("상담중인 고객 : " + consultingList.opsForValue().get(CONSULTING + tellerType));
+            return false;
+        }
+        String nextFaceId = waitingList.leftPop(WAITING + tellerType);
+        log.info("nextConsumerFaceId: " + nextFaceId);
+        
         if (nextFaceId != null) {
-            consultingList.opsForValue().set(tellerType, nextFaceId);
+            consultingList.opsForValue().set(CONSULTING + tellerType, nextFaceId);
             return true;
         }
+        log.error("대기인원이 없습니다.");
         return false;
     }
 
     @Override
     public boolean completeConsultation(String tellerType) {
         log.info("completeConsultation tellerType: " + tellerType);
-        String faceId = consultingList.opsForValue().get(tellerType);
+        String faceId = consultingList.opsForValue().getAndDelete(CONSULTING + tellerType);
         if (faceId != null) {
-            return consumerInfoList.delete(faceId) && consultingList.delete(tellerType);
+            return consumerInfoList.delete(faceId);
         }
         return false;
     }
@@ -101,8 +113,11 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public MemberDto.ResponseMember getMemberInfoByFaceId(String faceId) {
         MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(faceId);
+        if (waitingMember == null) return null;
         MemberDto.ResponseMember responseMember = MemberDto.ResponseMember
                 .builder()
+                .faceId(waitingMember.getFaceId())
+                .subId(waitingMember.getSubId())
                 .isMember(waitingMember.isMember())
                 .name(waitingMember.getName())
                 .phone(waitingMember.getPhone())
@@ -111,7 +126,7 @@ public class ManagerServiceImpl implements ManagerService {
 
         if (waitingMember.isMember()) {
             Member member = memberRepository.findByMemberFaceId(waitingMember.getFaceId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 faceId 입니다."));
-            responseMember.setMemberId(member.getMemberId());
+            responseMember.setUserId(member.getMemberId());
             responseMember.setAge(member.getMemberAge());
             responseMember.setGender(member.getMemberGender());
         }
@@ -121,19 +136,29 @@ public class ManagerServiceImpl implements ManagerService {
 
         return responseMember;
     }
-
+    @Transactional
     @Override
     public void createMember(MemberDto.RequestNewMember requestNewMember) {
         log.info("createMember");
         log.info("requestNewMember: " + requestNewMember);
-        memberRepository.save(Member.builder()
-                .memberFaceId(requestNewMember.getFaceId())
-                .memberAge(requestNewMember.getAge())
-                .memberPhone(requestNewMember.getGender())
-                .memberGender(requestNewMember.getGender())
-                .memberNickName(requestNewMember.getName())
-                .build());
+        Member member = new Member();
+        member.setMemberFaceId(requestNewMember.getFaceId());
+        member.setMemberSubId(requestNewMember.getSubId());
+        member.setMemberAge(requestNewMember.getAge());
+        member.setMemberGender(requestNewMember.getGender());
+        member.setMemberPhone(requestNewMember.getPhone());
+        member.setMemberNickName(requestNewMember.getName());
+        log.info(memberRepository.save(member).toString());
     }
 
+    @Override
+    public void flushAll() {
+        consumerInfoList.getConnectionFactory().getConnection().flushAll();
+        consultingList.getConnectionFactory().getConnection().flushAll();
+        waitingList.getOperations().execute((RedisCallback<Void>) connection -> {
+            connection.flushAll();
+            return null;
+        });
+    }
 
 }

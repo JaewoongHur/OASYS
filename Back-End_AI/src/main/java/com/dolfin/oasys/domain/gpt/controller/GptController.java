@@ -33,7 +33,6 @@ import java.util.Map;
 @RequestMapping("/gpt")
 @RequiredArgsConstructor
 public class GptController {
-
     @Value("${gpt.api.key}")
     private String key;
 
@@ -49,7 +48,7 @@ public class GptController {
     private PythonInterpreter py;
 
     /*resource\\mp3 폴더의 절대 경로 넣기*/
-   private final String filePath = "./src/main/resources/mp3/";
+   private final String FILE_PATH = "./src/main/resources/mp3/";
 
 
     @PostMapping("/voice")
@@ -77,17 +76,17 @@ public class GptController {
 //        gptService.sendToDesk("female");
         PlayerMP3 receive;
         if(answerText.contains("인출")||answerText.contains("1")) {
-            receive = new PlayerMP3(filePath + "인출_접수_여자.mp3");
+            receive = new PlayerMP3(FILE_PATH + "인출_접수_여자.mp3");
             answerText = "인출 업무 접수 완료";
             receive.playing();
         }
         else if(answerText.contains("입금")||answerText.contains("2")) {
-            receive = new PlayerMP3(filePath + "입금_접수_여자.mp3");
+            receive = new PlayerMP3(FILE_PATH+ "입금_접수_여자.mp3");
             answerText = "입금 업무 접수 완료";
             receive.playing();
         }
         else if(answerText.contains("송금")||answerText.contains("3")) {
-            receive = new PlayerMP3(filePath + "송금_접수_여자.mp3");
+            receive = new PlayerMP3(FILE_PATH + "송금_접수_여자.mp3");
             answerText = "송금 업무 접수 완료";
             receive.playing();
         }
@@ -98,7 +97,7 @@ public class GptController {
         catch (Exception e){
             e.printStackTrace();
         }
-        PlayerMP3 playerMP3 = new PlayerMP3(filePath+"접수_확인_여자.mp3");
+        PlayerMP3 playerMP3 = new PlayerMP3(FILE_PATH+"접수_확인_여자.mp3");
 
         playerMP3.playing();
         return ResponseEntity.ok(answerText);

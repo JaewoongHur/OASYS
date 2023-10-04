@@ -17,4 +17,6 @@ public interface ManagerService {
     MemberDto.ResponseMember getMemberInfoByFaceId(String faceId);
 
     void createMember(MemberDto.RequestNewMember requestNewMember);
+
+    void flushAll();
 }
