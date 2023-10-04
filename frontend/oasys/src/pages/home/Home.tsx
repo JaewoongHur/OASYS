@@ -58,13 +58,34 @@ function Home() {
     }, [webcamRef, setImgSrc, routeTo, updateUserInfo]);
 
     return (
-        <>
-            <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
+        <div onClick={capture}>
+            <iframe
+                title="Background Video"
+                width="100%"
+                height="100%"
+                src={`https://www.youtube.com/embed/JPvLbNDABnA?autoplay=1&controls=0&showinfo=0&rel=0&loop=1&playlist=JPvLbNDABnA&mute=1`}
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: -1,
+                }}
+            />
+            <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                style={{ visibility: "hidden" }}
+            />
+            {/* <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
             <button type="button" onClick={capture}>
                 이미지 캡처
             </button>
-            {imgSrc && <img src={imgSrc} alt="캡처 이미지" />}
-        </>
+            {imgSrc && <img src={imgSrc} alt="캡처 이미지" />} */}
+        </div>
     );
 }
 
