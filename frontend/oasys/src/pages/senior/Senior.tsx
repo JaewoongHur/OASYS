@@ -102,6 +102,7 @@ function Senior() {
                         const receivedText = response?.data;
                         setValue(receivedText);
                         setConfirm(true);
+                        // toggleRecording();
                     },
                     400: () => {},
                 },
@@ -122,7 +123,8 @@ function Senior() {
                             sendTextMessage();
                         } else {
                             setConfirm(false);
-                            routeTo("/senior");
+                            // routeTo("/senior");
+                            // toggleRecording();
                         }
                     },
                     400: () => {},
