@@ -38,11 +38,14 @@ public class GPTService {
 
     private String task="";
     public void createFineTuning(){
-        FineTuningJobRequest fineTuningJobRequest = new FineTuningJobRequest();
-        fineTuningJobRequest.setTrainingFile("file-vAgSFC7Lg1EZXm9Ftq2u2SWK");
-        fineTuningJobRequest.setModel("gpt-3.5-turbo");
+//        System.out.println(service.uploadFile("fine-tune","./src/main/resources/ftOasys.jsonl"));
+//        FineTuningJobRequest fineTuningJobRequest = new FineTuningJobRequest();
+//        fineTuningJobRequest.setTrainingFile("file-oZ26oxVErhdggSYYNs5fwvNa");
+//        fineTuningJobRequest.setModel("gpt-3.5-turbo");
 
-        service.createFineTuningJob(fineTuningJobRequest);
+//        service.deleteFineTune("ft:gpt-3.5-turbo-0613:personal::85nuYF05");// java는 삭제할 때 튜닝 모델 아이디를 적어야 한다.
+
+
 
     }
     public Object sendQuestion(String question){
@@ -52,7 +55,7 @@ public class GPTService {
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.USER.value(), question);
         messages.add(systemMessage);
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
-                .model("ft:gpt-3.5-turbo-0613:personal::85nuYF05")
+                .model("ft:gpt-3.5-turbo-0613:personal::85q8Amzd")
                 .messages(messages)
                 .maxTokens(100)
                 .n(1)
@@ -85,7 +88,7 @@ public class GPTService {
 
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                 .builder()
-                .model("ft:gpt-3.5-turbo-0613:personal::85nuYF05")
+                .model("ft:gpt-3.5-turbo-0613:personal::85q8Amzd")
                 .messages(messages)
                 .n(1)
                 .maxTokens(10)
