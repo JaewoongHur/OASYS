@@ -58,12 +58,21 @@ function Home() {
     }, [webcamRef, routeTo, updateUserInfo]);
 
     return (
-        <div onClick={capture}>
+        <div
+            role="button"
+            tabIndex={0}
+            onClick={capture}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    capture();
+                }
+            }}
+        >
             <iframe
                 title="Background Video"
                 width="100%"
                 height="100%"
-                src={`https://www.youtube.com/embed/JPvLbNDABnA?autoplay=1&controls=0&showinfo=0&rel=0&loop=1&playlist=JPvLbNDABnA&mute=1`}
+                src="https://www.youtube.com/embed/JPvLbNDABnA?autoplay=1&controls=0&showinfo=0&rel=0&loop=1&playlist=JPvLbNDABnA&mute=1"
                 frameBorder="0"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
