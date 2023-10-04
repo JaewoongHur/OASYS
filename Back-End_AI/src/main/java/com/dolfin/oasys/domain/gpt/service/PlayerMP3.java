@@ -1,4 +1,4 @@
-package com.dolfin.oasys.domain.gpt.mp3;
+package com.dolfin.oasys.domain.gpt.service;
 
 
 import javazoom.jl.player.Player;
@@ -7,6 +7,8 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 
 public class PlayerMP3 {
+
+
     private String filename;
     public PlayerMP3(String str){
         this.filename=str;

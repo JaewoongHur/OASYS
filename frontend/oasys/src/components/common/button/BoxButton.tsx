@@ -68,7 +68,7 @@ const ButtonHeaderContainer = styled("div")`
 const ButtonTitleWrapper = styled("div")`
     // Text Attribute
     font-family: "Cafe24 Ssurround";
-    font-size: 50px;
+    font-size: 40px;
 `;
 
 const ButtonIcon = styled("img")`
@@ -84,7 +84,7 @@ const ButtonBodyWrapper = styled("div")`
 
     // Text Attribute
     font-family: "Gmarket Sans Medium";
-    font-size: 20px;
+    font-size: 18px;
     text-align: left;
 `;
 
