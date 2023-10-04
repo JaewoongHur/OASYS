@@ -15,6 +15,7 @@ interface ModalType {
     posY: string;
     center?: boolean;
     overlayOn: boolean;
+    position: "absolute" | "fixed";
 }
 
 // ----------------------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ const ModalContent = styled("div")<ModalType>`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: absolute;
+    position: ${(props) => props.position};
     border: none;
     border-radius: 20px;
     background-color: white;
@@ -56,6 +57,7 @@ function Modal({
     posY,
     center,
     overlayOn,
+    position,
 }: PropsWithChildren<ModalType>) {
     const [visible, setVisible] = useState<boolean>(false);
 
@@ -79,6 +81,7 @@ function Modal({
                     posY={posY}
                     center={center}
                     overlayOn
+                    position={position}
                 >
                     {children}
                 </ModalContent>
