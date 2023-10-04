@@ -1,0 +1,25 @@
+{"messages": [{"role": "user", "content": "돈 보내려고"}, {"role": "assistant", "content": "송금 업무"}]}
+{"messages": [{"role": "user", "content": "송금하려고"}, {"role": "assistant", "content": "송금 업무"}]}
+{"messages": [{"role": "user", "content": "돈 넣으려고"}, {"role": "assistant", "content": "입금 업무"}]}
+{"messages": [{"role": "user", "content": "입금하려고"}, {"role": "assistant", "content": "입금 업무"}]}
+{"messages": [{"role": "user", "content": "돈 뽑으려고"}, {"role": "assistant", "content": "인출 업무"}]}
+{"messages": [{"role": "user", "content": "인출하려고"}, {"role": "assistant", "content": "인출 업무"}]}
+{"messages": [{"role": "user", "content": "통장 정리하려고"}, {"role": "assistant", "content": "통장 정리 업무"}]}
+{"messages": [{"role": "user", "content": "현금 서비스 신청하려고"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
+{"messages": [{"role": "user", "content": "공과금 납부하려고"}, {"role": "assistant", "content": "공과금 납부 업무"}]}
+{"messages": [{"role": "user", "content": "카드 발급하려고"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 재발급하려고"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 한도 변경하려고"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 비밀변호 변경하려고"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 분실 신고 하려고"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "인터넷 뱅킹 가입하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "OTP 신청하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "보안 카드 발급하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "텔레뱅킹 신청하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "이체 한도 변경하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "인터넷 뱅킹 비밀번호 변경하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "대출 받으려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "돈 갚으려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "원금 상환하려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "증명서 발급 받으려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "환전하려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
