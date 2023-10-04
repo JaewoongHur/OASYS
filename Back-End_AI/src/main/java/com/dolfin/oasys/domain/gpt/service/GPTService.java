@@ -43,7 +43,7 @@ public class GPTService {
 //        fineTuningJobRequest.setTrainingFile("file-oZ26oxVErhdggSYYNs5fwvNa");
 //        fineTuningJobRequest.setModel("gpt-3.5-turbo");
 
-//        service.deleteFineTune("ft:gpt-3.5-turbo-0613:personal::85nuYF05");// java는 삭제할 때 튜닝 모델 아이디를 적어야 한다.
+//        service.deleteFineTune("");// java는 삭제할 때 튜닝 모델 아이디를 적어야 한다.
 
 
 
@@ -55,7 +55,7 @@ public class GPTService {
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.USER.value(), question);
         messages.add(systemMessage);
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
-                .model("ft:gpt-3.5-turbo-0613:personal::85q8Amzd")
+                .model("ft:gpt-3.5-turbo-0613:personal::85nuYF05")
                 .messages(messages)
                 .maxTokens(100)
                 .n(1)

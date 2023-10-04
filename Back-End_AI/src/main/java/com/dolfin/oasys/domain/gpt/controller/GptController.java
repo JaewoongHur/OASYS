@@ -20,7 +20,7 @@ public class GptController {
 
     @PostMapping("/test")
     public void testGPT(String question){
-        gptService.createFineTuning();
+        gptService.sendQuestion("돈 보내려고");
     }
 
     @PostMapping("/question")
