@@ -237,9 +237,8 @@ function Senior() {
                         work = receivedText.split(" ")[0];
                         teller = receivedText.split(" ")[1];
 
-                        setValue(work + ` 업무가\n접수 완료되었습니다.\n잠시만 기다려주세요.`);
-
                         if (response?.data) {
+                            setValue(work + ` 업무가\n접수 완료되었습니다.\n잠시만 기다려주세요.`);
                             let resultVoice;
                             const genderKR = gender === "FEMALE" ? "남자" : "여자";
 
@@ -300,7 +299,7 @@ function Senior() {
                             }
                         } else {
                             setConfirm(false);
-
+                            setValue(`원하시는 업무를\n다시 말씀해주시겠어요?`);
                             // 일정 시간 동안 대기 후 고객 음성 인식
                             setTimeout(() => {
                                 listen();
