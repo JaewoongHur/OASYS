@@ -14,9 +14,9 @@ function Admin() {
 
     useEffect(() => {
         if (isAuth) {
-            routeTo("/admin/main");
+            routeTo("/main");
         } else {
-            routeTo("/admin");
+            routeTo("/");
         }
     }, [isAuth, routeTo]);
 
