@@ -73,15 +73,15 @@ public class FaceServiceImpl implements FaceService{
         ObjectMapper objectMapper = new ObjectMapper();
         Response response = getResponse(client,request);
 
+        FaceRecognize faceRecognize = objectMapper.readValue(response.body().string(), FaceRecognize.class);
+        log.info("faceRecognize={}",faceRecognize.toString());
+
         //얼굴 인식 불가
-        if(response.code() == 3004){
+        if(faceRecognize.getCode() == 3004){
             log.info("error response = {}" , response);
             convFile.delete();
             throw new InvalidImageException();
         }
-
-        FaceRecognize faceRecognize = objectMapper.readValue(response.body().string(), FaceRecognize.class);
-        log.info("faceRecognize={}",faceRecognize.toString());
 
         //이미 회원인 경우
         if(faceRecognize.getFace_id() != null){
