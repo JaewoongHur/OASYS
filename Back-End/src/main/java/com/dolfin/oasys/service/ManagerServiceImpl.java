@@ -100,13 +100,13 @@ public class ManagerServiceImpl implements ManagerService {
             String faceIdForMessage = waitingList.index(WAITING + tellerType, 2);
             log.info(faceIdForMessage);
             MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(faceIdForMessage);
-            MemberDto.ConsumerForMessage.builder()
+            sendMessage.sendSmsNotification(MemberDto.ConsumerForMessage.builder()
                     .name(waitingMember.getName())
                     .phone(waitingMember.getPhone())
                     .teller(tellerType)
                     .work(waitingMember.getCateTypeName())
                     .waitPeople("1")
-                    .build();
+                    .build());
         }
         
         if (nextFaceId != null) {
