@@ -6,6 +6,7 @@ import com.dolfin.oasys.model.entity.Member;
 import com.dolfin.oasys.model.entity.TellerType;
 import com.dolfin.oasys.repository.MemberRepository;
 import com.dolfin.oasys.repository.TellerTypeRepository;
+import com.dolfin.oasys.util.SendMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ListOperations;
@@ -33,6 +34,7 @@ public class ManagerServiceImpl implements ManagerService {
 
     private final TellerTypeRepository tellerTypeRepository;
     private final MemberRepository memberRepository;
+    private final SendMessage sendMessage;
 
     @Override
     public List<TellerStatusDTO> getTellerStatusList() {
@@ -91,6 +93,19 @@ public class ManagerServiceImpl implements ManagerService {
         }
         String nextFaceId = waitingList.leftPop(WAITING + tellerType);
         log.info("nextConsumerFaceId: " + nextFaceId);
+
+        if (waitingList.size(WAITING + tellerType) >= 2) {
+            String faceIdForMessage = waitingList.index(WAITING + tellerType, 1);
+            log.info(faceIdForMessage);
+            MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(faceIdForMessage);
+            sendMessage.sendSmsNotification(MemberDto.ConsumerForMessage.builder()
+                    .name(waitingMember.getName())
+                    .phone(waitingMember.getPhone())
+                    .teller(tellerType)
+                    .work(waitingMember.getCateTypeName())
+                    .waitPeople("1")
+                    .build());
+        }
         
         if (nextFaceId != null) {
             consultingList.opsForValue().set(CONSULTING + tellerType, nextFaceId);

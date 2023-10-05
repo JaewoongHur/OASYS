@@ -15,6 +15,14 @@
 {"messages": [{"role": "user", "content": "인출"}, {"role": "assistant", "content": "인출 업무"}]}
 {"messages": [{"role": "user", "content": "통장 정리하려고"}, {"role": "assistant", "content": "통장 정리 업무"}]}
 {"messages": [{"role": "user", "content": "통장 정리하러 왔어요"}, {"role": "assistant", "content": "통장 정리 업무"}]}
+{"messages": [{"role": "user", "content": "통장 정리"}, {"role": "assistant", "content": "통장 정리 업무"}]}
+{"messages": [{"role": "user", "content": "통장 업무 좀 하려구"}, {"role": "assistant", "content": "통장 정리 업무"}]}
+{"messages": [{"role": "user", "content": "통장"}, {"role": "assistant", "content": "통장 정리 업무"}]}
+{"messages": [{"role": "user", "content": "현금 서비스"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
+{"messages": [{"role": "user", "content": "현금 서비스 처리하려고"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
+{"messages": [{"role": "user", "content": "현금 서비스 업무요"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
+{"messages": [{"role": "user", "content": "현금 업무"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
+{"messages": [{"role": "user", "content": "현금 업무 처리하려고요"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
 {"messages": [{"role": "user", "content": "현금 서비스 신청하려고"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
 {"messages": [{"role": "user", "content": "현금 서비스 신청하러 왔습니다."}, {"role": "assistant", "content": "현금 서비스 업무"}]}
 {"messages": [{"role": "user", "content": "현금 서비스"}, {"role": "assistant", "content": "현금 서비스 업무"}]}
@@ -25,7 +33,6 @@
 {"messages": [{"role": "user", "content": "카드 발급하려고"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 발급"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 발급 하러 왔어요"}, {"role": "assistant", "content": "카드 업무"}]}
-{"messages": [{"role": "user", "content": "카드 발급"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 재발급하려고"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 재발급하러 왔어요"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드를 잃어버려서"}, {"role": "assistant", "content": "카드 업무"}]}
@@ -33,34 +40,63 @@
 {"messages": [{"role": "user", "content": "카드 한도 변경하려고"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 한도 좀 늘리려고"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 한도 좀 줄이려고 왔어요"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 한도 업무"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 업무"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 처리할라고"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 받으려고"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 다시 뽑으려고요"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 비밀변호 변경하려고"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 비밀변호 좀 변경하려구요"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 비밀변호"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드 분실 신고 하려고"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "카드가 없어졌어요"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 잃어버렸어요"}, {"role": "assistant", "content": "카드 업무"}]}
+{"messages": [{"role": "user", "content": "카드 분실"}, {"role": "assistant", "content": "카드 업무"}]}
 {"messages": [{"role": "user", "content": "인터넷 뱅킹 가입하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "인터넷 뱅킹"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "뱅킹 서비스"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "뱅킹 좀 하려구요"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "인터넷 뱅킹 보안 업무요"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "보안"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "OTP 신청하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "OTP"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "보안 카드"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "보안 카드 발급하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "보안 카드를 잃어버렸어요"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "보안 카드"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "텔레뱅킹 신청하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "텔레뱅킹"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "텔레 뱅킹 쓰려고요"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "이체 한도 변경하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "이체 한도 높이려고 왔어요"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
+{"messages": [{"role": "user", "content": "이체 한도"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "이체 한도 낮추려구요"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "인터넷 뱅킹 비밀번호 변경하려고"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "인터넷 뱅킹 비밀번호"}, {"role": "assistant", "content": "인터넷 뱅킹 업무"}]}
 {"messages": [{"role": "user", "content": "대출 받으려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "돈 좀 빌리러 왔어요"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "돈이 없어요"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "빚 갚으려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "빚"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "대출"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "돈 갚으려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "대출 상환하러 왔어요"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "이자 내려구요"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "이자"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "원금"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "원금 상환하려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "증명서 발급 받으려고"}, {"role": "assistant", "content": "증명서 업무"}]}
 {"messages": [{"role": "user", "content": "증명서가 만료돼서요"}, {"role": "assistant", "content": "증명서 업무"}]}
+{"messages": [{"role": "user", "content": "증명서"}, {"role": "assistant", "content": "증명서 업무"}]}
+{"messages": [{"role": "user", "content": "공인 인증서"}, {"role": "assistant", "content": "증명서 업무"}]}
+{"messages": [{"role": "user", "content": "서류"}, {"role": "assistant", "content": "증명서 업무"}]}
+{"messages": [{"role": "user", "content": "인증서"}, {"role": "assistant", "content": "증명서 업무"}]}
 {"messages": [{"role": "user", "content": "환전하려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "달러로 바꾸려고 왔어요"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
 {"messages": [{"role": "user", "content": "해외 여행 가려고"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "돈 좀 바꾸고 싶어서요"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "외환"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "환전"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "해외"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "달러"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}
+{"messages": [{"role": "user", "content": "유로"}, {"role": "assistant", "content": "대출 및 외환 업무"}]}

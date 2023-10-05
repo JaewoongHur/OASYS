@@ -1,6 +1,7 @@
 /* Import */
 import styled from "@emotion/styled";
 import { InputProps } from "@customTypes/componentTypes";
+import { lineBreakText } from "@utils/format";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -32,7 +33,7 @@ const TextAreaWrapper = styled("div")<TextAreaWrapperProps>`
 
     // Text Attribute
     color: ${(props) => props.theme.colors.gray7};
-    font-size: 100px;
+    font-size: 90px;
     font-weight: 900;
 
     // Interaction Attribute
@@ -46,7 +47,7 @@ function TextArea(props: InputProps) {
     const { width, height = "fit-content", value } = props;
     return (
         <TextAreaWrapper width={width} height={height}>
-            {value}
+            {lineBreakText(value)}
         </TextAreaWrapper>
     );
 }

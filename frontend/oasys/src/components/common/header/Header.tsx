@@ -6,28 +6,26 @@ import { WhiteLogo } from "@assets/images";
 
 /* Style */
 const HeaderContainer = styled("div")`
-    // Flexbox 속성 추가
+    // Position Attribute
     display: flex;
     justify-content: center;
     align-items: center;
-
-    // Position Attribute
+    gap: 1em;
     position: fixed;
-    z-index: 10;
     top: 0;
     left: 0;
+    z-index: 10;
 
     // Size Attribute
     width: 100%;
-    height: 8em;
+    height: 6em;
 
-    //Background Color
+    // Style Attribute
     background-color: ${(props) => props.theme.colors.gray7};
-
-    //radius config
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
 
+    // Interaction Attritubte
     user-select: none;
 `;
 
@@ -38,8 +36,11 @@ const HeaderIcon = styled("img")`
 `;
 
 const HeaderTextWrapper = styled("div")`
+    // Position Attribute
     display: flex;
     align-items: flex-end;
+    gap: 3em;
+
     // Size Attribute
     width: 100%;
 
@@ -49,17 +50,18 @@ const HeaderTextWrapper = styled("div")`
 
     // Text Attribute
     color: white;
+`;
+
+const TitleWrapper = styled("div")`
+    // Text Attribute
     font-size: 40px;
     font-weight: 700;
 `;
 
-const HeaderMain = styled("div")`
-    font-size: 50px;
-    margin-right: 20px;
-    margin-left: 20px;
+const SubTitleWrapper = styled("div")`
+    // Text Attribute
+    font-size: 20px;
 `;
-
-const HeaderSub = styled("div")``;
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -67,10 +69,10 @@ const HeaderSub = styled("div")``;
 function Header() {
     return (
         <HeaderContainer>
-            <HeaderIcon src={WhiteLogo} alt="Oasys-Logo" />
+            <HeaderIcon src={WhiteLogo} alt="White-Logo" />
             <HeaderTextWrapper>
-                <HeaderMain>오아시스 은행</HeaderMain>
-                <HeaderSub>역삼역 지점</HeaderSub>
+                <TitleWrapper>오아시스 은행</TitleWrapper>
+                <SubTitleWrapper>역삼역 지점</SubTitleWrapper>
             </HeaderTextWrapper>
         </HeaderContainer>
     );

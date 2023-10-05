@@ -1,4 +1,9 @@
 /* Export */
+export interface AnimationProps {
+    isRecording: boolean;
+    userGender: "MALE" | "FEMALE" | undefined;
+}
+
 export interface ButtonProps {
     type?: "reset" | "button" | "submit";
     width: string;
@@ -6,13 +11,15 @@ export interface ButtonProps {
     text: string;
 }
 
-export interface FooterProps {
-    isRecording: boolean;
+export interface DropdownProps {
+    width: string;
+    height: string;
+    placeholder: string;
+    optionList: { name: string; value: number }[];
 }
 
-export interface AnimationProps {
+export interface FooterProps {
     isRecording: boolean;
-    userGender: "MALE" | "FEMALE" | undefined;
 }
 
 export interface InputProps {
@@ -20,4 +27,14 @@ export interface InputProps {
     width: string;
     height?: string;
     value: string;
+}
+
+export interface OverlayProps {
+    onClick: (event: React.MouseEvent) => void;
+}
+
+export interface NumpadButtonProps {
+    text: string;
+    fontSize: string;
+    onClick: () => void;
 }

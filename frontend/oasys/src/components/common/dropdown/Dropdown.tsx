@@ -1,30 +1,35 @@
 /* import */
-import { useState } from "react";
-import styled from "@emotion/styled";
+import { DropdownProps } from "@customTypes/componentTypes";
 import Modal from "@components/modal/Modal";
-import { RightArrow } from "@/assets/icons";
+import { RightArrow } from "@assets/icons";
+import styled from "@emotion/styled";
+import { useState } from "react";
 
 // ----------------------------------------------------------------------------------------------------
+
 /* Props Type */
-interface DropdownProps extends DropdownInputProps {
-    placeholder: string;
-    optionList: { name: string; value: number }[];
-}
-interface ArrowImageProps {
-    rotate: boolean; // 사용자 지정 속성으로 선언
-}
 interface DropdownInputProps {
     width: string;
     height: string;
 }
 
+interface ArrowImageProps {
+    rotate: boolean;
+}
+
 // ----------------------------------------------------------------------------------------------------
 /* Style */
 const DropDownContainer = styled("div")`
+    // Interaction Attribute
     cursor: pointer;
 `;
 
-const InputContainer = styled.div<DropdownInputProps>`
+const DropDownInputContainer = styled("div")<DropdownInputProps>`
+    // Position Attribute
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     // Size Attribute
     width: ${(props) => props.width};
     height: ${(props) => props.height};
@@ -46,38 +51,46 @@ const InputContainer = styled.div<DropdownInputProps>`
     :focus {
         box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
     }
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
 `;
 
-const DropDownInput = styled.input`
+const DropDownInput = styled("input")`
+    // Size Attribute
     width: 100%;
     height: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+
+    // Style Attribute
+    background-color: transparent;
     border: none;
     outline: none;
-    background-color: transparent;
-    font-size: 16px;
-    padding: 8px;
-    cursor: pointer;
 `;
 
 const ArrowImage = styled("img")<ArrowImageProps>`
+    // Size Attribute
     width: 20px;
     height: 20px;
     margin-left: 10px;
+
+    // Interaction Attribute
     transition: transform 0.3s ease;
     transform: rotate(${(props) => (props.rotate ? "90deg" : "0deg")});
 `;
 
 const Option = styled("button")`
+    // Size Attribute
     width: 100%;
     height: 30%;
-    background-color: #ffffff;
+    margin-top: 10px;
+
+    // Style Attribute
+    background-color: white;
+
+    // Text Attribute
     color: ${(props) => props.theme.colors.gray7};
     font-size: 18px;
-    margin-top: 10px;
+
+    // Interaction Attribute
     &:hover {
         border-radius: 20px;
         background-color: ${(props) => props.theme.colors.gray1};
@@ -86,9 +99,10 @@ const Option = styled("button")`
 `;
 
 // ----------------------------------------------------------------------------------------------------
+
 /* Dropdown Component */
 function Dropdown(props: DropdownProps) {
-    const { placeholder, optionList, width, height } = props;
+    const { width, height, placeholder, optionList } = props;
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [selectedOption, setSelectedOption] = useState<string>("");
 
@@ -96,17 +110,17 @@ function Dropdown(props: DropdownProps) {
         setShowOptions(!showOptions);
     };
 
-    const onClickOption = (name) => {
+    const onClickOption = (name: string) => {
         setSelectedOption(name);
         setShowOptions(false);
     };
 
     return (
         <DropDownContainer>
-            <InputContainer width={width} height={height} onClick={toggleOptions}>
+            <DropDownInputContainer width={width} height={height} onClick={toggleOptions}>
                 <DropDownInput readOnly value={selectedOption} placeholder={placeholder} />
-                <ArrowImage src={RightArrow} alt="Arrow Icon" rotate={showOptions} />
-            </InputContainer>
+                <ArrowImage src={RightArrow} alt="Arrow-Icon" rotate={showOptions} />
+            </DropDownInputContainer>
             {showOptions && (
                 <Modal
                     width="70%"

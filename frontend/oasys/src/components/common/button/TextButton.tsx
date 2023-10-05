@@ -1,7 +1,7 @@
 /* Import */
-import styled from "@emotion/styled";
 import { ButtonProps } from "@customTypes/componentTypes";
 import React from "react";
+import styled from "@emotion/styled";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -99,9 +99,9 @@ function TextButton(props: TextButtonProps) {
         category = "positive",
         fontSize = "20px",
         disabled = false,
+        tabIndex,
         onClick,
         onKeyDown,
-        tabIndex,
     } = props;
 
     return (
@@ -112,9 +112,9 @@ function TextButton(props: TextButtonProps) {
             className={category}
             fontSize={fontSize}
             disabled={disabled}
+            tabIndex={tabIndex}
             onClick={onClick}
             onKeyDown={onKeyDown}
-            tabIndex={tabIndex}
         >
             {text}
         </TextButtonWrapper>

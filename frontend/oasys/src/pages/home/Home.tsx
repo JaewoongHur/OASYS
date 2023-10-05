@@ -10,7 +10,6 @@ import Webcam from "react-webcam";
 /* Home Page */
 function Home() {
     const webcamRef = useRef<Webcam | null>(null);
-    // const [imgSrc, setImgSrc] = useState<string | null>(null);
     const updateUserInfo = useUserStore((state) => state.updateUserState);
     const { routeTo } = useRouter();
 
@@ -31,9 +30,6 @@ function Home() {
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot();
         async function fetchUserInfo() {
-            // if (typeof imageSrc === "string") {
-            //     setImgSrc(imageSrc);
-            // }
             const formData = new FormData();
             if (typeof imageSrc === "string") {
                 const file = DataURIToBlob(imageSrc);
@@ -89,11 +85,6 @@ function Home() {
                 screenshotFormat="image/jpeg"
                 style={{ visibility: "hidden" }}
             />
-            {/* <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
-            <button type="button" onClick={capture}>
-                이미지 캡처
-            </button>
-            {imgSrc && <img src={imgSrc} alt="캡처 이미지" />} */}
         </div>
     );
 }
