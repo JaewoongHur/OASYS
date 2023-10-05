@@ -51,7 +51,7 @@ function Senior() {
     const [confirm, setConfirm] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
-    const [phase, setPhase] = useState<string>("phone");
+    const [phase, setPhase] = useState<string>("talk");
     const gender = useUserStore((state) => state.gender);
     const name = useUserStore((state) => state.member.name);
     const { routeTo } = useRouter();

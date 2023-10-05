@@ -5,7 +5,7 @@ import { TextButton } from "@components/common/button";
 import { TextInput } from "@components/common/input";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import useUserStore from "@/store";
+import { useUserStore } from "@/store";
 
 // ----------------------------------------------------------------------------------------------------
 
