@@ -223,7 +223,7 @@ public class GPTService {
     public String confirmTask(String voiceText,String gender){
         String answerText="";
         final List<ChatMessage> messages = new ArrayList<>();
-        final ChatMessage systemMessage2 = new ChatMessage(ChatMessageRole.SYSTEM.value(), "이게 긍정의 대답이면 '네', 아니면 '아니오'를 출력해줘");
+        final ChatMessage systemMessage2 = new ChatMessage(ChatMessageRole.SYSTEM.value(), "방금 한 말이 \"네\", \"맞아요\" 와 같이 동의한다는 뜻이면 1, \"아니오\", \"틀렸어\"와 같은 비동의를 뜻하거나 \"돈까스\", \"담배\"와 같은 관련 없는 뜻이면 2를 한 글자만 출력해줘");
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), voiceText);
         messages.add(systemMessage2);
         messages.add(systemMessage);
@@ -242,20 +242,20 @@ public class GPTService {
         System.out.println(answerText);
         PlayerMP3 receive;
         if(gender.equals("MALE")){
-            if(answerText.contains("네")||answerText.contains("맞아")){
+            if(answerText.contains("1")){
                 receive = new PlayerMP3(filePath + "접수_확인_여자.mp3");
                 answerText = "업무 접수 완료";
                 receive.playing();
 
             }
-            else{
+            else {
                 receive = new PlayerMP3(filePath+"확인_실패_여자.mp3");
                 answerText = null;
                 receive.playing();
             }
         }
         else{
-            if(answerText.contains("네")||answerText.contains("맞아")){
+            if(answerText.contains("1")){
                 receive = new PlayerMP3(filePath + "접수_확인_남자.mp3");
                 answerText = "업무 접수 완료";
                 receive.playing();

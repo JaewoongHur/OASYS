@@ -193,7 +193,7 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-    }, [confirm, isRecording, lastSpeechTime, stop, value, gender,listen]);
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender,listen,routeTo]);
 
     return (
         <SeniorContainer>
