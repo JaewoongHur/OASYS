@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 interface FileInputProps {
     width: string;
     height?: string;
+    placeholder: string;
     onFileUpload: (file: File | null) => void;
 }
 
@@ -85,7 +86,7 @@ const FileUploadButton = styled("label")<{ fontSize: string }>`
 
 /* File Input Component */
 function FileInput(props: FileInputProps) {
-    const { width, height = "50px", onFileUpload } = props;
+    const { width, height, placeholder, onFileUpload } = props;
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -101,7 +102,7 @@ function FileInput(props: FileInputProps) {
                 <FileNameInput
                     readOnly
                     value={selectedFile ? selectedFile.name : ""}
-                    placeholder="이미지를 첨부해주세요"
+                    placeholder={placeholder}
                 />
             </FileInputWrapper>
             <FileUploadButton fontSize="18px">

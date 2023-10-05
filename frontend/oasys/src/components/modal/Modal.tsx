@@ -37,7 +37,6 @@ const ModalContent = styled("div")<ModalType>`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     position: ${(props) => props.position};
     border: none;
     border-radius: 20px;
