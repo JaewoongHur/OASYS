@@ -126,6 +126,10 @@ function Senior() {
                         const receivedText = response?.data;
                         setValue(receivedText);
                         setConfirm(true);
+                        if(receivedText==""){
+                            setConfirm(false);
+                        }
+                        
 
                         // 일정 시간 동안 대기 후 고객 음성 인식
                         setTimeout(() => {
@@ -139,7 +143,9 @@ function Senior() {
                     text,
                     gender,
                 },
+                
             });
+            
         }
 
         async function confirmBusiness(text: string) {
@@ -174,6 +180,7 @@ function Senior() {
                 if (Date.now() - lastSpeechTime > 3000) {
                     stop();
                     setIsRecording(false);
+                    
                     if (confirm) {
                         confirmBusiness(value);
                     } else {
@@ -186,7 +193,7 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, routeTo]);
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender,listen]);
 
     return (
         <SeniorContainer>
