@@ -29,6 +29,7 @@ public class GPTService {
     private boolean confirm=false;
 
     private OpenAiService service;
+    static private String answer="";
 
     @PostConstruct
     public void connectGPT(){
@@ -219,7 +220,7 @@ public class GPTService {
             }
 
         }
-        String answer = answerText+" "+task;
+        answer = answerText+" "+task;
         return answer;
     }
 
@@ -246,31 +247,29 @@ public class GPTService {
         if(gender.equals("MALE")){
             if(answerText.contains("1")){
                 receive = new PlayerMP3(filePath + "접수_확인_여자.mp3");
-                answerText = "업무 접수 완료";
                 receive.playing();
 
             }
             else {
                 receive = new PlayerMP3(filePath+"확인_실패_여자.mp3");
-                answerText = null;
+                answer= null;
                 receive.playing();
             }
         }
         else{
             if(answerText.contains("1")){
                 receive = new PlayerMP3(filePath + "접수_확인_남자.mp3");
-                answerText = "업무 접수 완료";
                 receive.playing();
             }
             else {
                 receive = new PlayerMP3(filePath+"확인_실패_남자.mp3");
-                answerText = null;
+                answer = null;
                 receive.playing();
 
             }
         }
 
-        return answerText;
+        return answer;
     }
     public String getTask(){
 
