@@ -86,7 +86,7 @@ const FileUploadButton = styled("label")<{ fontSize: string }>`
 
 /* File Input Component */
 function FileInput(props: FileInputProps) {
-    const { width, height, placeholder, onFileUpload } = props;
+    const { width, height = "50px", placeholder, onFileUpload } = props;
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
