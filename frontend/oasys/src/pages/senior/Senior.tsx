@@ -8,7 +8,6 @@ import postMessage from "@api/notification";
 import { postQuestion, postConfirm } from "@api/voice";
 import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
 import { TextArea } from "@components/common/input";
-import useRouter from "@hooks/useRouter";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -52,7 +51,6 @@ function Senior() {
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
     const gender = useUserStore((state) => state.gender);
     const name = useUserStore((state) => state.member.name);
-    const { routeTo } = useRouter();
 
     async function sendTextMessage() {
         await postMessage({
@@ -116,6 +114,8 @@ function Senior() {
             welcomeAudioWoman.currentTime = 0;
             welcomeAudioMan.currentTime = 0;
         };
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // 최초로 한번만 실행
 
     useEffect(() => {
@@ -126,6 +126,9 @@ function Senior() {
                         const receivedText = response?.data;
                         setValue(receivedText);
                         setConfirm(true);
+                        if (receivedText === "") {
+                            setConfirm(false);
+                        }
 
                         // 일정 시간 동안 대기 후 고객 음성 인식
                         setTimeout(() => {
@@ -148,12 +151,7 @@ function Senior() {
                     200: (response) => {
                         const receivedText = response?.data;
                         setValue(receivedText);
-
-                        if (receivedText === null) {
-                            listen();
-                            setIsRecording(true);
-                            setConfirm(false);
-                        } else if (response?.data) {
+                        if (response?.data) {
                             sendTextMessage();
                         } else {
                             setConfirm(false);
@@ -179,6 +177,7 @@ function Senior() {
                 if (Date.now() - lastSpeechTime > 3000) {
                     stop();
                     setIsRecording(false);
+
                     if (confirm) {
                         confirmBusiness(value);
                     } else {
@@ -191,7 +190,7 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, listen, routeTo]);
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, listen]);
 
     return (
         <SeniorContainer>

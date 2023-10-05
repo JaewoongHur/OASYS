@@ -3,6 +3,7 @@ import Modal from "@components/modal/Modal";
 import { TextButton } from "@components/common/button";
 import Dropdown from "@components/common/dropdown/Dropdown";
 import { FileInput } from "@/components/common/input";
+
 function Test1() {
     const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -35,7 +36,9 @@ function Test1() {
             />
             <br />
             <FileInput width="500px" onFileUpload={handleFileUpload} />
-            <button onClick={handleSubmit}>등록</button>
+            <button type="submit" onClick={handleSubmit}>
+                등록
+            </button>
             {isOpenModal && (
                 <Modal
                     width="200px"
@@ -46,7 +49,7 @@ function Test1() {
                     openModal={isOpenModal}
                     getModal={onClickModal}
                     overlayOn
-                    position="fixed"
+                    position="absolute"
                 >
                     <div>이곳에 children이 들어갑니다.</div>
                     <TextButton width="50%" height="50%" onClick={onClickModal} text="closeModal" />

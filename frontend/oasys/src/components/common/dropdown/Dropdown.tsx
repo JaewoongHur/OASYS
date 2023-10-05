@@ -117,7 +117,7 @@ function Dropdown(props: DropdownProps) {
                     posX="100px"
                     posY="-40px"
                     overlayOn={false}
-                    position="fixed"
+                    position="absolute"
                 >
                     {optionList.map((option) => (
                         <Option
