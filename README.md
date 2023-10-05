@@ -22,7 +22,7 @@ One-stop Aid System for Senior People (A.K.A OASYS)는 얼굴 인식 및 음성 
 ## 빌드/배포 시나리오
 
 - 전체 프로젝트 구조
-
+![최종_아키텍처](/uploads/ea879e2e120d5c9dfb587a48bbbbd489/최종_아키텍처.png)
 
 - 파일 구조
     - Back
