@@ -41,10 +41,13 @@ public class GPTService {
     public void createFineTuning(){
 //        System.out.println(service.uploadFile("fine-tune","./src/main/resources/ftOasys.jsonl"));
 //        FineTuningJobRequest fineTuningJobRequest = new FineTuningJobRequest();
-//        fineTuningJobRequest.setTrainingFile("file-oZ26oxVErhdggSYYNs5fwvNa");
+//        fineTuningJobRequest.setTrainingFile("file-MnhPimAUkWD5361gI7TP5tbm");
 //        fineTuningJobRequest.setModel("gpt-3.5-turbo");
+//        service.createFineTuningJob(fineTuningJobRequest);
 
-//        service.deleteFineTune("");// java는 삭제할 때 튜닝 모델 아이디를 적어야 한다.
+
+
+//        service.deleteFineTune("ft:gpt-3.5-turbo-0613:personal::85q8Amzd");// java는 삭제할 때 튜닝 모델 아이디를 적어야 한다.
 
 
 
@@ -56,7 +59,7 @@ public class GPTService {
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.USER.value(), question);
         messages.add(systemMessage);
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest.builder()
-                .model("ft:gpt-3.5-turbo-0613:personal::85nuYF05")
+                .model("ft:gpt-3.5-turbo-0613:personal::86ANNlu7")
                 .messages(messages)
                 .maxTokens(100)
                 .n(1)
@@ -89,7 +92,7 @@ public class GPTService {
 
         ChatCompletionRequest chatCompletionRequest = ChatCompletionRequest
                 .builder()
-                .model("ft:gpt-3.5-turbo-0613:personal::85q8Amzd")
+                .model("ft:gpt-3.5-turbo-0613:personal::86ANNlu7")
                 .messages(messages)
                 .n(1)
                 .maxTokens(10)
@@ -97,57 +100,56 @@ public class GPTService {
                 .build();
         ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
         answerText = responseMessage.getContent();
-        System.out.println(answerText);
         PlayerMP3 receive;
         if (gender.equals("MALE")) {
             if (answerText.contains("인출")) {
                 receive = new PlayerMP3(filePath + "인출_확인_여자.mp3");
-                answerText = "인출 업무 확인";
+                answerText = "인출";
                 task="인출 업무";
                 receive.playing();
             } else if (answerText.contains("입금")) {
                 receive = new PlayerMP3(filePath + "입금_확인_여자.mp3");
-                answerText = "입금 업무 확인";
+                answerText = "입금";
                 task="입금 업무";
                 receive.playing();
             } else if (answerText.contains("송금")) {
                 receive = new PlayerMP3(filePath + "송금_확인_여자.mp3");
-                answerText = "송금 업무 확인";
+                answerText = "송금";
                 task="송금 업무";
                 receive.playing();
             } else if (answerText.contains("카드")){
                 receive = new PlayerMP3(filePath + "카드_확인_여자.mp3");
-                answerText = "카드 업무 확인";
+                answerText = "카드";
                 task="카드 업무";
                 receive.playing();
             }else if (answerText.contains("인터넷")){
                 receive = new PlayerMP3(filePath + "인터넷뱅킹_확인_여자.mp3");
-                answerText = "인터넷 뱅킹 업무 확인";
+                answerText = "인터넷 뱅킹";
                 task="인터넷 뱅킹 업무";
                 receive.playing();
             }else if (answerText.contains("대출")){
                 receive = new PlayerMP3(filePath + "대출_외환_확인_여자.mp3");
-                answerText = "대출 외환 업무 확인";
+                answerText = "대출 외환";
                 task="대출 외환 업무";
                 receive.playing();
             }else if (answerText.contains("통장")){
                 receive = new PlayerMP3(filePath + "통장정리_확인_여자.mp3");
-                answerText = "통장 정리 업무 확인";
+                answerText = "통장 정리";
                 task="통장 정리 업무";
                 receive.playing();
             }else if (answerText.contains("계좌")){
                 receive = new PlayerMP3(filePath + "계좌이체_확인_여자.mp3");
-                answerText = "계좌 이체 업무 확인";
+                answerText = "계좌 이체";
                 task="계좌 이체 업무";
                 receive.playing();
             }else if (answerText.contains("공과금")){
                 receive = new PlayerMP3(filePath + "공과금납부_확인_여자.mp3");
-                answerText = "공과금 납부 업무 확인";
+                answerText = "공과금 납부";
                 task="공과금 납부 업무";
                 receive.playing();
             }else if (answerText.contains("현금 서비스")){
                 receive = new PlayerMP3(filePath + "현금서비스_확인_여자.mp3");
-                answerText = "현금서비스 업무 확인";
+                answerText = "현금서비스";
                 task="현금서비스 업무";
                 receive.playing();
             }
@@ -161,52 +163,52 @@ public class GPTService {
         } else {
             if (answerText.contains("인출")) {
                 receive = new PlayerMP3(filePath + "인출_확인_남자.mp3");
-                answerText = "인출 업무 확인";
+                answerText = "인출";
                 task="인출 업무";
                 receive.playing();
             } else if (answerText.contains("입금")) {
                 receive = new PlayerMP3(filePath + "입금_확인_남자.mp3");
-                answerText = "입금 업무 확인";
+                answerText = "입금";
                 task="입금 업무";
                 receive.playing();
             } else if (answerText.contains("송금")) {
                 receive = new PlayerMP3(filePath + "송금_확인_남자.mp3");
-                answerText = "송금 업무 확인";
+                answerText = "송금";
                 task="송금 업무";
                 receive.playing();
             }else if (answerText.contains("카드")){
                 receive = new PlayerMP3(filePath + "카드_확인_남자.mp3");
-                answerText = "카드 업무 확인";
+                answerText = "카드";
                 task="카드 업무";
                 receive.playing();
             }else if (answerText.contains("인터넷")){
                 receive = new PlayerMP3(filePath + "인터넷뱅킹_확인_남자.mp3");
-                answerText = "인터넷 뱅킹 업무 확인";
+                answerText = "인터넷 뱅킹";
                 task="인터넷 뱅킹 업무";
                 receive.playing();
             }else if (answerText.contains("대출")){
                 receive = new PlayerMP3(filePath + "대출_외환_확인_남자.mp3");
-                answerText = "대출 외환 업무 확인";
+                answerText = "대출 외환";
                 task="대출 외환 업무";
                 receive.playing();
             }else if (answerText.contains("통장")){
                 receive = new PlayerMP3(filePath + "통장정리_확인_남자.mp3");
-                answerText = "통장 정리 업무 확인";
+                answerText = "통장 정리";
                 task="통장 정리 업무";
                 receive.playing();
             }else if (answerText.contains("계좌")){
                 receive = new PlayerMP3(filePath + "계좌이체_확인_남자.mp3");
-                answerText = "계좌 이체 업무 확인";
+                answerText = "계좌 이체";
                 task="계좌 이체 업무";
                 receive.playing();
             }else if (answerText.contains("공과금")){
                 receive = new PlayerMP3(filePath + "공과금납부_확인_남자.mp3");
-                answerText = "공과금 납부 업무 확인";
+                answerText = "공과금 납부";
                 task="공과금 납부 업무";
                 receive.playing();
             }else if (answerText.contains("현금 서비스")){
                 receive = new PlayerMP3(filePath + "현금서비스_확인_남자.mp3");
-                answerText = "현금서비스 업무 확인";
+                answerText = "현금서비스";
                 task="현금서비스 업무";
                 receive.playing();
             } else{
@@ -239,7 +241,6 @@ public class GPTService {
                 .build();
         ChatMessage responseMessage = service.createChatCompletion(chatCompletionRequest).getChoices().get(0).getMessage();
         answerText = responseMessage.getContent();
-        System.out.println(answerText);
         PlayerMP3 receive;
         if(gender.equals("MALE")){
             if(answerText.contains("1")){
@@ -270,7 +271,7 @@ public class GPTService {
 
         return answerText;
     }
-    public String getTaks(){
+    public String getTask(){
 
         return this.task;
     }

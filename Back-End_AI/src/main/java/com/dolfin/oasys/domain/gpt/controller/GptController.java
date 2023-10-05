@@ -3,10 +3,7 @@ package com.dolfin.oasys.domain.gpt.controller;
 import com.dolfin.oasys.domain.gpt.service.GPTService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -20,7 +17,8 @@ public class GptController {
 
     @PostMapping("/test")
     public void testGPT(String question){
-        gptService.sendQuestion("돈 보내려고");
+        //파인튜닝
+        gptService.createFineTuning();
     }
 
     @PostMapping("/question")
@@ -31,7 +29,7 @@ public class GptController {
         String answerText= "";
         answerText=gptService.taskQuestion(voiceText,gender);
 
-        System.out.println(gptService.getTaks());
+        System.out.println(gptService.getTask());
         return ResponseEntity.ok(answerText);
     }
 
@@ -42,9 +40,11 @@ public class GptController {
         System.out.println(gender);
         String answerText= "";
         answerText = gptService.confirmTask(voiceText,gender);
+        System.out.println(gptService.getTask());
         return ResponseEntity.ok(answerText);
 
     }
+
 
 
 }
