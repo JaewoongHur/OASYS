@@ -494,7 +494,7 @@ function AdminMain() {
             // After a successful API call, fetch the updated list of consumers
             fetchConsultingData();
 
-            const responseCALL = await fetch(`/notification/call`, {
+            const responseCALL = await fetch("/notification/call", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -502,10 +502,10 @@ function AdminMain() {
             });
 
             if (!responseCALL.ok) {
-                throw new Error("Failed to get the next customer for consultation");
+                throw new Error("Failed to call");
             }
         } catch (error) {
-            console.error("Error dequeuing consumer:", error);
+            console.error("Error calling to consumer:", error);
         }
     };
 

@@ -80,7 +80,7 @@ function Senior() {
             },
             data: {
                 name: name,
-                phone: "", // 시연할 때 phone: phone 으로 바꿔서 해주세요!
+                phone: phone, // 시연할 때 phone: phone 으로 바꿔서 해주세요!
                 teller: teller,
                 waitPeople: 3,
                 work: work,
