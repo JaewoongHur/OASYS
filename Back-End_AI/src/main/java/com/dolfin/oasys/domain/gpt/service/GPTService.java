@@ -36,6 +36,7 @@ public class GPTService {
 
     }
 
+    // 1. 통장, 계좌 업무 2. 카드 업무 3. 인터넷 뱅킹 업무 4. 대출 외환 업무
     private String task="";
     public void createFineTuning(){
 //        System.out.println(service.uploadFile("fine-tune","./src/main/resources/ftOasys.jsonl"));
