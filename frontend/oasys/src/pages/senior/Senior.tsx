@@ -6,17 +6,9 @@ import postMessage from "@api/notification";
 import { postQuestion, postConfirm } from "@api/voice";
 import styled from "@emotion/styled";
 import { TextArea } from "@components/common/input";
-import useRouter from "@hooks/useRouter";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 import { useUserStore } from "@/store";
-<<<<<<< HEAD
-import postMessage from "@api/notification";
-import { postQuestion, postConfirm } from "@api/voice";
-import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
-import { TextArea } from "@components/common/input";
-=======
->>>>>>> a7f8749d51ca4ddc60ea6796cf4826253dd2777f
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -124,13 +116,9 @@ function Senior() {
             welcomeAudioWoman.currentTime = 0;
             welcomeAudioMan.currentTime = 0;
         };
-<<<<<<< HEAD
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // 최초로 한번만 실행
-=======
-    }, [gender, listen, name]); // 최초로 한번만 실행
->>>>>>> a7f8749d51ca4ddc60ea6796cf4826253dd2777f
 
     useEffect(() => {
         async function askBusiness(text: string) {
@@ -205,11 +193,7 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-<<<<<<< HEAD
     }, [confirm, isRecording, lastSpeechTime, stop, value, gender, listen]);
-=======
-    }, [confirm, isRecording, lastSpeechTime, stop, value, gender,listen,routeTo]);
->>>>>>> a7f8749d51ca4ddc60ea6796cf4826253dd2777f
 
     return (
         <SeniorContainer>
