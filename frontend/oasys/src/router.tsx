@@ -13,7 +13,7 @@ import Test1 from "./pages/home/Test1";
 const routeList: RouteObject[] = [
     {
         id: "home",
-        path: "/",
+        path: "/home",
         element: <Home />,
     },
     {
@@ -33,7 +33,7 @@ const routeList: RouteObject[] = [
     },
     {
         id: "admin",
-        path: "/admin",
+        path: "",
         element: <Admin />,
         children: [
             {
