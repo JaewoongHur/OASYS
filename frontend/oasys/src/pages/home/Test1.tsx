@@ -35,7 +35,11 @@ function Test1() {
                 optionList={optionList}
             />
             <br />
-            <FileInput width="500px" onFileUpload={handleFileUpload} />
+            <FileInput
+                width="500px"
+                placeholder="이미지를 첨부하세요"
+                onFileUpload={handleFileUpload}
+            />
             <button type="submit" onClick={handleSubmit}>
                 등록
             </button>

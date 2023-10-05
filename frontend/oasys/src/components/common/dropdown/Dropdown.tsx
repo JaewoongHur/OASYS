@@ -20,10 +20,6 @@ interface ArrowImageProps {
 // ----------------------------------------------------------------------------------------------------
 /* Style */
 const DropDownContainer = styled("div")`
-    // Size Attribute
-    margin-top: 100px;
-    margin-left: 100px;
-
     // Interaction Attribute
     cursor: pointer;
 `;
@@ -85,13 +81,14 @@ const Option = styled("button")`
     // Size Attribute
     width: 100%;
     height: 30%;
+    margin-top: 10px;
 
     // Style Attribute
     background-color: white;
 
     // Text Attribute
     color: ${(props) => props.theme.colors.gray7};
-    font-size: 24px;
+    font-size: 18px;
 
     // Interaction Attribute
     &:hover {
@@ -126,11 +123,11 @@ function Dropdown(props: DropdownProps) {
             </DropDownInputContainer>
             {showOptions && (
                 <Modal
-                    width="200px"
+                    width="70%"
                     height="100px"
                     openModal={showOptions}
-                    posX="100px"
-                    posY="-40px"
+                    posX="160px"
+                    posY="-48px"
                     overlayOn={false}
                     position="absolute"
                 >

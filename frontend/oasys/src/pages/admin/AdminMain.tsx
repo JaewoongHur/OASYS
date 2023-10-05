@@ -2,6 +2,9 @@ import { useState } from "react";
 import { TextButton } from "@/components/common/button";
 import styled from "@emotion/styled";
 import Modal from "@components/modal/Modal";
+// import Dropdown from "@/components/common/dropdown";
+import { FileInput, TextInput } from "@/components/common/input";
+import Dropdown from "@/components/common/dropdown";
 
 interface TextButton2Props {
     width: string;
@@ -203,12 +206,14 @@ const AllWaitingConsumer = styled("div")`
 const WaitingConsumer = styled("div")`
     font-size: 24px;
     font-weight: 900;
+    cursor: pointer;
 `;
 const WaitingConsumer2 = styled("div")`
     font-size: 24px;
     font-weight: 900;
     margin-top: 10px;
     margin-bottom: 10px;
+    cursor: pointer;
 `;
 const ScrollWaitingContainer = styled("div")`
     display: flex;
@@ -217,7 +222,116 @@ const ScrollWaitingContainer = styled("div")`
     overflow-y: scroll;
     width: 100%;
 `;
+const RegisterContainer = styled("div")`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+`;
+const RegisterHeader = styled("div")`
+    font-size: 24px;
+    font-weight: 900;
+    margin-top: 20px;
+    margin-bottom: 20px;
+`;
+const NameContainer = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px;
+`;
+const PhoneContainer = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px;
+`;
+const AgeContainer = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 10px;
+`;
 
+const GenderContainer = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+`;
+const GenderWrapper = styled("div")``;
+const GenderLabel = styled("label")`
+    font-size: 18px;
+    font-weight: 700;
+    color: ${(props) => props.theme.colors.primary3};
+`;
+const FileContainer = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+`;
+const FileWrapper = styled("div")`
+    margin-bottom: 10px;
+`;
+const FileLabel = styled("label")`
+    font-size: 18px;
+    font-weight: 700;
+    color: ${(props) => props.theme.colors.primary3};
+`;
+const RegisterButtonContainer = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+`;
+const InfoContainer = styled("div")`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+`;
+const InfoHeader = styled("div")`
+    font-size: 24px;
+    font-weight: 900;
+    margin-top: 20px;
+    margin-bottom: 20px;
+`;
+const InfoMemberWrapper = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`;
+const MemberNameContainer = styled("div")`
+    margin-bottom: 10px;
+    margin-right: 30px;
+`;
+const IsMemberContainer = styled("div")`
+    margin-bottom: 10px;
+`;
+const WorkContainer = styled("div")`
+    display: flex;
+    width: 80%;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+`;
+const InfoButtonContainer = styled("div")`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
 const queueListData: ConsultingData[] = [
     {
         tellerTypeId: 1,
@@ -235,34 +349,34 @@ const queueListData: ConsultingData[] = [
         tellerTypeId: 2,
         tellerTypeName: "카드",
         consultingCustomer: {
-            faceId: "test5",
+            faceId: "test6",
             subId: "a",
             name: "John Doe5",
         },
         waitingConsumerCount: 5,
         waitingConsumerList: [
             {
-                faceId: "test5",
+                faceId: "test1",
                 subId: "b",
                 name: "고건",
             },
             {
-                faceId: "test5",
+                faceId: "test2",
                 subId: "c",
                 name: "정연수",
             },
             {
-                faceId: "test5",
+                faceId: "test3",
                 subId: "b",
                 name: "고건",
             },
             {
-                faceId: "test5",
+                faceId: "test4",
                 subId: "c",
                 name: "정연수",
             },
             {
-                faceId: "test5",
+                faceId: "test9",
                 subId: "c",
                 name: "정연수",
             },
@@ -313,12 +427,162 @@ function AdminMain() {
             setQueueData(updatedQueueData);
         }
     };
-    const register = () => {
-        // 서비스 회원 등록 로직 추가
-    };
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [registModalOpen, setRegistModalOpen] = useState<boolean>(false);
+    const [memberModalOpen, setMemberModalOpen] = useState<boolean>(false);
     const [selectedQueueIndex, setSelectedQueueIndex] = useState<number>(-1);
+    const [selectedMemberSubId, setSelectedMemberSubId] = useState<number>(-1);
+    const [name, setName] = useState<string>("");
+    const [phone, setPhone] = useState<string>("");
+    const [age, setAge] = useState<string>("");
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const genderOptionList = [
+        { name: "남성", value: 0 },
+        { name: "여성", value: 1 },
+    ];
+    const handlePhoneChange = (e) => {
+        if (e.target.value.length <= 10) {
+            setPhone(e.target.value);
+        }
+    };
+    const handleAgeChange = (e) => {
+        if (e.target.value.length <= 3) {
+            setAge(e.target.value);
+        }
+    };
+    const handleFileUpload = (file: File | null) => {
+        setSelectedFile(file);
+    };
+    const handleSubmit = () => {
+        if (selectedFile) {
+            console.log("Uploading file:", selectedFile.name);
+        }
+        // 데이터 post 요청
+    };
+    const closeRegistModal = () => {
+        setRegistModalOpen(false);
+    };
+
+    const registerModalContent = () => {
+        return (
+            <RegisterContainer>
+                <RegisterHeader>서비스 회원 등록</RegisterHeader>
+                <NameContainer>
+                    <TextInput
+                        width="100%"
+                        label="이름"
+                        value={name}
+                        placeholder="이름을 입력하세요."
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </NameContainer>
+                <PhoneContainer>
+                    <TextInput
+                        width="100%"
+                        type="number"
+                        label="전화번호"
+                        value={phone}
+                        placeholder="01012345678의 형식으로 입력하세요."
+                        onChange={handlePhoneChange}
+                    />
+                </PhoneContainer>
+                <AgeContainer>
+                    <TextInput
+                        width="100%"
+                        type="number"
+                        label="나이"
+                        value={age}
+                        placeholder="나이를 입력하세요."
+                        onChange={handleAgeChange}
+                    />
+                </AgeContainer>
+                <GenderContainer>
+                    <GenderWrapper>
+                        <GenderLabel htmlFor="gender">성별</GenderLabel>
+                    </GenderWrapper>
+                    <Dropdown
+                        width="100%"
+                        height="80%"
+                        placeholder="성별을 선택하세요."
+                        optionList={genderOptionList}
+                    />
+                </GenderContainer>
+                <FileContainer>
+                    <FileWrapper>
+                        <FileLabel htmlFor="gender">얼굴 이미지</FileLabel>
+                    </FileWrapper>
+                    <FileInput
+                        width="100%"
+                        placeholder="이미지를 첨부하세요."
+                        onFileUpload={handleFileUpload}
+                    />
+                </FileContainer>
+                <RegisterButtonContainer>
+                    <TextButton type="submit" width="45%" text="등록" onClick={handleSubmit} />
+                    <TextButton
+                        width="45%"
+                        text="취소"
+                        category="negative"
+                        onClick={closeRegistModal}
+                    />
+                </RegisterButtonContainer>
+            </RegisterContainer>
+        );
+    };
+    const handleMemberInfoClick = (subId) => {
+        // subId를 기반으로 고객 정보 조회 API 호출 또는 상태 업데이트 등을 수행
+        // 조회된 정보를 모달에 표시하기 위한 상태를 업데이트
+        setSelectedMemberSubId(subId); // 예시: 조회된 고객의 subId를 상태로 저장
+        const a = selectedMemberSubId;
+        console.log(a);
+        // 정보 조회 모달 열기
+        setMemberModalOpen(true);
+    };
+    const renderMemberModalContent = () => {
+        // 선택된 고객의 subId를 사용하여 해당 고객 정보를 가져오는 로직을 추가
+        // const selectedMemberInfo = getMemberInfoBySubId(selectedMemberSubId);
+        // API로 정보 가져오기
+
+        // 모달 내용을 반환
+        return (
+            // <div>
+            //     {/* 고객 정보를 출력하는 컴포넌트를 구현 */}
+            //     {/* <div>고객 이름: {selectedMemberInfo?.name}</div>
+            //     <div>고객 전화번호: {selectedMemberInfo?.phone}</div> */}
+            //     {/* 기타 정보 표시 */}
+            // </div>
+            <InfoContainer>
+                <InfoHeader>서비스 회원 정보</InfoHeader>
+                <InfoMemberWrapper>
+                    <MemberNameContainer>
+                        <TextInput readOnly width="100%" label="이름" value={name} />
+                    </MemberNameContainer>
+                    <IsMemberContainer>
+                        <TextInput readOnly width="100%" label="회원 여부" value="회원" />
+                    </IsMemberContainer>
+                </InfoMemberWrapper>
+                <PhoneContainer>
+                    <TextInput readOnly width="100%" label="전화번호" value={phone} />
+                </PhoneContainer>
+                <AgeContainer>
+                    <TextInput readOnly width="100%" label="나이" value={age} />
+                </AgeContainer>
+                <GenderContainer>
+                    <GenderWrapper>
+                        <GenderLabel htmlFor="gender">성별</GenderLabel>
+                    </GenderWrapper>
+                    <TextInput readOnly width="100%" value="남성" />
+                </GenderContainer>
+                <WorkContainer>
+                    <TextInput readOnly width="100%" label="업무 내용" value="금융 상품 가입" />
+                </WorkContainer>
+                <InfoButtonContainer>
+                    <TextButton width="40%" text="확인" onClick={() => setMemberModalOpen(false)} />
+                </InfoButtonContainer>
+            </InfoContainer>
+        );
+    };
 
     // 모달 내용을 동적으로 생성하는 함수
     const renderModalContent = () => {
@@ -328,7 +592,10 @@ function AdminMain() {
                 <AllWaitingConsumer>
                     <ScrollWaitingContainer>
                         {queue.waitingConsumerList.map((consumer) => (
-                            <WaitingConsumer2 key={consumer.faceId}>
+                            <WaitingConsumer2
+                                key={consumer.faceId}
+                                onClick={() => handleMemberInfoClick(consumer?.subId)}
+                            >
                                 {consumer.name}
                             </WaitingConsumer2>
                         ))}
@@ -376,7 +643,11 @@ function AdminMain() {
                             )}
                             <DivisionLine />
                             <BankTellerCustomer>창구 고객</BankTellerCustomer>
-                            <BankTellerCustomerName>
+                            <BankTellerCustomerName
+                                onClick={() =>
+                                    handleMemberInfoClick(queue.consultingCustomer?.subId)
+                                }
+                            >
                                 {queue.consultingCustomer ? queue.consultingCustomer.name : "없음"}
                             </BankTellerCustomerName>
                             <ButtonContainer>
@@ -402,7 +673,10 @@ function AdminMain() {
                                 {Array.from({ length: 3 }).map((_, i) => {
                                     const consumer = queue.waitingConsumerList[i];
                                     return (
-                                        <WaitingConsumer key={consumer?.faceId || `empty-${i}`}>
+                                        <WaitingConsumer
+                                            key={consumer?.faceId || `empty-${i}`}
+                                            onClick={() => handleMemberInfoClick(consumer?.subId)}
+                                        >
                                             {consumer ? consumer.name : ""}
                                         </WaitingConsumer>
                                     );
@@ -425,7 +699,11 @@ function AdminMain() {
                 ))}
             </MainContainer>
             <ButtonContainer>
-                <TextButton width="19%" text="서비스 회원 등록" onClick={register} />
+                <TextButton
+                    width="19%"
+                    text="서비스 회원 등록"
+                    onClick={() => setRegistModalOpen(true)}
+                />
             </ButtonContainer>
             {isModalOpen && (
                 <Modal
@@ -440,6 +718,36 @@ function AdminMain() {
                     getModal={closeModal}
                 >
                     {renderModalContent()}
+                </Modal>
+            )}
+            {memberModalOpen && (
+                <Modal
+                    width="430px"
+                    height="610px"
+                    posX="0px"
+                    posY="0px"
+                    center
+                    openModal={memberModalOpen}
+                    overlayOn
+                    position="fixed"
+                    getModal={() => setMemberModalOpen(false)}
+                >
+                    {renderMemberModalContent()}
+                </Modal>
+            )}
+            {registModalOpen && (
+                <Modal
+                    width="430px"
+                    height="610px"
+                    posX="0px"
+                    posY="0px"
+                    center
+                    openModal={registModalOpen}
+                    overlayOn
+                    position="fixed"
+                    getModal={() => setRegistModalOpen(false)}
+                >
+                    {registerModalContent()}
                 </Modal>
             )}
         </Div>
