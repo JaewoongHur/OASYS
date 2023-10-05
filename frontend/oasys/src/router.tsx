@@ -1,6 +1,7 @@
 /* Import */
 import { Admin, AdminMain, AdminLogin } from "@pages/admin";
 import { createBrowserRouter, RouteObject } from "react-router-dom";
+import ErrorNotFound from "@pages/error";
 import Home from "@pages/home";
 import Junior from "@pages/junior";
 import Senior from "@pages/senior";
@@ -46,6 +47,11 @@ const routeList: RouteObject[] = [
                 element: <AdminMain />,
             },
         ],
+    },
+    {
+        id: "error-not-found",
+        path: "/*",
+        element: <ErrorNotFound />,
     },
 ];
 
