@@ -99,6 +99,13 @@
 			<version>1.11.3</version>
 		</dependency>
 
+		<!-- sms notification -->
+		<dependency>
+			<groupId>net.nurigo</groupId>
+			<artifactId>sdk</artifactId>
+			<version>4.3.0</version>
+		</dependency>
+
 
 	</dependencies>
 
