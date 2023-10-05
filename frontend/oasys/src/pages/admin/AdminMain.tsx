@@ -2,7 +2,6 @@ import { useState } from "react";
 import { TextButton } from "@/components/common/button";
 import styled from "@emotion/styled";
 import Modal from "@components/modal/Modal";
-// import Dropdown from "@/components/common/dropdown";
 import { FileInput, TextInput } from "@/components/common/input";
 import Dropdown from "@/components/common/dropdown";
 
@@ -28,16 +27,24 @@ interface ConsultingData {
     }[];
     consulting: boolean;
 }
-const Div = styled("div")``;
+const Container = styled("div")`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 56px;
+    width: 100vw;
+    height: calc(100vh - 56px);
+`;
 const MainContainer = styled("div")`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
-    width: 90vw;
-    height: 100vh;
+    width: 90%;
+    height: 100%;
     margin: 0 auto;
-    margin-top: 70px;
+    margin-top: 25px;
 `;
 
 const ButtonContainer = styled("div")`
@@ -48,7 +55,6 @@ const ButtonContainer = styled("div")`
     width: 80%;
     height: 30%;
     max-height: 50px;
-    margin-top: 10px;
     margin-bottom: 10px;
 `;
 
@@ -56,6 +62,7 @@ const TextButton2 = styled("div")<TextButton2Props>`
     // Size Attribute
     width: ${(props) => props.width};
     height: ${(props) => props.height};
+    max-height: 50px;
     padding: 10px 20px;
     box-sizing: border-box;
 
@@ -81,7 +88,7 @@ const BankTellerContainer = styled("div")`
     align-items: center;
     justify-content: center;
     width: 20%;
-    height: 80%;
+    height: 92%;
 `;
 
 const BankTellerWrapper = styled("div")`
@@ -91,7 +98,6 @@ const BankTellerWrapper = styled("div")`
     border: 4px solid ${(props) => props.theme.colors.gray7};
     width: 100%;
     height: 100%;
-    margin-bottom: 10px;
 `;
 
 const BankTellerHeader = styled("div")`
@@ -99,8 +105,6 @@ const BankTellerHeader = styled("div")`
     font-weight: 900;
     height: 15%;
     margin: 0 auto;
-    margin-top: 15px;
-    margin-bottom: 15px;
 `;
 
 const BankDepartment = styled("div")`
@@ -154,7 +158,8 @@ const BankQueueWrapper = styled("div")`
     align-items: flex-start;
     border: 4px solid ${(props) => props.theme.colors.gray7};
     width: 100%;
-    height: 70%;
+    height: 100%;
+    font-size: 18px;
 `;
 
 const BankQueueHeader = styled("div")`
@@ -181,7 +186,6 @@ const BankPeopleNumber = styled("div")`
 
 const DivisionLine = styled("div")`
     border: 2px solid ${(props) => props.theme.colors.gray7};
-    margin-top: 20px;
     width: 80%;
     margin: 0 auto;
 `;
@@ -192,8 +196,7 @@ const BankQueueList = styled("div")`
     justify-content: space-between;
     width: 100%;
     height: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    margin-bottom: 10px;
 `;
 const AllWaitingConsumer = styled("div")`
     width: 100%;
@@ -627,84 +630,90 @@ function AdminMain() {
     };
 
     return (
-        <Div>
-            <MainContainer>
-                {queueData.map((queue, index) => (
-                    <BankTellerContainer key={queue.tellerTypeId}>
-                        <BankTellerWrapper>
-                            <BankTellerHeader>{`${queue.tellerTypeId}번 창구`}</BankTellerHeader>
-                            <BankDepartment>{queue.tellerTypeName}</BankDepartment>
-                            <DivisionLine />
-                            <BankStatus>창구 상태</BankStatus>
-                            {queue.consulting ? (
-                                <OrangeMark>상담 중</OrangeMark>
-                            ) : (
-                                <GreenMark>대기 중</GreenMark>
-                            )}
-                            <DivisionLine />
-                            <BankTellerCustomer>창구 고객</BankTellerCustomer>
-                            <BankTellerCustomerName
-                                onClick={() =>
-                                    handleMemberInfoClick(queue.consultingCustomer?.subId)
-                                }
-                            >
-                                {queue.consultingCustomer ? queue.consultingCustomer.name : "없음"}
-                            </BankTellerCustomerName>
-                            <ButtonContainer>
+        <>
+            <Container>
+                <MainContainer>
+                    {queueData.map((queue, index) => (
+                        <BankTellerContainer key={queue.tellerTypeId}>
+                            <BankTellerWrapper>
+                                <BankTellerHeader>{`${queue.tellerTypeId}번 창구`}</BankTellerHeader>
+                                <BankDepartment>{queue.tellerTypeName}</BankDepartment>
+                                <DivisionLine />
+                                <BankStatus>창구 상태</BankStatus>
                                 {queue.consulting ? (
-                                    <TextButton
-                                        width="100%"
-                                        text="상담 완료"
-                                        onClick={() => handleQueue(index)}
-                                    />
+                                    <OrangeMark>상담 중</OrangeMark>
                                 ) : (
-                                    <TextButton2 width="100%" height="100%" fontSize="20px">
-                                        상담 완료
-                                    </TextButton2>
+                                    <GreenMark>대기 중</GreenMark>
                                 )}
-                            </ButtonContainer>
-                        </BankTellerWrapper>
-                        <BankQueueWrapper>
-                            <BankQueueHeader>
-                                <BankList>창구 대기열</BankList>
-                                <BankPeopleNumber>{consultingCounts[index]}명</BankPeopleNumber>
-                            </BankQueueHeader>
-                            <BankQueueList>
-                                {Array.from({ length: 3 }).map((_, i) => {
-                                    const consumer = queue.waitingConsumerList[i];
-                                    return (
-                                        <WaitingConsumer
-                                            key={consumer?.faceId || `empty-${i}`}
-                                            onClick={() => handleMemberInfoClick(consumer?.subId)}
-                                        >
-                                            {consumer ? consumer.name : ""}
-                                        </WaitingConsumer>
-                                    );
-                                })}
-                                {queue.waitingConsumerList.length > 3 ? (
-                                    <TextButton
-                                        width="80%"
-                                        height="25%"
-                                        text="대기열 더 보기"
-                                        onClick={() => openModal(index)}
-                                    />
-                                ) : (
-                                    <TextButton2 width="80%" height="25%" fontSize="20px">
-                                        대기열 더 보기
-                                    </TextButton2>
-                                )}
-                            </BankQueueList>
-                        </BankQueueWrapper>
-                    </BankTellerContainer>
-                ))}
-            </MainContainer>
-            <ButtonContainer>
-                <TextButton
-                    width="19%"
-                    text="서비스 회원 등록"
-                    onClick={() => setRegistModalOpen(true)}
-                />
-            </ButtonContainer>
+                                <DivisionLine />
+                                <BankTellerCustomer>창구 고객</BankTellerCustomer>
+                                <BankTellerCustomerName
+                                    onClick={() =>
+                                        handleMemberInfoClick(queue.consultingCustomer?.subId)
+                                    }
+                                >
+                                    {queue.consultingCustomer
+                                        ? queue.consultingCustomer.name
+                                        : "없음"}
+                                </BankTellerCustomerName>
+                                <ButtonContainer>
+                                    {queue.consulting ? (
+                                        <TextButton
+                                            width="100%"
+                                            text="상담 완료"
+                                            onClick={() => handleQueue(index)}
+                                        />
+                                    ) : (
+                                        <TextButton2 width="100%" height="100%" fontSize="20px">
+                                            상담 완료
+                                        </TextButton2>
+                                    )}
+                                </ButtonContainer>
+                            </BankTellerWrapper>
+                            <BankQueueWrapper>
+                                <BankQueueHeader>
+                                    <BankList>창구 대기열</BankList>
+                                    <BankPeopleNumber>{consultingCounts[index]}명</BankPeopleNumber>
+                                </BankQueueHeader>
+                                <BankQueueList>
+                                    {Array.from({ length: 3 }).map((_, i) => {
+                                        const consumer = queue.waitingConsumerList[i];
+                                        return (
+                                            <WaitingConsumer
+                                                key={consumer?.faceId || `empty-${i}`}
+                                                onClick={() =>
+                                                    handleMemberInfoClick(consumer?.subId)
+                                                }
+                                            >
+                                                {consumer ? consumer.name : ""}
+                                            </WaitingConsumer>
+                                        );
+                                    })}
+                                    {queue.waitingConsumerList.length > 3 ? (
+                                        <TextButton
+                                            width="80%"
+                                            height="25%"
+                                            text="대기열 더 보기"
+                                            onClick={() => openModal(index)}
+                                        />
+                                    ) : (
+                                        <TextButton2 width="80%" height="50px" fontSize="20px">
+                                            대기열 더 보기
+                                        </TextButton2>
+                                    )}
+                                </BankQueueList>
+                            </BankQueueWrapper>
+                        </BankTellerContainer>
+                    ))}
+                </MainContainer>
+                <ButtonContainer>
+                    <TextButton
+                        width="19%"
+                        text="서비스 회원 등록"
+                        onClick={() => setRegistModalOpen(true)}
+                    />
+                </ButtonContainer>
+            </Container>
             {isModalOpen && (
                 <Modal
                     width="300px"
@@ -750,7 +759,7 @@ function AdminMain() {
                     {registerModalContent()}
                 </Modal>
             )}
-        </Div>
+        </>
     );
 }
 
