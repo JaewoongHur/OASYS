@@ -9,7 +9,6 @@ function Admin() {
         <>
             <Header />
             {isAuthenticated ? <Outlet /> : <Navigate to="/admin/login" />}
-            <Outlet />
         </>
     );
 }

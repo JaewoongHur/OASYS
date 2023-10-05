@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 interface FileInputProps {
     width: string;
     height?: string;
+    placeholder: string;
     onFileUpload: (file: File | null) => void;
 }
 
@@ -48,36 +49,36 @@ const FileNameInput = styled.input`
 `;
 
 const FileUploadButton = styled.label<{ fontSize: string }>`
-  width: 20%;
-  height: 100%;
-  box-sizing: border-box;
-  border-radius: 20px;
-  background-color: ${(props) => props.theme.colors.primary3};
-  font-weight: 700;
-  font-size: ${(props) => props.fontSize};
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s;
-  transform-origin: center;
-  user-select: none;
-  outline: none;
-  cursor: pointer;
-  &:active {
-    transform: scale(0.95);
-  }
-  &:disabled {
-    cursor: default;
-    pointer-events: none;
+    width: 20%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.colors.primary3};
+    font-weight: 700;
+    font-size: ${(props) => props.fontSize};
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    transform-origin: center;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
     &:active {
-      transform: scale(1);
+        transform: scale(0.95);
     }
-  }
-}`;
+    &:disabled {
+        cursor: default;
+        pointer-events: none;
+        &:active {
+            transform: scale(1);
+        }
+    }
+`;
 
 function FileInput(props: FileInputProps) {
-    const { width, height, onFileUpload } = props;
+    const { width, height, placeholder, onFileUpload } = props;
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -93,7 +94,7 @@ function FileInput(props: FileInputProps) {
                 <FileNameInput
                     readOnly
                     value={selectedFile ? selectedFile.name : ""}
-                    placeholder="이미지를 첨부해주세요"
+                    placeholder={placeholder}
                 />
             </FileInputWrapper>
             <FileUploadButton fontSize="18px">

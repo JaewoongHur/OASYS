@@ -33,6 +33,7 @@ const InputContainer = styled("div")`
 const LabelWrapper = styled("label")`
     // Text Attribute
     color: ${(props) => props.theme.colors.primary3};
+    font-size: 18px;
     font-weight: 700;
 
     // Interaction Attribute

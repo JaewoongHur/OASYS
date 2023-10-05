@@ -1,6 +1,6 @@
 /* Export */
 export interface ButtonProps {
-    type?: "reset" | "button";
+    type?: "reset" | "button" | "submit";
     width: string;
     height?: string;
     text: string;

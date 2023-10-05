@@ -21,8 +21,6 @@ interface DropdownInputProps {
 // ----------------------------------------------------------------------------------------------------
 /* Style */
 const DropDownContainer = styled("div")`
-    margin-top: 100px;
-    margin-left: 100px;
     cursor: pointer;
 `;
 
@@ -78,8 +76,8 @@ const Option = styled("button")`
     height: 30%;
     background-color: #ffffff;
     color: ${(props) => props.theme.colors.gray7};
-    font-size: 24px;
-
+    font-size: 18px;
+    margin-top: 10px;
     &:hover {
         border-radius: 20px;
         background-color: ${(props) => props.theme.colors.gray1};
@@ -111,13 +109,13 @@ function Dropdown(props: DropdownProps) {
             </InputContainer>
             {showOptions && (
                 <Modal
-                    width="200px"
+                    width="70%"
                     height="100px"
                     openModal={showOptions}
-                    posX="100px"
-                    posY="-40px"
+                    posX="160px"
+                    posY="-48px"
                     overlayOn={false}
-                    position="fixed"
+                    position="absolute"
                 >
                     {optionList.map((option) => (
                         <Option
