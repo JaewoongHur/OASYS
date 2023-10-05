@@ -82,8 +82,8 @@ function Senior() {
         let welcomeAudioWoman;
         let welcomeAudioMan;
         let waitTime;
-        
-        if(name === null) {
+
+        if (name === null) {
             welcomeAudioWoman = new Audio("../src/assets/sounds/업무_응대_확인_여자.mp3");
             welcomeAudioMan = new Audio("../src/assets/sounds/업무_응대_확인_남자.mp3");
             waitTime = 4500;
@@ -102,7 +102,7 @@ function Senior() {
                 welcomeAudioWoman.play();
             }
         }
-        
+
         // 일정 시간 동안 대기 후 고객 음성 인식
         setTimeout(() => {
             listen();
@@ -148,16 +148,21 @@ function Senior() {
                     200: (response) => {
                         const receivedText = response?.data;
                         setValue(receivedText);
-                        if (response?.data) {
+
+                        if (receivedText === null) {
+                            listen();
+                            setIsRecording(true);
+                            setConfirm(false);
+                        } else if (response?.data) {
                             sendTextMessage();
                         } else {
                             setConfirm(false);
 
-                        // 일정 시간 동안 대기 후 고객 음성 인식
-                        setTimeout(() => {
-                            listen();
-                            setIsRecording(true);
-                        }, 4000);
+                            // 일정 시간 동안 대기 후 고객 음성 인식
+                            setTimeout(() => {
+                                listen();
+                                setIsRecording(true);
+                            }, 4000);
                         }
                     },
                     400: () => {},
@@ -186,7 +191,7 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, routeTo]);
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, listen, routeTo]);
 
     return (
         <SeniorContainer>
