@@ -44,7 +44,9 @@ const SeniorBodyContainer = styled("div")`
 `;
 
 // ----------------------------------------------------------------------------------------------------
-
+/* eslint-disable prefer-template */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable object-shorthand */
 /* Senior Page */
 function Senior() {
     const [value, setValue] = useState<string>("");
@@ -52,6 +54,8 @@ function Senior() {
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
     const [phase, setPhase] = useState<string>("talk");
+    const [work, setWork] = useState<string>("");
+    const [teller, setTeller] = useState<string>("");
     const gender = useUserStore((state) => state.gender);
     const name = useUserStore((state) => state.member.name);
     const phone = useUserStore((state) => state.member.phone);
@@ -64,11 +68,11 @@ function Senior() {
                 400: () => {},
             },
             data: {
-                name: "",
-                phone: "",
-                teller: 2,
+                name: name,
+                phone: phone,
+                teller: teller,
                 waitPeople: 3,
-                work: "",
+                work: work,
             },
         });
     }
@@ -90,12 +94,13 @@ function Senior() {
             const genderKR = gender === "FEMALE" ? "남자" : "여자";
             const resultVoice = new Audio(`../src/assets/sounds/알림_인사_${genderKR}.mp3`);
             resultVoice.play();
+            sendTextMessage();
             setTimeout(() => {
                 useUserStore.persist.clearStorage();
                 routeTo("/");
             }, 10000);
         }
-    }, [phone, gender, routeTo]);
+    }, [phone]);
 
     // 고객 응대 기능 추가
     useEffect(() => {
@@ -147,8 +152,6 @@ function Senior() {
             welcomeAudioWoman.currentTime = 0;
             welcomeAudioMan.currentTime = 0;
         };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // 최초로 한번만 실행
 
     useEffect(() => {
@@ -157,7 +160,6 @@ function Senior() {
                 responseFunc: {
                     200: (response) => {
                         const receivedText = response?.data;
-                        // eslint-disable-next-line prefer-template
                         setValue(receivedText.split(" ")[0] + ` 업무가 맞으신가요?`);
                         setConfirm(true);
                         if (receivedText === "") {
@@ -184,10 +186,9 @@ function Senior() {
                 responseFunc: {
                     200: (response) => {
                         const receivedText = response?.data;
-                        const work = receivedText.split(" ")[0];
-                        const teller = receivedText.split(" ")[1];
+                        setWork(receivedText.split(" ")[0]);
+                        setTeller(receivedText.split(" ")[1]);
 
-                        // eslint-disable-next-line prefer-template
                         setValue(work + ` 업무\n접수 완료되었습니다.\n잠시만 기다려주세요.`);
 
                         if (response?.data) {
@@ -195,7 +196,6 @@ function Senior() {
                             const genderKR = gender === "FEMALE" ? "남자" : "여자";
 
                             setTimeout(() => {
-                                // eslint-disable-next-line prefer-template
                                 setValue(teller + `번 창구 대기열에\n등록되었습니다.`);
                                 resultVoice = new Audio(
                                     `../src/assets/sounds/${teller}번창구_안내_${genderKR}.mp3`,
@@ -207,7 +207,6 @@ function Senior() {
                                 // 회원일때
                                 // /consumer/waiting 으로 보내서 대기 인원 추가하기
                                 setTimeout(() => {
-                                    // eslint-disable-next-line prefer-template
                                     setValue(
                                         `대기열 정보를\n휴대전화를 통해\n알려드리겠습니다.\n이용해 주셔서 감사합니다.`,
                                     );
@@ -215,13 +214,12 @@ function Senior() {
                                         `../src/assets/sounds/알림_인사_${genderKR}.mp3`,
                                     );
                                     resultVoice.play();
+                                    sendTextMessage();
                                 }, 12000);
-                                sendTextMessage();
                             } else {
                                 // 회원이 아닐때
                                 // /consumer/waiting 으로 보내서 대기 인원 추가하기
                                 setTimeout(() => {
-                                    // eslint-disable-next-line prefer-template
                                     setValue(
                                         `문자 및 전화 알림을 원하신다면\n전화번호를 입력해주세요.`,
                                     );
@@ -231,7 +229,6 @@ function Senior() {
                                     resultVoice.play();
                                     setPhase("phone");
                                 }, 12000);
-                                sendTextMessage();
                             }
                         } else {
                             setConfirm(false);
