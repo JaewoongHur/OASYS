@@ -14,6 +14,12 @@ export default defineConfig({
         host: true,
         strictPort: true,
         port: 5173,
+        proxy: {
+            "/manager": {
+                target: "https://j9a106.p.ssafy.io",
+                changeOrigin: true,
+            },
+        },
     },
     resolve: {
         alias: [

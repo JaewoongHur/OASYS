@@ -45,21 +45,26 @@ const SeniorBodyContainer = styled("div")`
 
 // ----------------------------------------------------------------------------------------------------
 /* eslint-disable prefer-template */
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable object-shorthand */
+/* eslint-disable consistent-return */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* Senior Page */
+let work = "";
+let teller = "";
+let name = "";
+let phone = "";
+
 function Senior() {
     const [value, setValue] = useState<string>("");
     const [confirm, setConfirm] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
     const [phase, setPhase] = useState<string>("talk");
-    const [work, setWork] = useState<string>("");
-    const [teller, setTeller] = useState<string>("");
     const gender = useUserStore((state) => state.gender);
-    const name = useUserStore((state) => state.member.name);
-    const phone = useUserStore((state) => state.member.phone);
     const { routeTo } = useRouter();
+    name = useUserStore((state) => state.member.name);
+    phone = useUserStore((state) => state.member.phone);
 
     async function sendTextMessage() {
         await postMessage({
@@ -76,6 +81,27 @@ function Senior() {
             },
         });
     }
+
+    const sendConsumerToWaiting = async (data) => {
+        console.log(data);
+        try {
+            const response = await fetch("/manager/consumer/waiting", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) {
+                console.log("response not ok!");
+                throw new Error("Failed to add consumer to waiting list");
+            }
+        } catch (error) {
+            console.error("Error sending consumer data:", error);
+            console.log("error!");
+        }
+    };
 
     const { listen, stop } = useSpeechRecognition({
         onResult: (result) => {
@@ -95,9 +121,25 @@ function Senior() {
             const resultVoice = new Audio(`../src/assets/sounds/알림_인사_${genderKR}.mp3`);
             resultVoice.play();
             sendTextMessage();
+
+            // Construct the member data to be sent
+            const memberData = {
+                isMember: false, // Adjust this based on your logic
+                userId: null,
+                faceId: "test15",
+                subId: "test15",
+                phone: "00000000000",
+                name: "K",
+                tellerTypeId: 1,
+                cateTypeName: "통장 · 계좌",
+            };
+
+            // Call the function to send data to the backend
+            sendConsumerToWaiting(memberData);
+
             setTimeout(() => {
                 useUserStore.persist.clearStorage();
-                routeTo("/");
+                routeTo("/home");
             }, 10000);
         }
     }, [phone]);
@@ -186,10 +228,10 @@ function Senior() {
                 responseFunc: {
                     200: (response) => {
                         const receivedText = response?.data;
-                        setWork(receivedText.split(" ")[0]);
-                        setTeller(receivedText.split(" ")[1]);
+                        work = receivedText.split(" ")[0];
+                        teller = receivedText.split(" ")[1];
 
-                        setValue(work + ` 업무\n접수 완료되었습니다.\n잠시만 기다려주세요.`);
+                        setValue(work + ` 업무가\n접수 완료되었습니다.\n잠시만 기다려주세요.`);
 
                         if (response?.data) {
                             let resultVoice;
@@ -215,6 +257,21 @@ function Senior() {
                                     );
                                     resultVoice.play();
                                     sendTextMessage();
+
+                                    // Construct the member data to be sent
+                                    const memberData = {
+                                        isMember: true, // Adjust this based on your logic
+                                        userId: "",
+                                        faceId: "",
+                                        subId: "",
+                                        phone: phone,
+                                        name: name,
+                                        tellerTypeId: teller,
+                                        cateTypeName: work,
+                                    };
+
+                                    // Call the function to send data to the backend
+                                    sendConsumerToWaiting(memberData);
                                 }, 12000);
                             } else {
                                 // 회원이 아닐때
