@@ -83,10 +83,14 @@ function Senior() {
         let welcomeAudioMan;
         let waitTime;
 
-        if (name === null) {
+        if (name !== null) {
             welcomeAudioWoman = new Audio("../src/assets/sounds/업무_응대_확인_여자.mp3");
             welcomeAudioMan = new Audio("../src/assets/sounds/업무_응대_확인_남자.mp3");
             waitTime = 4500;
+            setValue("고객님 안녕하세요!😀");
+            setTimeout(() => {
+                setValue(`어떤 업무를 도와드릴까요?`);
+            }, 1800);
             if (gender === "FEMALE") {
                 welcomeAudioMan.play();
             } else {
@@ -96,6 +100,13 @@ function Senior() {
             welcomeAudioWoman = new Audio("../src/assets/sounds/회원_응대_확인_여자.mp3");
             welcomeAudioMan = new Audio("../src/assets/sounds/회원_응대_확인_남자.mp3");
             waitTime = 7000;
+            setValue(`${name}님 안녕하세요!😀`);
+            setTimeout(() => {
+                setValue(`다시 찾아주셔서 감사해요`);
+            }, 1800);
+            setTimeout(() => {
+                setValue(`어떤 업무를 도와드릴까요?`);
+            }, 3800);
             if (gender === "FEMALE") {
                 welcomeAudioMan.play();
             } else {
