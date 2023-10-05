@@ -18,11 +18,17 @@ public class MemberDto {
 
     private String phone;
 
+    private String faceId;
+
+    private String subId;
+
     public static MemberDto from(Member member){
         return MemberDto.builder()
             .id(member.getId())
             .name(member.getNickname())
             .phone(member.getPhone())
+            .faceId(member.getFaceId())
+            .subId(member.getSubId())
             .build();
     }
 }
