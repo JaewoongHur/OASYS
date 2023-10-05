@@ -81,7 +81,7 @@ function AdminLogin() {
     const handleLogin = () => {
         if (username === VITE_ADMIN_ID && password === VITE_ADMIN_PASSWORD) {
             updateAuthState({ isAuth: true });
-            routeTo("/admin");
+            routeTo("/main");
         } else {
             alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         }

@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextButton } from "@/components/common/button";
 import styled from "@emotion/styled";
 import Modal from "@components/modal/Modal";
 import { FileInput, TextInput } from "@/components/common/input";
 import Dropdown from "@/components/common/dropdown";
+
+type ResponseMember = {
+    faceId: string;
+    subId: string;
+    name: string;
+    phone: string;
+    cateTypeName: string;
+    isMember: boolean;
+    age: number;
+    userId: number;
+    gender: string;
+};
 
 interface TextButton2Props {
     width: string;
@@ -105,6 +117,7 @@ const BankTellerHeader = styled("div")`
     font-weight: 900;
     height: 15%;
     margin: 0 auto;
+    cursor: pointer;
 `;
 
 const BankDepartment = styled("div")`
@@ -335,99 +348,164 @@ const InfoButtonContainer = styled("div")`
     align-items: center;
     justify-content: center;
 `;
-const queueListData: ConsultingData[] = [
-    {
-        tellerTypeId: 1,
-        tellerTypeName: "통장 · 계좌",
-        consultingCustomer: {
-            faceId: "test5",
-            subId: "a",
-            name: "John Doe5",
-        },
-        waitingConsumerCount: 0,
-        waitingConsumerList: [],
-        consulting: true,
-    },
-    {
-        tellerTypeId: 2,
-        tellerTypeName: "카드",
-        consultingCustomer: {
-            faceId: "test6",
-            subId: "a",
-            name: "John Doe5",
-        },
-        waitingConsumerCount: 5,
-        waitingConsumerList: [
-            {
-                faceId: "test1",
-                subId: "b",
-                name: "고건",
-            },
-            {
-                faceId: "test2",
-                subId: "c",
-                name: "정연수",
-            },
-            {
-                faceId: "test3",
-                subId: "b",
-                name: "고건",
-            },
-            {
-                faceId: "test4",
-                subId: "c",
-                name: "정연수",
-            },
-            {
-                faceId: "test9",
-                subId: "c",
-                name: "정연수",
-            },
-        ],
-        consulting: true,
-    },
-    {
-        tellerTypeId: 3,
-        tellerTypeName: "인터넷뱅킹",
-        consultingCustomer: null,
-        waitingConsumerCount: 0,
-        waitingConsumerList: [],
-        consulting: false,
-    },
-    {
-        tellerTypeId: 4,
-        tellerTypeName: "대출 · 외환",
-        consultingCustomer: null,
-        waitingConsumerCount: 0,
-        waitingConsumerList: [],
-        consulting: false,
-    },
-];
+
+// const queueListData: ConsultingData[] = [
+//     {
+//         tellerTypeId: 1,
+//         tellerTypeName: "통장 · 계좌",
+//         consultingCustomer: {
+//             faceId: "test5",
+//             subId: "a",
+//             name: "John Doe5",
+//         },
+//         waitingConsumerCount: 0,
+//         waitingConsumerList: [],
+//         consulting: true,
+//     },
+//     {
+//         tellerTypeId: 2,
+//         tellerTypeName: "카드",
+//         consultingCustomer: {
+//             faceId: "test6",
+//             subId: "a",
+//             name: "John Doe5",
+//         },
+//         waitingConsumerCount: 5,
+//         waitingConsumerList: [
+//             {
+//                 faceId: "test1",
+//                 subId: "b",
+//                 name: "고건",
+//             },
+//             {
+//                 faceId: "test2",
+//                 subId: "c",
+//                 name: "정연수",
+//             },
+//             {
+//                 faceId: "test3",
+//                 subId: "b",
+//                 name: "고건",
+//             },
+//             {
+//                 faceId: "test4",
+//                 subId: "c",
+//                 name: "정연수",
+//             },
+//             {
+//                 faceId: "test9",
+//                 subId: "c",
+//                 name: "정연수",
+//             },
+//         ],
+//         consulting: true,
+//     },
+//     {
+//         tellerTypeId: 3,
+//         tellerTypeName: "인터넷뱅킹",
+//         consultingCustomer: null,
+//         waitingConsumerCount: 0,
+//         waitingConsumerList: [],
+//         consulting: false,
+//     },
+//     {
+//         tellerTypeId: 4,
+//         tellerTypeName: "대출 · 외환",
+//         consultingCustomer: null,
+//         waitingConsumerCount: 0,
+//         waitingConsumerList: [],
+//         consulting: false,
+//     },
+// ];
 
 function AdminMain() {
-    const [consultingCounts, setConsultingCounts] = useState<number[]>([
-        queueListData[0].waitingConsumerCount,
-        queueListData[1].waitingConsumerCount,
-        queueListData[2].waitingConsumerCount,
-        queueListData[3].waitingConsumerCount,
-    ]);
-    const [queueData, setQueueData] = useState<ConsultingData[]>(queueListData);
-    const handleQueue = (index: number) => {
-        const updatedQueueData = [...queueData];
-        const queue = updatedQueueData[index];
+    const [queueListData, setQueueListData] = useState<ConsultingData[]>([]);
+    const [consultingCounts, setConsultingCounts] = useState<number[]>([0, 0, 0, 0]);
+    const [selectedMemberInfo, setSelectedMemberInfo] = useState<ResponseMember | null>(null);
 
-        // consultingCustomer 변경 및 첫 번째 대기자 삭제
-        if (queue.consulting && queue.waitingConsumerList.length >= 0) {
-            const [firstConsumer, ...remainingConsumers] = queue.waitingConsumerList;
-            queue.consultingCustomer = firstConsumer;
-            queue.waitingConsumerList = remainingConsumers;
-            setConsultingCounts((prevCounts) => {
-                const newCounts = [...prevCounts];
-                newCounts[index] = Math.max(newCounts[index] - 1, 0);
-                return newCounts;
+    const fetchConsultingData = async () => {
+        try {
+            const response = await fetch("/manager/teller/list");
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch consulting data");
+            }
+
+            const data: ConsultingData[] = await response.json();
+
+            setQueueListData(data);
+            console.log(data);
+
+            setConsultingCounts([
+                data[0]?.waitingConsumerCount || 0,
+                data[1]?.waitingConsumerCount || 0,
+                data[2]?.waitingConsumerCount || 0,
+                data[3]?.waitingConsumerCount || 0,
+            ]);
+        } catch (error) {
+            console.error("Error fetching consulting data:", error);
+        }
+    };
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useEffect(() => {
+        fetchConsultingData();
+    }, []);
+
+    const handleQueueDEL = async (index: number) => {
+        try {
+            const responseDEL = await fetch(
+                `/manager/consulting/${queueListData[index].tellerTypeId}`,
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                },
+            );
+
+            if (!responseDEL.ok) {
+                throw new Error("Failed to dequeue the consumer");
+            }
+
+            fetchConsultingData();
+        } catch (error) {
+            console.error("Error dequeuing consumer:", error);
+        }
+    };
+
+    const handleQueuePUT = async (index: number) => {
+        try {
+            // Make the PUT request to get the next customer for consultation
+            const responsePUT = await fetch(
+                `/manager/consulting/${queueListData[index].tellerTypeId}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                },
+            );
+
+            if (!responsePUT.ok) {
+                throw new Error("Failed to get the next customer for consultation");
+            }
+
+            // After a successful API call, fetch the updated list of consumers
+            fetchConsultingData();
+
+            const responseCALL = await fetch(`/notification/call`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
             });
 
-            setQueueData(updatedQueueData);
+            if (!responseCALL.ok) {
+                throw new Error("Failed to get the next customer for consultation");
+            }
+        } catch (error) {
+            console.error("Error dequeuing consumer:", error);
         }
     };
 
@@ -435,7 +513,7 @@ function AdminMain() {
     const [registModalOpen, setRegistModalOpen] = useState<boolean>(false);
     const [memberModalOpen, setMemberModalOpen] = useState<boolean>(false);
     const [selectedQueueIndex, setSelectedQueueIndex] = useState<number>(-1);
-    const [selectedMemberSubId, setSelectedMemberSubId] = useState<number>(-1);
+    // const [selectedMemberSubId, setSelectedMemberSubId] = useState<number>(-1);
     const [name, setName] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
     const [age, setAge] = useState<string>("");
@@ -533,52 +611,78 @@ function AdminMain() {
             </RegisterContainer>
         );
     };
-    const handleMemberInfoClick = (subId) => {
+    const handleMemberInfoClick = async (faceId) => {
         // subId를 기반으로 고객 정보 조회 API 호출 또는 상태 업데이트 등을 수행
         // 조회된 정보를 모달에 표시하기 위한 상태를 업데이트
-        setSelectedMemberSubId(subId); // 예시: 조회된 고객의 subId를 상태로 저장
-        const a = selectedMemberSubId;
-        console.log(a);
-        // 정보 조회 모달 열기
+        console.log(faceId);
+        const responseUSER = await fetch(`/manager/consumer/${faceId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        if (!responseUSER.ok) {
+            throw new Error("Failed to get the next customer for consultation");
+        }
+
+        const data: ResponseMember = await responseUSER.json();
+        console.log(data);
+        setSelectedMemberInfo(data);
         setMemberModalOpen(true);
     };
     const renderMemberModalContent = () => {
-        // 선택된 고객의 subId를 사용하여 해당 고객 정보를 가져오는 로직을 추가
-        // const selectedMemberInfo = getMemberInfoBySubId(selectedMemberSubId);
-        // API로 정보 가져오기
-
-        // 모달 내용을 반환
         return (
-            // <div>
-            //     {/* 고객 정보를 출력하는 컴포넌트를 구현 */}
-            //     {/* <div>고객 이름: {selectedMemberInfo?.name}</div>
-            //     <div>고객 전화번호: {selectedMemberInfo?.phone}</div> */}
-            //     {/* 기타 정보 표시 */}
-            // </div>
             <InfoContainer>
                 <InfoHeader>서비스 회원 정보</InfoHeader>
                 <InfoMemberWrapper>
                     <MemberNameContainer>
-                        <TextInput readOnly width="100%" label="이름" value={name} />
+                        <TextInput
+                            readOnly
+                            width="100%"
+                            label="이름"
+                            value={selectedMemberInfo?.name || ""}
+                        />
                     </MemberNameContainer>
                     <IsMemberContainer>
-                        <TextInput readOnly width="100%" label="회원 여부" value="회원" />
+                        <TextInput
+                            readOnly
+                            width="100%"
+                            label="회원 여부"
+                            value={selectedMemberInfo?.isMember ? "회원" : "비회원"}
+                        />
                     </IsMemberContainer>
                 </InfoMemberWrapper>
                 <PhoneContainer>
-                    <TextInput readOnly width="100%" label="전화번호" value={phone} />
+                    <TextInput
+                        readOnly
+                        width="100%"
+                        label="전화번호"
+                        value={selectedMemberInfo?.phone || ""}
+                    />
                 </PhoneContainer>
                 <AgeContainer>
-                    <TextInput readOnly width="100%" label="나이" value={age} />
+                    <TextInput
+                        readOnly
+                        width="100%"
+                        label="나이"
+                        value={selectedMemberInfo?.age.toString() || ""}
+                    />
                 </AgeContainer>
                 <GenderContainer>
                     <GenderWrapper>
                         <GenderLabel htmlFor="gender">성별</GenderLabel>
                     </GenderWrapper>
-                    <TextInput readOnly width="100%" value="남성" />
+                    <TextInput readOnly width="100%" value={selectedMemberInfo?.gender || ""} />
                 </GenderContainer>
                 <WorkContainer>
-                    <TextInput readOnly width="100%" label="업무 내용" value="금융 상품 가입" />
+                    {/* I'm not sure where the work data comes from, so I left it as it was */}
+                    <TextInput
+                        readOnly
+                        width="100%"
+                        label="업무 내용"
+                        value={selectedMemberInfo?.cateTypeName || ""}
+                    />
                 </WorkContainer>
                 <InfoButtonContainer>
                     <TextButton width="40%" text="확인" onClick={() => setMemberModalOpen(false)} />
@@ -590,7 +694,7 @@ function AdminMain() {
     // 모달 내용을 동적으로 생성하는 함수
     const renderModalContent = () => {
         if (selectedQueueIndex !== -1) {
-            const queue = queueData[selectedQueueIndex];
+            const queue = queueListData[selectedQueueIndex];
             return (
                 <AllWaitingConsumer>
                     <ScrollWaitingContainer>
@@ -633,10 +737,12 @@ function AdminMain() {
         <>
             <Container>
                 <MainContainer>
-                    {queueData.map((queue, index) => (
+                    {queueListData.map((queue, index) => (
                         <BankTellerContainer key={queue.tellerTypeId}>
                             <BankTellerWrapper>
-                                <BankTellerHeader>{`${queue.tellerTypeId}번 창구`}</BankTellerHeader>
+                                <BankTellerHeader
+                                    onClick={() => handleQueuePUT(index)}
+                                >{`${queue.tellerTypeId}번 창구`}</BankTellerHeader>
                                 <BankDepartment>{queue.tellerTypeName}</BankDepartment>
                                 <DivisionLine />
                                 <BankStatus>창구 상태</BankStatus>
@@ -649,7 +755,7 @@ function AdminMain() {
                                 <BankTellerCustomer>창구 고객</BankTellerCustomer>
                                 <BankTellerCustomerName
                                     onClick={() =>
-                                        handleMemberInfoClick(queue.consultingCustomer?.subId)
+                                        handleMemberInfoClick(queue.consultingCustomer?.faceId)
                                     }
                                 >
                                     {queue.consultingCustomer
@@ -661,7 +767,7 @@ function AdminMain() {
                                         <TextButton
                                             width="100%"
                                             text="상담 완료"
-                                            onClick={() => handleQueue(index)}
+                                            onClick={() => handleQueueDEL(index)}
                                         />
                                     ) : (
                                         <TextButton2 width="100%" height="100%" fontSize="20px">
@@ -682,7 +788,7 @@ function AdminMain() {
                                             <WaitingConsumer
                                                 key={consumer?.faceId || `empty-${i}`}
                                                 onClick={() =>
-                                                    handleMemberInfoClick(consumer?.subId)
+                                                    handleMemberInfoClick(consumer?.faceId)
                                                 }
                                             >
                                                 {consumer ? consumer.name : ""}
