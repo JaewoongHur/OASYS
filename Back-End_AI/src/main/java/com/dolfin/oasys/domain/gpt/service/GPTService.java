@@ -268,14 +268,7 @@ public class GPTService {
 
             }
         }
-
         return answer;
     }
-    public String getTask(){
-
-        return this.task;
-    }
-
-
 
 }

@@ -23,7 +23,10 @@ public class TtsController {
             SynthesisInput input = SynthesisInput.newBuilder().setText(str).build();
             VoiceSelectionParams voice;
             if(gender.equals("female")) {
-                voice = VoiceSelectionParams.newBuilder().setLanguageCode("ko-KR").setSsmlGender(SsmlVoiceGender.FEMALE).build();
+                voice = VoiceSelectionParams.newBuilder()
+                        .setLanguageCode("ko-KR")
+                        .setSsmlGender(SsmlVoiceGender.FEMALE)
+                        .build();
             }
             else{
                 voice = VoiceSelectionParams.newBuilder().setLanguageCode("ko-KR").setName("ko-KR-Wavenet-C").setSsmlGender(SsmlVoiceGender.MALE).build();

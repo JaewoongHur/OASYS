@@ -29,7 +29,6 @@ public class GptController {
         String answerText= "";
         answerText=gptService.taskQuestion(voiceText,gender);
 
-        System.out.println(gptService.getTask());
         return ResponseEntity.ok(answerText);
     }
 
@@ -40,7 +39,6 @@ public class GptController {
         System.out.println(gender);
         String answerText= "";
         answerText = gptService.confirmTask(voiceText,gender);
-        System.out.println(gptService.getTask());
         return ResponseEntity.ok(answerText);
 
     }
