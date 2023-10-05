@@ -72,13 +72,13 @@ public class GPTService {
  * 은행 업무'
  * 자주 사용하는 서비스 - 입금, 계좌 이체, 송금, 출금, 통장 정리, 현금 서비스, 공과금 납부
  *
- 통장, 계좌 창구 - 입금, 계좌 이체, 송금, 출금, 통장 정리 등
+ 1.통장, 계좌 창구 - 입금, 계좌 이체, 송금, 출금, 통장 정리 등
 
-카드 창구 - 카드 발급 및 재발급, 한도 및 비밀변호 변경, 신고, 현금 서비스 등
+ 2.카드 창구 - 카드 발급 및 재발급, 한도 및 비밀변호 변경, 신고, 현금 서비스 등
 
-인터넷 뱅킹 - 가입, OTP 및 보안 카드 업무, 텔레 뱅킹, 이체한도 및 비밀번호 변경 등
+ 3.인터넷 뱅킹 - 가입, OTP 및 보안 카드 업무, 텔레 뱅킹, 이체한도 및 비밀번호 변경 등
 
-대출, 외환 창구 - 예적금 담보 대출, 원금 및 이자 상환, 공과금 납부, 증명서 발금, 환전 등
+ 4.대출, 외환 창구 - 예적금 담보 대출, 원금 및 이자 상환, 공과금 납부, 증명서 발금, 환전 등
  *
  *
  * */
@@ -105,52 +105,52 @@ public class GPTService {
             if (answerText.contains("인출")) {
                 receive = new PlayerMP3(filePath + "인출_확인_여자.mp3");
                 answerText = "인출";
-                task="인출 업무";
+                task="1";
                 receive.playing();
             } else if (answerText.contains("입금")) {
                 receive = new PlayerMP3(filePath + "입금_확인_여자.mp3");
                 answerText = "입금";
-                task="입금 업무";
+                task="1";
                 receive.playing();
             } else if (answerText.contains("송금")) {
                 receive = new PlayerMP3(filePath + "송금_확인_여자.mp3");
                 answerText = "송금";
-                task="송금 업무";
+                task="1";
                 receive.playing();
             } else if (answerText.contains("카드")){
                 receive = new PlayerMP3(filePath + "카드_확인_여자.mp3");
                 answerText = "카드";
-                task="카드 업무";
+                task="2";
                 receive.playing();
             }else if (answerText.contains("인터넷")){
                 receive = new PlayerMP3(filePath + "인터넷뱅킹_확인_여자.mp3");
-                answerText = "인터넷 뱅킹";
-                task="인터넷 뱅킹 업무";
+                answerText = "인터넷뱅킹";
+                task="3";
                 receive.playing();
             }else if (answerText.contains("대출")){
                 receive = new PlayerMP3(filePath + "대출_외환_확인_여자.mp3");
-                answerText = "대출 외환";
-                task="대출 외환 업무";
+                answerText = "대출외환";
+                task="4";
                 receive.playing();
             }else if (answerText.contains("통장")){
                 receive = new PlayerMP3(filePath + "통장정리_확인_여자.mp3");
-                answerText = "통장 정리";
-                task="통장 정리 업무";
+                answerText = "통장정리";
+                task="1";
                 receive.playing();
             }else if (answerText.contains("계좌")){
                 receive = new PlayerMP3(filePath + "계좌이체_확인_여자.mp3");
-                answerText = "계좌 이체";
-                task="계좌 이체 업무";
+                answerText = "계좌이체";
+                task="1";
                 receive.playing();
             }else if (answerText.contains("공과금")){
                 receive = new PlayerMP3(filePath + "공과금납부_확인_여자.mp3");
-                answerText = "공과금 납부";
-                task="공과금 납부 업무";
+                answerText = "공과금납부";
+                task="4";
                 receive.playing();
             }else if (answerText.contains("현금 서비스")){
                 receive = new PlayerMP3(filePath + "현금서비스_확인_여자.mp3");
                 answerText = "현금서비스";
-                task="현금서비스 업무";
+                task="2";
                 receive.playing();
             }
             else{
@@ -164,52 +164,52 @@ public class GPTService {
             if (answerText.contains("인출")) {
                 receive = new PlayerMP3(filePath + "인출_확인_남자.mp3");
                 answerText = "인출";
-                task="인출 업무";
+                task="1";
                 receive.playing();
             } else if (answerText.contains("입금")) {
                 receive = new PlayerMP3(filePath + "입금_확인_남자.mp3");
                 answerText = "입금";
-                task="입금 업무";
+                task="1";
                 receive.playing();
             } else if (answerText.contains("송금")) {
                 receive = new PlayerMP3(filePath + "송금_확인_남자.mp3");
                 answerText = "송금";
-                task="송금 업무";
+                task="1";
                 receive.playing();
             }else if (answerText.contains("카드")){
                 receive = new PlayerMP3(filePath + "카드_확인_남자.mp3");
                 answerText = "카드";
-                task="카드 업무";
+                task="2";
                 receive.playing();
             }else if (answerText.contains("인터넷")){
                 receive = new PlayerMP3(filePath + "인터넷뱅킹_확인_남자.mp3");
-                answerText = "인터넷 뱅킹";
-                task="인터넷 뱅킹 업무";
+                answerText = "인터넷뱅킹";
+                task="3";
                 receive.playing();
             }else if (answerText.contains("대출")){
                 receive = new PlayerMP3(filePath + "대출_외환_확인_남자.mp3");
-                answerText = "대출 외환";
-                task="대출 외환 업무";
+                answerText = "대출외환";
+                task="4";
                 receive.playing();
             }else if (answerText.contains("통장")){
                 receive = new PlayerMP3(filePath + "통장정리_확인_남자.mp3");
-                answerText = "통장 정리";
-                task="통장 정리 업무";
+                answerText = "통장정리";
+                task="1";
                 receive.playing();
             }else if (answerText.contains("계좌")){
                 receive = new PlayerMP3(filePath + "계좌이체_확인_남자.mp3");
-                answerText = "계좌 이체";
-                task="계좌 이체 업무";
+                answerText = "계좌이체";
+                task="1";
                 receive.playing();
             }else if (answerText.contains("공과금")){
                 receive = new PlayerMP3(filePath + "공과금납부_확인_남자.mp3");
-                answerText = "공과금 납부";
-                task="공과금 납부 업무";
+                answerText = "공과금납부";
+                task="4";
                 receive.playing();
             }else if (answerText.contains("현금 서비스")){
                 receive = new PlayerMP3(filePath + "현금서비스_확인_남자.mp3");
                 answerText = "현금서비스";
-                task="현금서비스 업무";
+                task="2";
                 receive.playing();
             } else{
                 receive = new PlayerMP3(filePath+"확인_실패_남자.mp3");
@@ -219,7 +219,8 @@ public class GPTService {
             }
 
         }
-        return answerText;
+        String answer = answerText+" "+task;
+        return answer;
     }
 
     public String confirmTask(String voiceText,String gender){
