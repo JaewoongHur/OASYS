@@ -82,17 +82,18 @@ public class MemberDto {
         private String name;
     }
 
-//    @Getter
-//    @Setter
-//    @ToString
-//    @Builder
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class NonMember {
-//        private String faceId;
-//        private String Name;
-//        private String phone;
-//        private String cateTypeName;
-//    }
+    @Getter
+    @Setter
+    @ToString
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class ConsumerForMessage {
+        private String name;
+        private String phone;
+        private String teller;
+        private String work;
+        private String waitPeople;
+    }
 
 }
