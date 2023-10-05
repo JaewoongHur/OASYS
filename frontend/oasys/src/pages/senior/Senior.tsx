@@ -83,11 +83,11 @@ function Senior() {
         let welcomeAudioMan;
         let waitTime;
 
-        if (name !== null) {
+        if (name === null) {
             welcomeAudioWoman = new Audio("../src/assets/sounds/업무_응대_확인_여자.mp3");
             welcomeAudioMan = new Audio("../src/assets/sounds/업무_응대_확인_남자.mp3");
             waitTime = 4500;
-            setValue("고객님 안녕하세요!😀");
+            setValue(`고객님 안녕하세요!😃`);
             setTimeout(() => {
                 setValue(`어떤 업무를 도와드릴까요?`);
             }, 1800);
@@ -100,7 +100,7 @@ function Senior() {
             welcomeAudioWoman = new Audio("../src/assets/sounds/회원_응대_확인_여자.mp3");
             welcomeAudioMan = new Audio("../src/assets/sounds/회원_응대_확인_남자.mp3");
             waitTime = 7000;
-            setValue(`${name}님 안녕하세요!😀`);
+            setValue(`${name}님 안녕하세요!😃`);
             setTimeout(() => {
                 setValue(`다시 찾아주셔서 감사해요`);
             }, 1800);
@@ -137,7 +137,8 @@ function Senior() {
                 responseFunc: {
                     200: (response) => {
                         const receivedText = response?.data;
-                        setValue(receivedText);
+                        // eslint-disable-next-line prefer-template
+                        setValue(receivedText.split(" ")[0] + ` 업무가 맞으신가요?`);
                         setConfirm(true);
                         if (receivedText === "") {
                             setConfirm(false);
@@ -163,10 +164,53 @@ function Senior() {
                 responseFunc: {
                     200: (response) => {
                         const receivedText = response?.data;
-                        setValue(receivedText);
+                        const work = receivedText.split(" ")[0];
+                        const teller = receivedText.split(" ")[1];
+
+                        // eslint-disable-next-line prefer-template
+                        setValue(work + ` 업무\n접수 완료되었습니다.\n잠시만 기다려주세요.`);
+
                         if (response?.data) {
-                            sendTextMessage();
-                            setPhase("phone");
+                            let resultVoice;
+                            const genderKR = gender === "FEMALE" ? "남자" : "여자";
+
+                            setTimeout(() => {
+                                // eslint-disable-next-line prefer-template
+                                setValue(teller + `번 창구 대기열에\n등록되었습니다.`);
+                                resultVoice = new Audio(
+                                    `../src/assets/sounds/${teller}번창구_안내_${genderKR}.mp3`,
+                                );
+                                resultVoice.play();
+                            }, 8000);
+
+                            if (name === null) {
+                                // 회원일때
+                                // /consumer/waiting 으로 보내서 대기 인원 추가하기
+                                setTimeout(() => {
+                                    // eslint-disable-next-line prefer-template
+                                    setValue(
+                                        `다음 차례일 때\n문자로 알려드릴게요.\n이용해 주셔서 감사합니다.`,
+                                    );
+                                    resultVoice = new Audio(
+                                        `../src/assets/sounds/문자_알림_인사_${genderKR}.mp3`,
+                                    );
+                                    resultVoice.play();
+                                }, 12000);
+                                sendTextMessage();
+                            } else {
+                                // 회원이 아닐때
+                                // /consumer/waiting 으로 보내서 대기 인원 추가하기
+                                setTimeout(() => {
+                                    // eslint-disable-next-line prefer-template
+                                    setValue(`문자 알림을 원하신다면\n전화번호를 입력해주세요.`);
+                                    resultVoice = new Audio(
+                                        `../src/assets/sounds/비회원_전화번호_${genderKR}.mp3`,
+                                    );
+                                    resultVoice.play();
+                                }, 12000);
+                                setPhase("phone");
+                                sendTextMessage();
+                            }
                         } else {
                             setConfirm(false);
 
@@ -204,7 +248,7 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, listen]);
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, listen, name]);
 
     return (
         <SeniorContainer>
