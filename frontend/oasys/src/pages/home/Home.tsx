@@ -2,16 +2,28 @@
 import postFace from "@api/faces";
 import useRouter from "@hooks/useRouter";
 import { useUserStore } from "@/store";
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useState, useEffect } from "react";
 import Webcam from "react-webcam";
+import socketIOClient from "socket.io-client";
 
 // ----------------------------------------------------------------------------------------------------
-
+const ENDPOINT = "http://127.0.0.1:4001";
 /* Home Page */
 function Home() {
     const webcamRef = useRef<Webcam | null>(null);
     const updateUserInfo = useUserStore((state) => state.updateUserState);
     const { routeTo } = useRouter();
+
+    const [response, setResponse] = useState("");
+
+    // communicate with express by socketIo
+    useEffect(() => {
+        const socket = socketIOClient(ENDPOINT);
+        socket.on("FromArduino", (data) => {
+            console.log("data=" + data);
+            setResponse(data);
+        });
+    }, []);
 
     function DataURIToBlob(dataURI: string) {
         const splitDataURI = dataURI.split(",");
@@ -64,6 +76,7 @@ function Home() {
                 }
             }}
         >
+            {response} // express socket response
             <iframe
                 title="Background Video"
                 width="100%"
