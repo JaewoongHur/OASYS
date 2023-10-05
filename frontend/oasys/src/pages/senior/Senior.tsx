@@ -118,7 +118,7 @@ function Senior() {
 
     // 비회원 번호 입력 확인 추가
     useEffect(() => {
-        if (phone && (faceId === null || faceId === undefined)) {
+        if (phone && (faceId === null || faceId === undefined || faceId === "")) {
             setPhase("talk");
             setValue(
                 `대기열 정보를\n휴대전화를 통해\n알려드리겠습니다.\n이용해 주셔서 감사합니다.`,
@@ -208,7 +208,7 @@ function Senior() {
                 responseFunc: {
                     200: (response) => {
                         const receivedText = response?.data;
-                        setValue(receivedText.split(" ")[0] + ` 업무가 맞으신가요?`);
+                        setValue(receivedText.split(" ")[0] + ` 업무가\n맞으신가요?`);
                         setConfirm(true);
                         if (receivedText === "") {
                             setConfirm(false);

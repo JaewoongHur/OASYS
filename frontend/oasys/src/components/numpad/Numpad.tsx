@@ -57,6 +57,8 @@ function Numpad() {
     const [id, setId] = useState<number>(0);
     const [name, setName] = useState<string>("");
     const [phone, setPhone] = useState<string>("010");
+    const faceId = "";
+    const subId = "";
     const updateUserInfo = useUserStore((state) => state.updateUserState);
 
     // Change Phone Number Input Text
@@ -131,7 +133,9 @@ function Numpad() {
                     <NumpadButton
                         text="확인"
                         fontSize="40px"
-                        onClick={() => updateUserInfo({ member: { id, name, phone } })}
+                        onClick={() =>
+                            updateUserInfo({ member: { id, name, phone, faceId, subId } })
+                        }
                     />
                 </NumpadRowWrapper>
             </NumpadBox>

@@ -33,7 +33,7 @@ const TextAreaWrapper = styled("div")<TextAreaWrapperProps>`
 
     // Text Attribute
     color: ${(props) => props.theme.colors.gray7};
-    font-size: 90px;
+    font-size: 85px;
     font-weight: 900;
 
     // Interaction Attribute
