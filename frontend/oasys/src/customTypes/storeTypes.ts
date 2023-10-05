@@ -12,6 +12,8 @@ export interface UserState {
         id: number;
         name: string;
         phone: string;
+        faceId: string;
+        subId: string;
     };
     updateUserState: (data: Partial<UserState>) => void;
 }

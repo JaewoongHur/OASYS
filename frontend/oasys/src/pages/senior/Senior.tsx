@@ -65,6 +65,12 @@ function Senior() {
     const { routeTo } = useRouter();
     name = useUserStore((state) => state.member.name);
     phone = useUserStore((state) => state.member.phone);
+    const faceId = useUserStore((state) => state.member.faceId);
+    const subId = useUserStore((state) => state.member.subId);
+    const userId = useUserStore((state) => state.member.id);
+    const categories = ["통장 · 계좌", "카드", "인터넷뱅킹", "대출 · 외환"];
+
+    console.log(name, phone, gender, faceId, subId, userId);
 
     async function sendTextMessage() {
         await postMessage({
@@ -74,7 +80,7 @@ function Senior() {
             },
             data: {
                 name: name,
-                phone: phone,
+                phone: "", // 시연할 때 phone: phone 으로 바꿔서 해주세요!
                 teller: teller,
                 waitPeople: 3,
                 work: work,
@@ -92,7 +98,7 @@ function Senior() {
                 },
                 body: JSON.stringify(data),
             });
-
+            console.log(response);
             if (!response.ok) {
                 console.log("response not ok!");
                 throw new Error("Failed to add consumer to waiting list");
@@ -112,7 +118,7 @@ function Senior() {
 
     // 비회원 번호 입력 확인 추가
     useEffect(() => {
-        if (phone) {
+        if (phone && (faceId === null || faceId === undefined)) {
             setPhase("talk");
             setValue(
                 `대기열 정보를\n휴대전화를 통해\n알려드리겠습니다.\n이용해 주셔서 감사합니다.`,
@@ -126,12 +132,12 @@ function Senior() {
             const memberData = {
                 isMember: false, // Adjust this based on your logic
                 userId: null,
-                faceId: "test15",
-                subId: "test15",
-                phone: "00000000000",
-                name: "K",
-                tellerTypeId: 1,
-                cateTypeName: "통장 · 계좌",
+                faceId: "not Member",
+                subId: "not Member",
+                phone: phone,
+                name: "not Member",
+                tellerTypeId: teller,
+                cateTypeName: categories[parseInt(teller, 10) - 1],
             };
 
             // Call the function to send data to the backend
@@ -261,17 +267,22 @@ function Senior() {
                                     // Construct the member data to be sent
                                     const memberData = {
                                         isMember: true, // Adjust this based on your logic
-                                        userId: "",
-                                        faceId: "",
-                                        subId: "",
+                                        userId: userId,
+                                        faceId: faceId,
+                                        subId: subId,
                                         phone: phone,
                                         name: name,
                                         tellerTypeId: teller,
-                                        cateTypeName: work,
+                                        cateTypeName: categories[parseInt(teller, 10) - 1],
                                     };
 
                                     // Call the function to send data to the backend
                                     sendConsumerToWaiting(memberData);
+
+                                    setTimeout(() => {
+                                        useUserStore.persist.clearStorage();
+                                        routeTo("/home");
+                                    }, 10000);
                                 }, 12000);
                             } else {
                                 // 회원이 아닐때
