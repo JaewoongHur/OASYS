@@ -150,19 +150,25 @@ public class GPTService {
                 task="현금서비스 업무";
                 receive.playing();
             }
+            else{
+                receive = new PlayerMP3(filePath+"확인_실패_여자.mp3");
+                answerText=null;
+                task="";
+                receive.playing();
+            }
 
         } else {
-            if (answerText.contains("인출") || answerText.contains("1")) {
+            if (answerText.contains("인출")) {
                 receive = new PlayerMP3(filePath + "인출_확인_남자.mp3");
                 answerText = "인출 업무 확인";
                 task="인출 업무";
                 receive.playing();
-            } else if (answerText.contains("입금") || answerText.contains("2")) {
+            } else if (answerText.contains("입금")) {
                 receive = new PlayerMP3(filePath + "입금_확인_남자.mp3");
                 answerText = "입금 업무 확인";
                 task="입금 업무";
                 receive.playing();
-            } else if (answerText.contains("송금") || answerText.contains("3")) {
+            } else if (answerText.contains("송금")) {
                 receive = new PlayerMP3(filePath + "송금_확인_남자.mp3");
                 answerText = "송금 업무 확인";
                 task="송금 업무";
@@ -201,6 +207,11 @@ public class GPTService {
                 receive = new PlayerMP3(filePath + "현금서비스_확인_남자.mp3");
                 answerText = "현금서비스 업무 확인";
                 task="현금서비스 업무";
+                receive.playing();
+            } else{
+                receive = new PlayerMP3(filePath+"확인_실패_남자.mp3");
+                answerText=null;
+                task="";
                 receive.playing();
             }
 
@@ -249,7 +260,7 @@ public class GPTService {
                 receive.playing();
             }
             else {
-                receive = new PlayerMP3(filePath+"확인_실패_여자.mp3");
+                receive = new PlayerMP3(filePath+"확인_실패_남자.mp3");
                 answerText = null;
                 receive.playing();
 
@@ -259,6 +270,7 @@ public class GPTService {
         return answerText;
     }
     public String getTaks(){
+
         return this.task;
     }
 
