@@ -81,10 +81,15 @@ function Senior() {
     // 비회원 번호 입력 확인 추가
     useEffect(() => {
         if (phone) {
-            // Check if phone has a value
             setPhase("talk");
+            setValue(
+                `대기열 정보를\n휴대전화를 통해\n알려드리겠습니다.\n이용해 주셔서 감사합니다.`,
+            );
+            const genderKR = gender === "FEMALE" ? "남자" : "여자";
+            const resultVoice = new Audio(`../src/assets/sounds/알림_인사_${genderKR}.mp3`);
+            resultVoice.play();
         }
-    }, [phone]); // Dependency array with phone
+    }, [phone, gender]);
 
     // 고객 응대 기능 추가
     useEffect(() => {
@@ -198,10 +203,10 @@ function Senior() {
                                 setTimeout(() => {
                                     // eslint-disable-next-line prefer-template
                                     setValue(
-                                        `다음 차례일 때\n전화로 알려드릴게요.\n이용해 주셔서 감사합니다.`,
+                                        `대기열 정보를\n휴대전화를 통해\n알려드리겠습니다.\n이용해 주셔서 감사합니다.`,
                                     );
                                     resultVoice = new Audio(
-                                        `../src/assets/sounds/문자_알림_인사_${genderKR}.mp3`,
+                                        `../src/assets/sounds/알림_인사_${genderKR}.mp3`,
                                     );
                                     resultVoice.play();
                                 }, 12000);
@@ -211,9 +216,11 @@ function Senior() {
                                 // /consumer/waiting 으로 보내서 대기 인원 추가하기
                                 setTimeout(() => {
                                     // eslint-disable-next-line prefer-template
-                                    setValue(`전화 알림을 원하신다면\n전화번호를 입력해주세요.`);
+                                    setValue(
+                                        `문자 및 전화 알림을 원하신다면\n전화번호를 입력해주세요.`,
+                                    );
                                     resultVoice = new Audio(
-                                        `../src/assets/sounds/비회원_전화번호_${genderKR}.mp3`,
+                                        `../src/assets/sounds/전화번호_${genderKR}.mp3`,
                                     );
                                     resultVoice.play();
                                     setPhase("phone");
