@@ -95,7 +95,7 @@ public class ManagerServiceImpl implements ManagerService {
         log.info("nextConsumerFaceId: " + nextFaceId);
 
         if (waitingList.size(WAITING + tellerType) >= 2) {
-            log.info(waitingList.index(WAITING + tellerType, 2));
+            log.info(waitingList.index(WAITING + tellerType, 1));
             log.info(String.valueOf(waitingList.index(WAITING + tellerType, 2).getClass()));
             String faceIdForMessage = waitingList.index(WAITING + tellerType, 2);
             log.info(faceIdForMessage);
