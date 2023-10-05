@@ -32,6 +32,7 @@ const TextButtonWrapper = styled("button")<TextButtonWrapperProps>`
     height: ${(props) => props.height};
     padding: 10px 20px;
     box-sizing: border-box;
+    max-height: 50px;
 
     // Style Attribute
     border-radius: 20px;
