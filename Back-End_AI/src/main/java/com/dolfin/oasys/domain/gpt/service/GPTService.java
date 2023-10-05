@@ -249,7 +249,7 @@ public class GPTService {
                 receive.playing();
             }
             else {
-                receive = new PlayerMP3(filePath+"확인_실패_여자.mp3");
+                receive = new PlayerMP3(filePath+"확인_실패_남자.mp3");
                 answerText = null;
                 receive.playing();
 
