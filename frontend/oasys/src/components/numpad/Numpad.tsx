@@ -1,9 +1,11 @@
 /* Import */
-import useUserStore from "@/store";
+import { formatPhoneNumber } from "@utils/format";
+import { NumpadButtonProps } from "@customTypes/componentTypes";
 import { TextButton } from "@components/common/button";
 import { TextInput } from "@components/common/input";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
+import useUserStore from "@/store";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -27,12 +29,36 @@ const NumpadRowWrapper = styled("div")`
 
 // ----------------------------------------------------------------------------------------------------
 
+/* Numpad Button Component */
+function NumpadButton({ text, fontSize, onClick }: NumpadButtonProps) {
+    return (
+        <TextButton
+            width="130px"
+            height="130px"
+            text={text}
+            fontSize={fontSize}
+            onClick={onClick}
+        />
+    );
+}
+
 /* Numpad Component */
 function Numpad() {
     const [id, setId] = useState<number>(0);
     const [name, setName] = useState<string>("");
-    const [phone, setPhone] = useState<string>("");
+    const [phone, setPhone] = useState<string>("010");
+    const updateUserInfo = useUserStore((state) => state.updateUserState);
 
+    // Change Phone Number Input Text
+    const handleButtonClick = (value: string) => {
+        if (value === "cancel") {
+            if (phone.length > 3) setPhone((prevPhone) => prevPhone.slice(0, -1));
+        } else if (phone.length < 12) {
+            setPhone((prevPhone) => prevPhone + value);
+        }
+    };
+
+    // Load User ID and Name Info
     useEffect(() => {
         const userData = sessionStorage.getItem("user-storage");
         if (userData) {
@@ -42,117 +68,57 @@ function Numpad() {
         }
     }, []);
 
-    const updateUserInfo = useUserStore((state) => state.updateUserState);
-
-    const handleButtonClick = (value: string) => {
-        if (value === "cancel") {
-            setPhone((prevPhone) => prevPhone.slice(0, -1));
-        } else {
-            setPhone((prevPhone) => prevPhone + value);
-        }
-    };
-
     return (
         <NumpadContainer>
             <TextInput
                 width="100%"
                 height="100px"
-                value={phone}
+                value={formatPhoneNumber(phone)}
                 readOnly
                 fontSize="50px"
-                placeholder="전화번호"
                 onChange={(event) => {
                     setPhone(event.target.value);
                 }}
             />
             <NumpadBox>
                 <NumpadRowWrapper>
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="1"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("1")}
-                    />
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="2"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("2")}
-                    />
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="3"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("3")}
-                    />
+                    {[1, 2, 3].map((number) => (
+                        <NumpadButton
+                            key={number}
+                            text={String(number)}
+                            fontSize="80px"
+                            onClick={() => handleButtonClick(String(number))}
+                        />
+                    ))}
                 </NumpadRowWrapper>
                 <NumpadRowWrapper>
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="4"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("4")}
-                    />
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="5"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("5")}
-                    />
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="6"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("6")}
-                    />
+                    {[4, 5, 6].map((number) => (
+                        <NumpadButton
+                            key={number}
+                            text={String(number)}
+                            fontSize="80px"
+                            onClick={() => handleButtonClick(String(number))}
+                        />
+                    ))}
                 </NumpadRowWrapper>
                 <NumpadRowWrapper>
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="7"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("7")}
-                    />
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="8"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("8")}
-                    />
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="9"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("9")}
-                    />
+                    {[7, 8, 9].map((number) => (
+                        <NumpadButton
+                            key={number}
+                            text={String(number)}
+                            fontSize="80px"
+                            onClick={() => handleButtonClick(String(number))}
+                        />
+                    ))}
                 </NumpadRowWrapper>
                 <NumpadRowWrapper>
-                    <TextButton
-                        width="130px"
-                        height="130px"
+                    <NumpadButton
                         text="취소"
                         fontSize="40px"
                         onClick={() => handleButtonClick("cancel")}
                     />
-                    <TextButton
-                        width="130px"
-                        height="130px"
-                        text="0"
-                        fontSize="80px"
-                        onClick={() => handleButtonClick("0")}
-                    />
-                    <TextButton
-                        width="130px"
-                        height="130px"
+                    <NumpadButton text="0" fontSize="80px" onClick={() => handleButtonClick("0")} />
+                    <NumpadButton
                         text="확인"
                         fontSize="40px"
                         onClick={() => updateUserInfo({ member: { id, name, phone } })}
