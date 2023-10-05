@@ -14,16 +14,7 @@ function Home() {
     const updateUserInfo = useUserStore((state) => state.updateUserState);
     const { routeTo } = useRouter();
 
-    const [response, setResponse] = useState("");
-
-    // communicate with express by socketIo
-    useEffect(() => {
-        const socket = socketIOClient(ENDPOINT);
-        socket.on("FromArduino", (data) => {
-            console.log("data=" + data);
-            setResponse(data);
-        });
-    }, []);
+    const [sonic, setSonic] = useState<string>("");
 
     function DataURIToBlob(dataURI: string) {
         const splitDataURI = dataURI.split(",");
@@ -65,6 +56,22 @@ function Home() {
         fetchUserInfo();
     }, [webcamRef, routeTo, updateUserInfo]);
 
+    // communicate with express by socketIo
+    useEffect(() => {
+        const socket = socketIOClient(ENDPOINT);
+
+        socket.on("FromArduino", (data) => {
+            setSonic(data);
+        });
+    }, []);
+
+    // Watch for changes to `sonic` and trigger `capture` function
+    useEffect(() => {
+        if (sonic) {
+            capture();
+        }
+    }, [sonic, capture]); // Watch for changes to `sonic` and `capture`
+
     return (
         <div
             role="button"
@@ -76,7 +83,7 @@ function Home() {
                 }
             }}
         >
-            {response} // express socket response
+            {/* {response} // express socket response */}
             <iframe
                 title="Background Video"
                 width="100%"
