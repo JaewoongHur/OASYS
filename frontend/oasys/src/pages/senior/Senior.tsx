@@ -9,6 +9,7 @@ import { TextArea } from "@components/common/input";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 import { useUserStore } from "@/store";
+import useRouter from "@hooks/useRouter";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -54,6 +55,7 @@ function Senior() {
     const gender = useUserStore((state) => state.gender);
     const name = useUserStore((state) => state.member.name);
     const phone = useUserStore((state) => state.member.phone);
+    const { routeTo } = useRouter();
 
     async function sendTextMessage() {
         await postMessage({
@@ -88,8 +90,12 @@ function Senior() {
             const genderKR = gender === "FEMALE" ? "남자" : "여자";
             const resultVoice = new Audio(`../src/assets/sounds/알림_인사_${genderKR}.mp3`);
             resultVoice.play();
+            setTimeout(() => {
+                useUserStore.persist.clearStorage();
+                routeTo("/");
+            }, 10000);
         }
-    }, [phone, gender]);
+    }, [phone, gender, routeTo]);
 
     // 고객 응대 기능 추가
     useEffect(() => {
