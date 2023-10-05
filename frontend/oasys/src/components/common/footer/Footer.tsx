@@ -1,7 +1,7 @@
 /* Import */
-import styled from "@emotion/styled";
 import { FooterProps } from "@customTypes/componentTypes";
 import { MicOn, MicOff } from "@assets/icons";
+import styled from "@emotion/styled";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -54,6 +54,7 @@ const FooterTextWrapper = styled("div")<FooterProps>`
 /* Footer Component */
 function Footer(props: FooterProps) {
     const { isRecording } = props;
+
     return (
         <FooterContainer>
             <FooterIcon src={isRecording ? MicOn : MicOff} />
