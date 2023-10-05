@@ -29,6 +29,10 @@ export interface InputProps {
     value: string;
 }
 
+export interface OverlayProps {
+    onClick: (event: React.MouseEvent) => void;
+}
+
 export interface NumpadButtonProps {
     text: string;
     fontSize: string;
