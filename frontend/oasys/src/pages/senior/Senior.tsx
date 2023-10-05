@@ -1,14 +1,15 @@
 /* Import */
+import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
 import Footer from "@components/common/footer";
+import Numpad from "@components/numpad";
+import postMessage from "@api/notification";
+import { postQuestion, postConfirm } from "@api/voice";
 import styled from "@emotion/styled";
+import { TextArea } from "@components/common/input";
+import useRouter from "@hooks/useRouter";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 import { useUserStore } from "@/store";
-import postMessage from "@api/notification";
-import { postQuestion, postConfirm } from "@api/voice";
-import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
-import { TextArea } from "@components/common/input";
-import useRouter from "@hooks/useRouter";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -50,6 +51,7 @@ function Senior() {
     const [confirm, setConfirm] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
+    const [phase, setPhase] = useState<string>("talk");
     const gender = useUserStore((state) => state.gender);
     const name = useUserStore((state) => state.member.name);
     const { routeTo } = useRouter();
@@ -82,8 +84,8 @@ function Senior() {
         let welcomeAudioWoman;
         let welcomeAudioMan;
         let waitTime;
-        
-        if(name === null) {
+
+        if (name === null) {
             welcomeAudioWoman = new Audio("../src/assets/sounds/업무_응대_확인_여자.mp3");
             welcomeAudioMan = new Audio("../src/assets/sounds/업무_응대_확인_남자.mp3");
             waitTime = 4500;
@@ -102,7 +104,7 @@ function Senior() {
                 welcomeAudioWoman.play();
             }
         }
-        
+
         // 일정 시간 동안 대기 후 고객 음성 인식
         setTimeout(() => {
             listen();
@@ -116,7 +118,7 @@ function Senior() {
             welcomeAudioWoman.currentTime = 0;
             welcomeAudioMan.currentTime = 0;
         };
-    }, []); // 최초로 한번만 실행
+    }, [gender, listen, name]); // 최초로 한번만 실행
 
     useEffect(() => {
         async function askBusiness(text: string) {
@@ -156,14 +158,15 @@ function Senior() {
                         setValue(receivedText);
                         if (response?.data) {
                             sendTextMessage();
+                            setPhase("phone");
                         } else {
                             setConfirm(false);
 
-                        // 일정 시간 동안 대기 후 고객 음성 인식
-                        setTimeout(() => {
-                            listen();
-                            setIsRecording(true);
-                        }, 4000);
+                            // 일정 시간 동안 대기 후 고객 음성 인식
+                            setTimeout(() => {
+                                listen();
+                                setIsRecording(true);
+                            }, 4000);
                         }
                     },
                     400: () => {},
@@ -199,7 +202,8 @@ function Senior() {
         <SeniorContainer>
             <SeniorBodyContainer>
                 <AttendantAnimation isRecording={isRecording} userGender={gender} />
-                <TextArea width="100%" value={value} />
+                {phase === "talk" && <TextArea width="100%" value={value} />}
+                {phase === "phone" && <Numpad />}
             </SeniorBodyContainer>
             <WaveAnimation />
             <Footer isRecording={isRecording} />
