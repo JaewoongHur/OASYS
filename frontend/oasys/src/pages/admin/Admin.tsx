@@ -1,11 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuthStore } from "@/store";
 import Header from "@components/common/header";
 
 function Admin() {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
     return (
         <>
             <Header />
-            <div>관리자 페이지</div>
+            {isAuthenticated ? <Outlet /> : <Navigate to="/admin/login" />}
             <Outlet />
         </>
     );

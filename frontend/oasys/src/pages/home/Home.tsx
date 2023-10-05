@@ -1,8 +1,8 @@
 /* Import */
 import postFace from "@api/faces";
 import useRouter from "@hooks/useRouter";
-import useUserStore from "@/store";
-import { useRef, useState, useCallback } from "react";
+import { useUserStore } from "@/store";
+import { useRef, useCallback } from "react";
 import Webcam from "react-webcam";
 
 // ----------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ import Webcam from "react-webcam";
 /* Home Page */
 function Home() {
     const webcamRef = useRef<Webcam | null>(null);
-    const [imgSrc, setImgSrc] = useState<string | null>(null);
+    // const [imgSrc, setImgSrc] = useState<string | null>(null);
     const updateUserInfo = useUserStore((state) => state.updateUserState);
     const { routeTo } = useRouter();
 
@@ -31,9 +31,9 @@ function Home() {
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot();
         async function fetchUserInfo() {
-            if (typeof imageSrc === "string") {
-                setImgSrc(imageSrc);
-            }
+            // if (typeof imageSrc === "string") {
+            //     setImgSrc(imageSrc);
+            // }
             const formData = new FormData();
             if (typeof imageSrc === "string") {
                 const file = DataURIToBlob(imageSrc);
@@ -55,16 +55,46 @@ function Home() {
             });
         }
         fetchUserInfo();
-    }, [webcamRef, setImgSrc, routeTo, updateUserInfo]);
+    }, [webcamRef, routeTo, updateUserInfo]);
 
     return (
-        <>
-            <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
+        <div
+            role="button"
+            tabIndex={0}
+            onClick={capture}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    capture();
+                }
+            }}
+        >
+            <iframe
+                title="Background Video"
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/iVmb7XTmD1o?autoplay=1&controls=0&showinfo=0&rel=0&loop=1&playlist=iVmb7XTmD1o&mute=1"
+                frameBorder="0"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+                style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: -1,
+                }}
+            />
+            <Webcam
+                audio={false}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                style={{ visibility: "hidden" }}
+            />
+            {/* <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" />
             <button type="button" onClick={capture}>
                 이미지 캡처
             </button>
-            {imgSrc && <img src={imgSrc} alt="캡처 이미지" />}
-        </>
+            {imgSrc && <img src={imgSrc} alt="캡처 이미지" />} */}
+        </div>
     );
 }
 

@@ -92,6 +92,14 @@
 			<version>2.15.2</version>
 		</dependency>
 
+		<!-- prometheus -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<version>1.11.3</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

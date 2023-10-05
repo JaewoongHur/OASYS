@@ -1,7 +1,7 @@
 /* Import */
 import { create } from "zustand";
+import { UserState, LoginState } from "@customTypes/storeTypes";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { UserState } from "@customTypes/storeTypes";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -31,7 +31,13 @@ const useUserStore = create<UserState>()(
     ),
 );
 
+/* Login Store */
+const useAuthStore = create<LoginState>((set) => ({
+    isAuthenticated: false,
+    login: () => set({ isAuthenticated: true }),
+}));
+
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export default useUserStore;
+export { useUserStore, useAuthStore };

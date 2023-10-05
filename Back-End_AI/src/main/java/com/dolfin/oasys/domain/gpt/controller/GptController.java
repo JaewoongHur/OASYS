@@ -19,9 +19,8 @@ public class GptController {
     private final GPTService gptService;
 
     @PostMapping("/test")
-    public ResponseEntity<?> testGPT(String question){
-        gptService.sendQuestion(question);
-        return ResponseEntity.ok(gptService.sendQuestion(question));
+    public void testGPT(String question){
+        gptService.sendQuestion("돈 보내려고");
     }
 
     @PostMapping("/question")

@@ -4,6 +4,7 @@ import { createBrowserRouter, RouteObject } from "react-router-dom";
 import Home from "@pages/home";
 import Junior from "@pages/junior";
 import Senior from "@pages/senior";
+import Test1 from "./pages/home/Test1";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -13,6 +14,11 @@ const routeList: RouteObject[] = [
         id: "home",
         path: "/",
         element: <Home />,
+    },
+    {
+        id: "test",
+        path: "/test",
+        element: <Test1 />,
     },
     {
         id: "junior",
@@ -34,12 +40,12 @@ const routeList: RouteObject[] = [
                 path: "",
                 element: <AdminMain />,
             },
-            {
-                id: "admin-login",
-                path: "login",
-                element: <AdminLogin />,
-            },
         ],
+    },
+    {
+        id: "admin-login",
+        path: "/admin/login",
+        element: <AdminLogin />,
     },
 ];
 

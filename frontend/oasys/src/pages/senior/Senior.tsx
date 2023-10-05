@@ -1,15 +1,15 @@
 /* Import */
+import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
 import Footer from "@components/common/footer";
-import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
-import { useSpeechRecognition } from "react-speech-kit";
-import useUserStore from "@/store";
+import Numpad from "@components/numpad";
 import postMessage from "@api/notification";
 import { postQuestion, postConfirm } from "@api/voice";
-import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
+import styled from "@emotion/styled";
 import { TextArea } from "@components/common/input";
 import useRouter from "@hooks/useRouter";
-import Numpad from "@components/numpad";
+import { useState, useEffect } from "react";
+import { useSpeechRecognition } from "react-speech-kit";
+import { useUserStore } from "@/store";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -43,24 +43,6 @@ const SeniorBodyContainer = styled("div")`
     width: 100%;
 `;
 
-const PushButton = styled("button")`
-    padding: 30px 60px;
-    margin-top: 20px;
-    cursor: pointer;
-    background-color: transparent;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    font-size: 50px;
-    font-weight: bold;
-    z-index: 2;
-
-    &:hover {
-        background-color: transparent;
-    }
-`;
-
 // ----------------------------------------------------------------------------------------------------
 
 /* Senior Page */
@@ -71,6 +53,7 @@ function Senior() {
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
     const [phase, setPhase] = useState<string>("phone");
     const gender = useUserStore((state) => state.gender);
+    const name = useUserStore((state) => state.member.name);
     const { routeTo } = useRouter();
 
     async function sendTextMessage() {
@@ -96,6 +79,47 @@ function Senior() {
         },
     });
 
+    // 고객 응대 기능 추가
+    useEffect(() => {
+        let welcomeAudioWoman;
+        let welcomeAudioMan;
+        let waitTime;
+
+        if (name === null) {
+            welcomeAudioWoman = new Audio("../src/assets/sounds/업무_응대_확인_여자.mp3");
+            welcomeAudioMan = new Audio("../src/assets/sounds/업무_응대_확인_남자.mp3");
+            waitTime = 4500;
+            if (gender === "FEMALE") {
+                welcomeAudioMan.play();
+            } else {
+                welcomeAudioWoman.play();
+            }
+        } else {
+            welcomeAudioWoman = new Audio("../src/assets/sounds/회원_응대_확인_여자.mp3");
+            welcomeAudioMan = new Audio("../src/assets/sounds/회원_응대_확인_남자.mp3");
+            waitTime = 7000;
+            if (gender === "FEMALE") {
+                welcomeAudioMan.play();
+            } else {
+                welcomeAudioWoman.play();
+            }
+        }
+
+        // 일정 시간 동안 대기 후 고객 음성 인식
+        setTimeout(() => {
+            listen();
+            setIsRecording(true);
+        }, waitTime);
+
+        // unmount시 음성 재생 취소
+        return () => {
+            welcomeAudioWoman.pause();
+            welcomeAudioMan.pause();
+            welcomeAudioWoman.currentTime = 0;
+            welcomeAudioMan.currentTime = 0;
+        };
+    }, [gender, listen, name]); // 최초로 한번만 실행
+
     useEffect(() => {
         async function askBusiness(text: string) {
             await postQuestion({
@@ -104,6 +128,12 @@ function Senior() {
                         const receivedText = response?.data;
                         setValue(receivedText);
                         setConfirm(true);
+
+                        // 일정 시간 동안 대기 후 고객 음성 인식
+                        setTimeout(() => {
+                            listen();
+                            setIsRecording(true);
+                        }, 4000);
                     },
                     400: () => {},
                 },
@@ -122,9 +152,15 @@ function Senior() {
                         setValue(receivedText);
                         if (response?.data) {
                             sendTextMessage();
+                            setPhase("phone");
                         } else {
                             setConfirm(false);
-                            routeTo("/senior");
+
+                            // 일정 시간 동안 대기 후 고객 음성 인식
+                            setTimeout(() => {
+                                listen();
+                                setIsRecording(true);
+                            }, 4000);
                         }
                     },
                     400: () => {},
@@ -153,18 +189,7 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
-    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, routeTo]);
-
-    const toggleRecording = () => {
-        if (isRecording) {
-            stop();
-            setIsRecording(false);
-            setLastSpeechTime(null); // Reset the last speech time when stopping
-        } else {
-            listen();
-            setIsRecording(true);
-        }
-    };
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender, routeTo, listen]);
 
     return (
         <SeniorContainer>
