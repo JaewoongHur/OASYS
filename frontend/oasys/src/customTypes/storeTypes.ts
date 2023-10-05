@@ -1,4 +1,9 @@
 /* Export */
+export interface AuthState {
+    isAuth: boolean;
+    updateAuthState: (data: Partial<AuthState>) => void;
+}
+
 export interface UserState {
     senior: boolean;
     gender: "MALE" | "FEMALE" | undefined;
@@ -9,11 +14,6 @@ export interface UserState {
         phone: string;
     };
     updateUserState: (data: Partial<UserState>) => void;
-}
-
-export interface LoginState {
-    isAuthenticated: boolean;
-    login: () => void;
 }
 
 export interface NoticeState {

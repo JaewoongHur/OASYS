@@ -1,6 +1,6 @@
 /* Import */
 import { create } from "zustand";
-import { UserState, LoginState } from "@customTypes/storeTypes";
+import { AuthState, UserState } from "@customTypes/storeTypes";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 // ----------------------------------------------------------------------------------------------------
@@ -31,11 +31,23 @@ const useUserStore = create<UserState>()(
     ),
 );
 
-/* Login Store */
-const useAuthStore = create<LoginState>((set) => ({
-    isAuthenticated: false,
-    login: () => set({ isAuthenticated: true }),
-}));
+/* Auth Store */
+const useAuthStore = create<AuthState>()(
+    persist(
+        (set) => ({
+            isAuth: false,
+            updateAuthState: (data: Partial<AuthState>) =>
+                set((state) => ({
+                    ...state,
+                    ...data,
+                })),
+        }),
+        {
+            name: "auth-storage",
+            storage: createJSONStorage(() => sessionStorage),
+        },
+    ),
+);
 
 // ----------------------------------------------------------------------------------------------------
 
