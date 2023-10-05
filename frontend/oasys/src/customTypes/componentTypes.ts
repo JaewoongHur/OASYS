@@ -21,3 +21,9 @@ export interface InputProps {
     height?: string;
     value: string;
 }
+
+export interface NumpadButtonProps {
+    text: string;
+    fontSize: string;
+    onClick: () => void;
+}

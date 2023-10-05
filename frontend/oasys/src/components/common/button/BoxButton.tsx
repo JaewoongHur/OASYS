@@ -1,7 +1,7 @@
 /* Import */
 import styled from "@emotion/styled";
 import { ButtonProps } from "@customTypes/componentTypes";
-import lineBreakText from "@utils/format";
+import { lineBreakText } from "@utils/format";
 
 // ----------------------------------------------------------------------------------------------------
 

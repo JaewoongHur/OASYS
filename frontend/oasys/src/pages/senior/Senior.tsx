@@ -1,13 +1,22 @@
 /* Import */
+import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
 import Footer from "@components/common/footer";
+import Numpad from "@components/numpad";
+import postMessage from "@api/notification";
+import { postQuestion, postConfirm } from "@api/voice";
 import styled from "@emotion/styled";
+import { TextArea } from "@components/common/input";
+import useRouter from "@hooks/useRouter";
 import { useState, useEffect } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 import { useUserStore } from "@/store";
+<<<<<<< HEAD
 import postMessage from "@api/notification";
 import { postQuestion, postConfirm } from "@api/voice";
 import { AttendantAnimation, WaveAnimation } from "@components/common/animation";
 import { TextArea } from "@components/common/input";
+=======
+>>>>>>> a7f8749d51ca4ddc60ea6796cf4826253dd2777f
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -49,6 +58,7 @@ function Senior() {
     const [confirm, setConfirm] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
+    const [phase, setPhase] = useState<string>("talk");
     const gender = useUserStore((state) => state.gender);
     const name = useUserStore((state) => state.member.name);
 
@@ -114,9 +124,13 @@ function Senior() {
             welcomeAudioWoman.currentTime = 0;
             welcomeAudioMan.currentTime = 0;
         };
+<<<<<<< HEAD
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // 최초로 한번만 실행
+=======
+    }, [gender, listen, name]); // 최초로 한번만 실행
+>>>>>>> a7f8749d51ca4ddc60ea6796cf4826253dd2777f
 
     useEffect(() => {
         async function askBusiness(text: string) {
@@ -153,6 +167,7 @@ function Senior() {
                         setValue(receivedText);
                         if (response?.data) {
                             sendTextMessage();
+                            setPhase("phone");
                         } else {
                             setConfirm(false);
 
@@ -190,13 +205,18 @@ function Senior() {
             return () => clearInterval(checkSilenceInterval);
         }
         return () => {};
+<<<<<<< HEAD
     }, [confirm, isRecording, lastSpeechTime, stop, value, gender, listen]);
+=======
+    }, [confirm, isRecording, lastSpeechTime, stop, value, gender,listen,routeTo]);
+>>>>>>> a7f8749d51ca4ddc60ea6796cf4826253dd2777f
 
     return (
         <SeniorContainer>
             <SeniorBodyContainer>
                 <AttendantAnimation isRecording={isRecording} userGender={gender} />
-                <TextArea width="100%" value={value} />
+                {phase === "talk" && <TextArea width="100%" value={value} />}
+                {phase === "phone" && <Numpad />}
             </SeniorBodyContainer>
             <WaveAnimation />
             <Footer isRecording={isRecording} />
