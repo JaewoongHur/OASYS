@@ -1,8 +1,9 @@
 /* Import */
+import FileInput from "./FileInput";
 import TextArea from "./TextArea";
 import TextInput from "./TextInput";
-import FileInput from "./FileInput";
+
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export { TextArea, TextInput, FileInput };
+export { FileInput, TextArea, TextInput };

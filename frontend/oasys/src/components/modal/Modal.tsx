@@ -1,10 +1,11 @@
 /* import */
+import { css } from "@emotion/react";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import Overlay from "@/components/common/overlay/Overlay";
-import { css } from "@emotion/react";
+import Overlay from "@components/common/overlay";
 
 // ----------------------------------------------------------------------------------------------------
+
 /* Props Type */
 interface ModalType {
     width: string;
@@ -19,6 +20,7 @@ interface ModalType {
 }
 
 // ----------------------------------------------------------------------------------------------------
+
 /* Style */
 const ModalContent = styled("div")<ModalType>`
     width: ${(props) => props.width};
@@ -46,6 +48,7 @@ const ModalContent = styled("div")<ModalType>`
 `;
 
 // ----------------------------------------------------------------------------------------------------
+
 /* Modal Component */
 function Modal({
     openModal,

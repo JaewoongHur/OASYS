@@ -36,16 +36,16 @@ const routeList: RouteObject[] = [
         element: <Admin />,
         children: [
             {
-                id: "admin-main",
+                id: "admin-login",
                 path: "",
+                element: <AdminLogin />,
+            },
+            {
+                id: "admin-main",
+                path: "main",
                 element: <AdminMain />,
             },
         ],
-    },
-    {
-        id: "admin-login",
-        path: "/admin/login",
-        element: <AdminLogin />,
     },
 ];
 

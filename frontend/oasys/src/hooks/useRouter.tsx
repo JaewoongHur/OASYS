@@ -1,7 +1,7 @@
 /* Import */
+import { RouterFuncType } from "@customTypes/routerTypes";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { RouterFuncType } from "@customTypes/routerTypes";
 
 // ----------------------------------------------------------------------------------------------------
 

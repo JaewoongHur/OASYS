@@ -1,5 +1,8 @@
+/* Import */
 import { useState, useRef, ChangeEvent } from "react";
 import styled from "@emotion/styled";
+
+// ----------------------------------------------------------------------------------------------------
 
 interface FileInputProps {
     width: string;
@@ -7,16 +10,18 @@ interface FileInputProps {
     onFileUpload: (file: File | null) => void;
 }
 
-const FileInputContainer = styled.div<{ width: string; height?: string }>`
+// ----------------------------------------------------------------------------------------------------
+
+/* Style */
+const FileInputContainer = styled("div")<{ width: string; height?: string }>`
     width: ${(props) => props.width};
-    height: ${(props) => props.height || "50px"};
+    height: ${(props) => props.height};
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-direction: row;
 `;
 
-const FileInputWrapper = styled.div`
+const FileInputWrapper = styled("div")`
     width: 75%;
     height: 100%;
     padding: 10px;
@@ -28,7 +33,7 @@ const FileInputWrapper = styled.div`
     font-weight: 700;
     transition: 0.3s;
     outline: none;
-    :focus {
+    &:focus {
         box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
     }
     display: flex;
@@ -37,7 +42,7 @@ const FileInputWrapper = styled.div`
     justify-content: space-between;
 `;
 
-const FileNameInput = styled.input`
+const FileNameInput = styled("input")`
     width: 100%;
     height: 100%;
     border: none;
@@ -47,37 +52,40 @@ const FileNameInput = styled.input`
     padding: 8px;
 `;
 
-const FileUploadButton = styled.label<{ fontSize: string }>`
-  width: 20%;
-  height: 100%;
-  box-sizing: border-box;
-  border-radius: 20px;
-  background-color: ${(props) => props.theme.colors.primary3};
-  font-weight: 700;
-  font-size: ${(props) => props.fontSize};
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.3s;
-  transform-origin: center;
-  user-select: none;
-  outline: none;
-  cursor: pointer;
-  &:active {
-    transform: scale(0.95);
-  }
-  &:disabled {
-    cursor: default;
-    pointer-events: none;
+const FileUploadButton = styled("label")<{ fontSize: string }>`
+    width: 20%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-color: ${(props) => props.theme.colors.primary3};
+    font-weight: 700;
+    font-size: ${(props) => props.fontSize};
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    transform-origin: center;
+    user-select: none;
+    outline: none;
+    cursor: pointer;
     &:active {
-      transform: scale(1);
+        transform: scale(0.95);
     }
-  }
-}`;
+    &:disabled {
+        cursor: default;
+        pointer-events: none;
+        &:active {
+            transform: scale(1);
+        }
+    }
+`;
 
+// ----------------------------------------------------------------------------------------------------
+
+/* File Input Component */
 function FileInput(props: FileInputProps) {
-    const { width, height, onFileUpload } = props;
+    const { width, height = "50px", onFileUpload } = props;
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -110,4 +118,7 @@ function FileInput(props: FileInputProps) {
     );
 }
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Export */
 export default FileInput;
