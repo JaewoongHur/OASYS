@@ -97,13 +97,13 @@ public class ManagerServiceImpl implements ManagerService {
         if (waitingList.size(WAITING + tellerType) >= 2) {
             String faceIdForMessage = waitingList.index(WAITING + tellerType, 2);
             MemberDto.WaitingMember waitingMember = consumerInfoList.opsForValue().get(faceIdForMessage);
-            sendMessage.sendSmsNotification(MemberDto.ConsumerForMessage.builder()
+            MemberDto.ConsumerForMessage.builder()
                     .name(waitingMember.getName())
                     .phone(waitingMember.getPhone())
                     .teller(tellerType)
                     .work(waitingMember.getCateTypeName())
                     .waitPeople("1")
-                    .build());
+                    .build();
         }
         
         if (nextFaceId != null) {
