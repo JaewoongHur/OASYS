@@ -10,10 +10,21 @@ import useRouter from "@hooks/useRouter";
 
 /* Style */
 const LoginContainer = styled("div")`
+    // Size Attribute
+    width: 100%;
+
+    // Style Attribute
+    background-color: ${(props) => props.theme.colors.gray1};
+`;
+
+const LoginWrapper = styled("div")`
+    // Position Attribute
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    // Size Attribute
     width: 50%;
     height: 100vh;
     margin: 0 auto;
@@ -36,13 +47,6 @@ const IDContainer = styled("div")`
     margin-bottom: 10px;
 `;
 
-const IDWrapper = styled("div")``;
-
-const IDLabel = styled.label`
-    font-size: 24px;
-    font-weight: 700;
-`;
-
 const PWContainer = styled("div")`
     display: flex;
     width: 60%;
@@ -51,11 +55,15 @@ const PWContainer = styled("div")`
     margin-bottom: 50px;
 `;
 
-const PWWrapper = styled("div")``;
+const ButtonContainer = styled("div")`
+    // Position Attribute
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
 
-const PWLabel = styled.label`
-    font-size: 24px;
-    font-weight: 700;
+    // Size Attribute
+    width: 100%;
 `;
 
 // ----------------------------------------------------------------------------------------------------
@@ -87,40 +95,47 @@ function AdminLogin() {
 
     return (
         <LoginContainer>
-            <LoginHeader>관리자 페이지 로그인</LoginHeader>
-            <IDContainer>
-                <IDWrapper>
-                    <IDLabel htmlFor="username">아이디</IDLabel>
-                </IDWrapper>
-                <TextInput
-                    width="100%"
-                    value={username}
-                    placeholder="아이디를 입력하세요."
-                    onChange={(e) => setUsername(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                />
-            </IDContainer>
-            <PWContainer>
-                <PWWrapper>
-                    <PWLabel htmlFor="password">비밀번호</PWLabel>
-                </PWWrapper>
-                <TextInput
-                    width="100%"
-                    type="password"
-                    value={password}
-                    placeholder="비밀번호를 입력하세요."
-                    onChange={(e) => setPassword(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                />
-            </PWContainer>
-            <TextButton
-                width="25%"
-                height="50px"
-                text="로그인"
-                onKeyDown={handleKeyDown}
-                onClick={handleLogin}
-                tabIndex={0}
-            />
+            <LoginWrapper>
+                <LoginHeader>관리자 페이지 로그인</LoginHeader>
+                <IDContainer>
+                    <TextInput
+                        width="100%"
+                        value={username}
+                        label="아이디"
+                        placeholder="아이디를 입력하세요."
+                        onChange={(e) => setUsername(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                </IDContainer>
+                <PWContainer>
+                    <TextInput
+                        width="100%"
+                        type="password"
+                        value={password}
+                        label="비밀번호"
+                        placeholder="비밀번호를 입력하세요."
+                        onChange={(e) => setPassword(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                </PWContainer>
+                <ButtonContainer>
+                    <TextButton
+                        width="20%"
+                        height="50px"
+                        text="로그인"
+                        onKeyDown={handleKeyDown}
+                        onClick={handleLogin}
+                        tabIndex={0}
+                    />
+                    <TextButton
+                        width="35%"
+                        height="50px"
+                        text="키오스크 화면으로 이동"
+                        category="negative"
+                        onClick={() => routeTo("/home")}
+                    />
+                </ButtonContainer>
+            </LoginWrapper>
         </LoginContainer>
     );
 }
