@@ -11,17 +11,27 @@ import useUserStore from "@/store";
 
 /* Style */
 const NumpadContainer = styled("div")`
+    // Position Attribute
     z-index: 20;
+
+    // Size Attribute
+    margin-left: 500px;
+    margin-bottom: 50px;
+    width: 450px;
 `;
 
 const NumpadBox = styled("div")`
+    // Position Attribute
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
     gap: 1em;
+
+    // Size Attribute
+    margin-top: 1em;
 `;
 
 const NumpadRowWrapper = styled("div")`
+    // Position Attribute
     display: flex;
     justify-content: space-between;
     gap: 1em;

@@ -69,6 +69,7 @@ function Senior() {
     const [confirm, setConfirm] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState<boolean>(false);
     const [lastSpeechTime, setLastSpeechTime] = useState<number | null>(null);
+    const [phase, setPhase] = useState<string>("phone");
     const gender = useUserStore((state) => state.gender);
     const { routeTo } = useRouter();
 
@@ -169,11 +170,8 @@ function Senior() {
         <SeniorContainer>
             <SeniorBodyContainer>
                 <AttendantAnimation isRecording={isRecording} userGender={gender} />
-                <TextArea width="100%" value={value} />
-                <PushButton type="button" onClick={toggleRecording}>
-                    {isRecording ? "음성 인식 중입니다 🎧" : "말하기 💬"}
-                </PushButton>
-                <Numpad />
+                {phase === "talk" && <TextArea width="100%" value={value} />}
+                {phase === "phone" && <Numpad />}
             </SeniorBodyContainer>
             <WaveAnimation />
             <Footer isRecording={isRecording} />
