@@ -397,7 +397,7 @@ http://j9a106.p.ssafy.io:8088
 
 - <i><b>Prometheus</b></i> : 
 http://j9a106.p.ssafy.io:9090/targets?search=
-에서 <admin> / <zxcv1234> 로 로그인 후에 서버의 상태를 확인할 수 있습니다.
+에서 서버의 상태를 확인할 수 있습니다.
 
     ![prometheus_화면](/uploads/085d41d555ce2f6e642c871358927da9/prometheus_화면.png)
 
