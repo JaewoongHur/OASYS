@@ -95,7 +95,7 @@ function TextInput(props: TextInputProps) {
                 width={width}
                 height={height}
                 id={inputId}
-                value={value}
+                value={value.trim()}
                 readOnly={readOnly}
                 fontSize={fontSize}
                 placeholder={placeholder}
