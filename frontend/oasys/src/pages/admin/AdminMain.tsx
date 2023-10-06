@@ -376,7 +376,6 @@ function AdminMain() {
             const data: ConsultingData[] = await response.json();
 
             setQueueListData(data);
-            console.log(data);
 
             setConsultingCounts([
                 data[0]?.waitingConsumerCount || 0,
@@ -385,7 +384,7 @@ function AdminMain() {
                 data[3]?.waitingConsumerCount || 0,
             ]);
         } catch (error) {
-            console.error("Error fetching consulting data:", error);
+            throw new Error("Error fetching consulting data");
         }
     };
 
@@ -412,7 +411,7 @@ function AdminMain() {
 
             fetchConsultingData();
         } catch (error) {
-            console.error("Error dequeuing consumer:", error);
+            throw new Error("Error dequeuing consumer");
         }
     };
 
@@ -447,7 +446,7 @@ function AdminMain() {
                 throw new Error("Failed to call");
             }
         } catch (error) {
-            console.error("Error calling to consumer:", error);
+            throw new Error("Error calling to consumer");
         }
     };
 
@@ -475,13 +474,10 @@ function AdminMain() {
         }
     };
     const handleFileUpload = (file: File | null) => {
-        setSelectedFile(file);
+        if (!selectedFile) setSelectedFile(file);
     };
     const handleSubmit = () => {
-        if (selectedFile) {
-            console.log("Uploading file:", selectedFile.name);
-        }
-        // 데이터 post 요청
+        setRegistModalOpen(false);
     };
     const closeRegistModal = () => {
         setRegistModalOpen(false);
@@ -556,7 +552,6 @@ function AdminMain() {
     const handleMemberInfoClick = async (faceId) => {
         // subId를 기반으로 고객 정보 조회 API 호출 또는 상태 업데이트 등을 수행
         // 조회된 정보를 모달에 표시하기 위한 상태를 업데이트
-        console.log(faceId);
         const responseUSER = await fetch(`/manager/consumer/${faceId}`, {
             method: "GET",
             headers: {
@@ -569,7 +564,6 @@ function AdminMain() {
         }
 
         const data: ResponseMember = await responseUSER.json();
-        console.log(data);
         setSelectedMemberInfo(data);
         setMemberModalOpen(true);
     };
