@@ -369,20 +369,44 @@ TTS : google Cloud Text-to-Speech API v1
 저희 팀명 돌핀은 ‘돌격! 핀테크’의 약자로 핀테크를 주제로 특화 프로젝트를 거침없이 진행하자는 의미를 담았습니다.
 ### 팀 로고
 ![Team_Logo](/uploads/5598711e8ae471876e809719c9edd2b1/Team_Logo.png)
+
 저희 프로젝트 팀의 로고는 돌고래(Dolphin)가 돈을 들고 있는 모습을 형상화하였습니다. 돈은 특화 프로젝트 주제인 핀테크(FinTech)를 의미하고, 돌고래는 저희 팀명인 ‘돌핀’을 상징하며, 누구나 다가가기 쉬운 귀여운 모습으로 접근성이 좋은 앱을 개발하자는 의미를 담았습니다.
 ### 팀원 정보
 ![서울_1반_A106](/uploads/cab52fb04e8e554481bbe1eab20344a9/서울_1반_A106.png)
 
 ## 팀 역할 분배
 
+Back-End
+    
+
 ## 프로젝트 산출물
 
 ## 프로젝트 결과물
 
 ## OASYS 링크
+- <i><b>OASYS</b></i> : 
+https://j9a106.p.ssafy.io/
+에서 확인할 수 있습니다.
+    
+    아래 [시연 영상](#oasys-시연-영상) 또는 [서비스 화면](#oasys-서비스-화면)에서 볼 수 있습니다.
+- <i><b>Jenkins</b></i> : 
+http://j9a106.p.ssafy.io:8088
+에서 <admin> / <zxcv1234> 로 로그인 후에 젠킨스 웹사이트를 확인할 수 있습니다.
+
+    ![jenkins_화면](/uploads/6ad984e82a90a32dd910a24332997db0/jenkins_화면.png)
+
+- <i><b>Prometheus</b></i> : 
+http://j9a106.p.ssafy.io:9090/targets?search=
+에서 <admin> / <zxcv1234> 로 로그인 후에 서버의 상태를 확인할 수 있습니다.
+
+    ![prometheus_화면](/uploads/085d41d555ce2f6e642c871358927da9/prometheus_화면.png)
+
 - <i><b>Grafana</b></i> : 
 http://j9a106.p.ssafy.io:3000
 에서 <admin> / <zxcv1234> 로 로그인 후에 서버의 상태를 확인할 수 있습니다.
+
+    ![grafana_화면](/uploads/cbdb54300b1d477d1b0247206824c316/grafana_화면.png)
+
 
 ## OASYS 시연 영상
 
