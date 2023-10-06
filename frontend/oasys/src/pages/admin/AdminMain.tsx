@@ -494,7 +494,7 @@ function AdminMain() {
             // After a successful API call, fetch the updated list of consumers
             fetchConsultingData();
 
-            const responseCALL = await fetch("/notification/call", {
+            const responseCALL = await fetch("http://localhost:8081/api/v1/notification/call", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
