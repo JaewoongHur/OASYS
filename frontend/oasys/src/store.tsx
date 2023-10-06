@@ -14,7 +14,7 @@ const useUserStore = create<UserState>()(
             membership: false,
             member: {
                 id: -1,
-                facdId: "",
+                faceId: "",
                 subId: "",
                 name: "",
                 phone: "",
