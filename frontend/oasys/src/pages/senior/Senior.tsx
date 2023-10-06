@@ -70,8 +70,6 @@ function Senior() {
     const userId = useUserStore((state) => state.member.id);
     const categories = ["통장 · 계좌", "카드", "인터넷뱅킹", "대출 · 외환"];
 
-    console.log(name, phone, gender, faceId, subId, userId);
-
     async function sendTextMessage() {
         await postMessage({
             responseFunc: {
@@ -89,7 +87,6 @@ function Senior() {
     }
 
     const sendConsumerToWaiting = async (data) => {
-        console.log(data);
         try {
             const response = await fetch("/manager/consumer/waiting", {
                 method: "POST",
@@ -98,14 +95,11 @@ function Senior() {
                 },
                 body: JSON.stringify(data),
             });
-            console.log(response);
             if (!response.ok) {
-                console.log("response not ok!");
                 throw new Error("Failed to add consumer to waiting list");
             }
         } catch (error) {
-            console.error("Error sending consumer data:", error);
-            console.log("error!");
+            throw new Error("Error sending consumer data");
         }
     };
 
