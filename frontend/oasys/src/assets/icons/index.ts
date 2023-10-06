@@ -1,4 +1,5 @@
 /* Import */
+import Alert from "./alert-icon.svg";
 import Bankbook from "./bankbook-icon.svg";
 import Card from "./card-icon.svg";
 import Internet from "./internet-icon.svg";
@@ -11,4 +12,4 @@ import Wave from "./wave-background.svg";
 // ----------------------------------------------------------------------------------------------------
 
 /* Export */
-export { Bankbook, Card, Internet, MicOn, MicOff, Money, RightArrow, Wave };
+export { Alert, Bankbook, Card, Internet, MicOn, MicOff, Money, RightArrow, Wave };
