@@ -98,6 +98,7 @@ function TextInput(props: TextInputProps) {
                 placeholder={placeholder}
                 onChange={onChange}
                 onKeyDown={onKeyDown}
+                autoComplete="off"
             />
         </InputContainer>
     );
