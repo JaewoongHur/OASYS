@@ -34,28 +34,26 @@ const LoginBox = styled("div")`
     margin: auto;
 `;
 
-const LoginHeader = styled("div")`
-    width: 100%;
-    text-align: center;
-    font-size: 36px;
+const TitleWrapper = styled("div")`
+    // Size Attribute
+    margin-bottom: 1em;
+
+    // Text Attribute
+    font-size: 40px;
     font-weight: 700;
-    margin-bottom: 30px;
+    color: ${(props) => props.theme.colors.primary3};
 `;
 
-const IDContainer = styled("div")`
+const InputContainer = styled("div")`
+    // Position Attribute
     display: flex;
-    width: 60%;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 10px;
-`;
+    gap: 1em;
 
-const PWContainer = styled("div")`
-    display: flex;
+    // Size Attribute
     width: 60%;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 50px;
+    margin-bottom: 3em;
 `;
 
 const ButtonContainer = styled("div")`
@@ -100,8 +98,8 @@ function AdminLogin() {
     return (
         <LoginContainer>
             <LoginBox>
-                <LoginHeader>관리자 페이지 로그인</LoginHeader>
-                <IDContainer>
+                <TitleWrapper>관리자 페이지 로그인</TitleWrapper>
+                <InputContainer>
                     <TextInput
                         width="100%"
                         value={id}
@@ -110,8 +108,6 @@ function AdminLogin() {
                         onChange={(e) => setId(e.target.value)}
                         onKeyDown={handleKeyDown}
                     />
-                </IDContainer>
-                <PWContainer>
                     <TextInput
                         width="100%"
                         type="password"
@@ -121,7 +117,7 @@ function AdminLogin() {
                         onChange={(e) => setPassword(e.target.value)}
                         onKeyDown={handleKeyDown}
                     />
-                </PWContainer>
+                </InputContainer>
                 <ButtonContainer>
                     <TextButton
                         width="20%"
