@@ -1,9 +1,10 @@
 /* Import */
-import { useAuthStore } from "@/store";
+import AdminLoginModal from "@components/modal/admin";
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { TextInput } from "@components/common/input";
 import { TextButton } from "@components/common/button";
+import { useAuthStore } from "@/store";
 import useRouter from "@hooks/useRouter";
 
 // ----------------------------------------------------------------------------------------------------
@@ -41,7 +42,7 @@ const TitleWrapper = styled("div")`
     // Text Attribute
     font-size: 40px;
     font-weight: 700;
-    color: ${(props) => props.theme.colors.primary3};
+    color: ${(props) => props.theme.colors.gray7};
 `;
 
 const InputContainer = styled("div")`
@@ -73,6 +74,7 @@ const ButtonContainer = styled("div")`
 function AdminLogin() {
     const [id, setId] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const [isError, setIsError] = useState<boolean>(false);
     const { routeTo } = useRouter();
     const updateAuthState = useAuthStore((state) => state.updateAuthState);
     const { VITE_ADMIN_ID, VITE_ADMIN_PASSWORD } = import.meta.env;
@@ -83,14 +85,14 @@ function AdminLogin() {
             updateAuthState({ isAuth: true });
             routeTo("/main");
         } else {
-            alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+            setIsError(true);
         }
     };
 
     // Handle Enter Key Press
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
             handleLogin();
         }
     };
@@ -105,16 +107,16 @@ function AdminLogin() {
                         value={id}
                         label="아이디"
                         placeholder="아이디를 입력하세요."
-                        onChange={(e) => setId(e.target.value)}
+                        onChange={(event) => setId(event.target.value)}
                         onKeyDown={handleKeyDown}
                     />
                     <TextInput
-                        width="100%"
                         type="password"
+                        width="100%"
                         value={password}
                         label="비밀번호"
                         placeholder="비밀번호를 입력하세요."
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(event) => setPassword(event.target.value)}
                         onKeyDown={handleKeyDown}
                     />
                 </InputContainer>
@@ -136,6 +138,7 @@ function AdminLogin() {
                     />
                 </ButtonContainer>
             </LoginBox>
+            {isError && <AdminLoginModal openModal={isError} getModal={() => setIsError(false)} />}
         </LoginContainer>
     );
 }
