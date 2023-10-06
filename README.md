@@ -308,6 +308,19 @@ TTS : google Cloud Text-to-Speech API v1
                 ├── tsconfig.node.json
                 └── vite.config.ts
         ```
+    - ARDUINO
+        ```
+        arduino
+            └── UltraSonic
+                └── UltraSonic.ino
+
+        socket/socket-io-server
+                ├── app.js
+                ├── package-lock.json
+                ├── package.json
+                └── routes
+                    └── index.js
+        ```
 
 
 ### 협업 정보
@@ -352,6 +365,12 @@ TTS : google Cloud Text-to-Speech API v1
         
 
 ## 팀 소개
+### 팀명의 의미
+저희 팀명 돌핀은 ‘돌격! 핀테크’의 약자로 핀테크를 주제로 특화 프로젝트를 거침없이 진행하자는 의미를 담았습니다.
+### 팀 로고
+저희 프로젝트 팀의 로고는 돌고래(Dolphin)가 돈을 들고 있는 모습을 형상화하였습니다. 돈은 특화 프로젝트 주제인 핀테크(FinTech)를 의미하고, 돌고래는 저희 팀명인 ‘돌핀’을 상징하며, 누구나 다가가기 쉬운 귀여운 모습으로 접근성이 좋은 앱을 개발하자는 의미를 담았습니다.
+### 팀원 정보
+
 
 ## 팀 역할 분배
 
