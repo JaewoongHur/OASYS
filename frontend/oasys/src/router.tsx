@@ -5,7 +5,6 @@ import ErrorNotFound from "@pages/error";
 import Home from "@pages/home";
 import Junior from "@pages/junior";
 import Senior from "@pages/senior";
-import Test1 from "./pages/home/Test1";
 
 // ----------------------------------------------------------------------------------------------------
 
@@ -15,11 +14,6 @@ const routeList: RouteObject[] = [
         id: "home",
         path: "/home",
         element: <Home />,
-    },
-    {
-        id: "test",
-        path: "/test",
-        element: <Test1 />,
     },
     {
         id: "junior",
