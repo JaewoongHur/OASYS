@@ -12,12 +12,16 @@ import useRouter from "@hooks/useRouter";
 const LoginContainer = styled("div")`
     // Size Attribute
     width: 100%;
+    height: 100vh;
 
     // Style Attribute
     background-color: ${(props) => props.theme.colors.gray1};
+
+    // Interaction Attribute
+    user-select: none;
 `;
 
-const LoginWrapper = styled("div")`
+const LoginBox = styled("div")`
     // Position Attribute
     display: flex;
     flex-direction: column;
@@ -27,8 +31,7 @@ const LoginWrapper = styled("div")`
     // Size Attribute
     width: 50%;
     height: 100vh;
-    margin: 0 auto;
-    margin-top: 50px;
+    margin: auto;
 `;
 
 const LoginHeader = styled("div")`
@@ -70,22 +73,23 @@ const ButtonContainer = styled("div")`
 
 /* Admin Login Component */
 function AdminLogin() {
-    const updateAuthState = useAuthStore((state) => state.updateAuthState);
-    const { routeTo } = useRouter();
-    const [username, setUsername] = useState<string>("");
+    const [id, setId] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
-    /* Admin ID and Password */
+    const { routeTo } = useRouter();
+    const updateAuthState = useAuthStore((state) => state.updateAuthState);
     const { VITE_ADMIN_ID, VITE_ADMIN_PASSWORD } = import.meta.env;
 
+    // Handle Login Request
     const handleLogin = () => {
-        if (username === VITE_ADMIN_ID && password === VITE_ADMIN_PASSWORD) {
+        if (id === VITE_ADMIN_ID && password === VITE_ADMIN_PASSWORD) {
             updateAuthState({ isAuth: true });
             routeTo("/main");
         } else {
             alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
     };
+
+    // Handle Enter Key Press
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter") {
             e.preventDefault();
@@ -95,15 +99,15 @@ function AdminLogin() {
 
     return (
         <LoginContainer>
-            <LoginWrapper>
+            <LoginBox>
                 <LoginHeader>관리자 페이지 로그인</LoginHeader>
                 <IDContainer>
                     <TextInput
                         width="100%"
-                        value={username}
+                        value={id}
                         label="아이디"
                         placeholder="아이디를 입력하세요."
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => setId(e.target.value)}
                         onKeyDown={handleKeyDown}
                     />
                 </IDContainer>
@@ -135,7 +139,7 @@ function AdminLogin() {
                         onClick={() => routeTo("/home")}
                     />
                 </ButtonContainer>
-            </LoginWrapper>
+            </LoginBox>
         </LoginContainer>
     );
 }

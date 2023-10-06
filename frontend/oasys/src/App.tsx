@@ -9,6 +9,7 @@ import styled from "@emotion/styled";
 const MainContainer = styled("div")`
     // Size Attribute
     width: 100%;
+    height: 100vh;
 `;
 
 // ----------------------------------------------------------------------------------------------------
