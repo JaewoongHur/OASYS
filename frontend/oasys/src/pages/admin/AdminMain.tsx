@@ -1,9 +1,12 @@
-import { useState, useEffect } from "react";
-import { TextButton } from "@/components/common/button";
+/* Import */
+import Dropdown from "@components/common/dropdown";
+import { FileInput, TextInput } from "@components/common/input";
 import styled from "@emotion/styled";
-import Modal from "@components/modal/Modal";
-import { FileInput, TextInput } from "@/components/common/input";
-import Dropdown from "@/components/common/dropdown";
+import { TextButton } from "@components/common/button";
+import Modal from "@components/modal";
+import { useState, useEffect } from "react";
+
+// ----------------------------------------------------------------------------------------------------
 
 type ResponseMember = {
     faceId: string;
@@ -39,6 +42,10 @@ interface ConsultingData {
     }[];
     consulting: boolean;
 }
+
+// ----------------------------------------------------------------------------------------------------
+
+/* Style */
 const Container = styled("div")`
     display: flex;
     flex-direction: column;
@@ -48,6 +55,7 @@ const Container = styled("div")`
     width: 100vw;
     height: calc(100vh - 56px);
 `;
+
 const MainContainer = styled("div")`
     display: flex;
     flex-direction: row;
@@ -349,75 +357,9 @@ const InfoButtonContainer = styled("div")`
     justify-content: center;
 `;
 
-// const queueListData: ConsultingData[] = [
-//     {
-//         tellerTypeId: 1,
-//         tellerTypeName: "통장 · 계좌",
-//         consultingCustomer: {
-//             faceId: "test5",
-//             subId: "a",
-//             name: "John Doe5",
-//         },
-//         waitingConsumerCount: 0,
-//         waitingConsumerList: [],
-//         consulting: true,
-//     },
-//     {
-//         tellerTypeId: 2,
-//         tellerTypeName: "카드",
-//         consultingCustomer: {
-//             faceId: "test6",
-//             subId: "a",
-//             name: "John Doe5",
-//         },
-//         waitingConsumerCount: 5,
-//         waitingConsumerList: [
-//             {
-//                 faceId: "test1",
-//                 subId: "b",
-//                 name: "고건",
-//             },
-//             {
-//                 faceId: "test2",
-//                 subId: "c",
-//                 name: "정연수",
-//             },
-//             {
-//                 faceId: "test3",
-//                 subId: "b",
-//                 name: "고건",
-//             },
-//             {
-//                 faceId: "test4",
-//                 subId: "c",
-//                 name: "정연수",
-//             },
-//             {
-//                 faceId: "test9",
-//                 subId: "c",
-//                 name: "정연수",
-//             },
-//         ],
-//         consulting: true,
-//     },
-//     {
-//         tellerTypeId: 3,
-//         tellerTypeName: "인터넷뱅킹",
-//         consultingCustomer: null,
-//         waitingConsumerCount: 0,
-//         waitingConsumerList: [],
-//         consulting: false,
-//     },
-//     {
-//         tellerTypeId: 4,
-//         tellerTypeName: "대출 · 외환",
-//         consultingCustomer: null,
-//         waitingConsumerCount: 0,
-//         waitingConsumerList: [],
-//         consulting: false,
-//     },
-// ];
+// ----------------------------------------------------------------------------------------------------
 
+/* Admin Main Component */
 function AdminMain() {
     const [queueListData, setQueueListData] = useState<ConsultingData[]>([]);
     const [consultingCounts, setConsultingCounts] = useState<number[]>([0, 0, 0, 0]);
@@ -869,4 +811,7 @@ function AdminMain() {
     );
 }
 
+// ----------------------------------------------------------------------------------------------------
+
+/* Export */
 export default AdminMain;
